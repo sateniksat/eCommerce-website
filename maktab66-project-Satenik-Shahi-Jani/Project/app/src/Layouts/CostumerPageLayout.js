@@ -1,5 +1,5 @@
 import React from "react";
-import CostumerNav from "../Components/CostumerNav";
+import CostumerNav from "../components/CostumerNav";
 
 const CostumerPageLayout = (Component) => {
   return function CostumerPage(props) {

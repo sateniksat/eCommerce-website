@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AdminMain from "../adminPages.js/AdminMain/AdminMain";
-import ProtectedRout from "../adminPages.js/ProtectedRoute/ProtectedRoute";
+import AdminMain from "../adminPages/AdminMain/AdminMain";
+import ProtectedRout from "../adminPages/ProtectedRoute/ProtectedRoute";
 import Cart from "../costumerPages/Cart/Cart";
 // import CategoryShop from "../CostumerPages/Category/CategoryShop";
 import FailedOperation from "../costumerPages/FailedOperation/FailedOperation";
