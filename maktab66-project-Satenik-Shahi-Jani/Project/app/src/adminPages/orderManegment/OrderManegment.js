@@ -1,4 +1,5 @@
 import React from 'react'
+import AdminPageLayout from "../../layouts/AdminPageLayout"
 
 function OrderManegment() {
   return (
@@ -6,4 +7,4 @@ function OrderManegment() {
   )
 }
 
-export default OrderManegment
+export default AdminPageLayout(OrderManegment)

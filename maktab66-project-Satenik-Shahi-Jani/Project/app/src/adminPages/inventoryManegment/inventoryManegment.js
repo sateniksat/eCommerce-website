@@ -1,9 +1,10 @@
 import React from 'react'
+import AdminPageLayout from "../../layouts/AdminPageLayout"
 
-function inventoryManegment() {
+function InventoryManegment() {
   return (
     <div>inventoryManegment</div>
   )
 }
 
-export default inventoryManegment
+export default AdminPageLayout(InventoryManegment);

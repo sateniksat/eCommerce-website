@@ -1,4 +1,5 @@
 import React from 'react'
+import AdminPageLayout from "../../layouts/AdminPageLayout"
 
 function ProductManegment() {
   return (
@@ -6,4 +7,4 @@ function ProductManegment() {
   )
 }
 
-export default ProductManegment
+export default AdminPageLayout(ProductManegment)
