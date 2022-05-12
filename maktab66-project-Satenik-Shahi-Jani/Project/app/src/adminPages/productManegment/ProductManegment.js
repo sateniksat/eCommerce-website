@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect ,useState} from "react";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
+import axios from "axios";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -24,6 +25,18 @@ const rows = [
 ];
 
 function ProductManegment() {
+const [data,setdata]=useState([])
+  useEffect(()=>{
+    (async()=>{
+      try{
+        const response=await axios.get("http://localhost:3002/products").then((res)=>res.data);
+        setdata(response);
+        console.log(response)
+      }catch(error){
+        console.log(error)
+      }
+    })()
+  },[])
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
