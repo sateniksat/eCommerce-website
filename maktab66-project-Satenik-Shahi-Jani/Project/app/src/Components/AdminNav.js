@@ -1,21 +1,25 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
+// import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
 import Tooltip from "@mui/material/Tooltip";
-import Avatar from "@mui/material/Avatar";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Logo from "../assets/images/shop.png";
 import { Link } from "react-router-dom";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-export  function AdminNav() {
+export function AdminNav() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [alignment, setAlignment] = React.useState("");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -25,7 +29,7 @@ export  function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
-      <AppBar position="static" sx={{bgcolor:"secondary.main"}}>
+      <AppBar position="static" sx={{ bgcolor: "secondary.main" }}>
         <Toolbar>
           <Tooltip title="رفتن به صفحه اصلی">
             <Link to="/" style={{ width: "5%" }}>
@@ -45,12 +49,31 @@ export  function AdminNav() {
           >
             پنل مدیریت فروشگاه
           </Typography>
+          {/* <Box sx={{ bgcolor: "#ffff", borderRadius: "10px" }}> */}
+          <ToggleButtonGroup
+            color="primary"
+            sx={{ bgcolor: "#ffff", borderRadius: "10px" }}
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+          >
+            <ToggleButton value="productmanage">
+              <Link to="/admin-productmanage">کالا ها</Link>
+            </ToggleButton>
+            <ToggleButton value="inventory">
+              <Link to="/admin-inventory">موجودی و قیمت ها </Link>
+            </ToggleButton>
+            <ToggleButton value="order">
+              <Link to="/admin-order">سفارس ها </Link>
+            </ToggleButton>
+          </ToggleButtonGroup>
+          {/* </Box> */}
           <Link to="/">
-          <Button color="inherit"> بازگشت به سایت</Button>
+            <Button color="inherit"> بازگشت به سایت</Button>
           </Link>
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
-export default AdminNav
+export default AdminNav;

@@ -33,7 +33,7 @@ export default function AppRoute() {
         <Route path="successfuloperation" element={<SuccessOperation />} />
         <Route path="failedoperation" element={<FailedOperation />} />
         <Route
-          path="admin/inventory"
+          path="/admin-inventory"
           element={
             <ProtectedRout>
               <InventoryManegment />
@@ -41,7 +41,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="admin/order"
+          path="/admin-order"
           element={
             <ProtectedRout>
               <OrderManegment />
@@ -49,7 +49,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="admin/productmanage"
+          path="/admin-productmanage"
           element={
             <ProtectedRout>
               <ProductManegment />

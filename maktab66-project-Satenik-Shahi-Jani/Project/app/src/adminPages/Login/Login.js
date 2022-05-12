@@ -14,20 +14,22 @@ import Container from "@mui/material/Container";
 import { Formik } from "formik";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { serAuthorizationToken } from "../../api/api";
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // const theme = createTheme();
 
 export function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
-  };
+  const navigate=useNavigate();
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     username: data.get("username"),
+  //     password: data.get("password"),
+  //   });
+  // };
 
   // <ThemeProvider theme={theme}>
   //       </ThemeProvider>
@@ -54,11 +56,15 @@ export function Login() {
     return errors;
   };
   const submitForm = (values) => {
+    // event.preventDefault();
     console.log(values);
     axios.post("http://localhost:3002/auth/login", values).then(res=>{
       console.log(res.data.token)
-    })
-    
+      const token=res.data.token;
+      localStorage.setItem("token",token)
+      serAuthorizationToken(token)
+    }).catch((error)=>console.log(error))
+    navigate("/admin-productmanage")
   };
 
   return (
