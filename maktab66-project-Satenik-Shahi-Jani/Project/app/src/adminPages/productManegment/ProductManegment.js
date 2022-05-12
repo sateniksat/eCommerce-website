@@ -40,9 +40,9 @@ const [data,setdata]=useState([])
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <div>ProductManegment</div>
+        <div>کالا ها</div>
         <Button variant="contained" color="success">
-          Success
+          افزودن کالا
         </Button>
       </Box>
       <TableContainer component={Paper}>
@@ -56,22 +56,22 @@ const [data,setdata]=useState([])
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((item) => (
               <TableRow
-                key={row.name}
+                key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" align="right">
-                  {row.name}
+                  {item.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{item.name}</TableCell>
+                <TableCell align="right">{item.categoryName}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="success">
-                    Success
+                    ویرایش
                   </Button>
                   <Button variant="outlined" color="error">
-                    Error
+                  حذف
                   </Button>
                 </TableCell>
               </TableRow>
