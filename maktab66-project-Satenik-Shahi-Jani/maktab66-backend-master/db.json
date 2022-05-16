@@ -2,7 +2,8 @@
   "products": [
     {
       "name": "کیف پول چرم جانتا مدل 124",
-      "category": "1",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانتا",
       "price": "120000",
       "count": "12",
@@ -13,7 +14,8 @@
       "createdAt":"1643375019984"
     },    {
       "name": "2نوشیدنی",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -25,6 +27,7 @@
     },{
       "name": "1نوشیدنی",
       "category": "2",
+      "categoryName":"1نوشیدنی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -34,8 +37,9 @@
       "id": 7,
       "createdAt":"1643375019984"
     },{
-      "name": "خوراکی1",
+      "name": "1نوشیدنی1",
       "category": "2",
+      "categoryName":"1نوشیدنی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -46,8 +50,9 @@
       "createdAt":"1643375019984"
     }
     ,{
-      "name": "خوراکی2",
+      "name": "1نوشیدنی2",
       "category": "2",
+      "categoryName":"1نوشیدنی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -59,6 +64,7 @@
     },{
       "name": "خوراک32",
       "category": "2",
+      "categoryName":"1نوشیدنی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -68,8 +74,9 @@
       "id": 175,
       "createdAt":"1643375019984"
     },{
-      "name": "خوراکی4",
+      "name": "1نوشیدنی4",
       "category": "2",
+      "categoryName":"1نوشیدنی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -79,8 +86,9 @@
       "id": 174,
       "createdAt":"1643375019984"
     },{
-      "name": "خوراکی5",
-      "category": "2",
+      "name": "1نوشیدنی5",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -91,7 +99,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی13",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -102,7 +111,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی14",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -113,7 +123,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی19",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -124,7 +135,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی15",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -135,7 +147,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی23",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -146,7 +159,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی27",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -157,7 +171,8 @@
       "createdAt":"1643375019984"
     },{
       "name": "خوراکی33",
-      "category": "2",
+      "category": "3",
+      "categoryName":"خوراکی",
       "brand": "جانا",
       "price": "120000",
       "count": "120",
@@ -215,7 +230,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 5,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -240,7 +255,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 5,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -267,7 +282,7 @@
       "purchaseTotal": "220000",
       "orderStatus": 1,
       "delivery": 1643396897495,
-      "deliveredAt": 1646222643757,
+      "deliveredAt": null,
       "orderItems": [
         {
           "name": "Test product",
@@ -292,7 +307,7 @@
       "purchaseTotal": "220000",
       "orderStatus": 1,
       "delivery": 1643396897495,
-      "deliveredAt": 1646222643757,
+      "deliveredAt": null,
       "orderItems": [
         {
           "name": "Test product",
@@ -315,9 +330,9 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 5,
       "delivery": 1643396897495,
-      "deliveredAt": 1646222643757,
+      "deliveredAt": null,
       "orderItems": [
         {
           "name": "Test product",
