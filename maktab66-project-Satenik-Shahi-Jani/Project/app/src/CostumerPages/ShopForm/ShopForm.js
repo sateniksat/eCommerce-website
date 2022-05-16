@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageLayout from '../../Layouts/CostumerPageLayout'
+import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 
 export function ShopForm() {
   return (

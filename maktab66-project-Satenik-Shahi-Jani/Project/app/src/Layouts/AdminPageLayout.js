@@ -1,5 +1,5 @@
 import React from "react";
-import AdminNav from "../Components/AdminNav";
+import AdminNav from "../components/AdminNav";
 const AdminPageLayout = (Component) => {
   return function WithAdminPage(props) {
     return (

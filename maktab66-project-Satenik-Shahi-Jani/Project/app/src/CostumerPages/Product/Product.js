@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageDrower from '../../Layouts/CostumerPageDrower'
+import CostumerPageDrower from '../../layouts/CostumerPageDrower'
 
 function Product() {
   return (
