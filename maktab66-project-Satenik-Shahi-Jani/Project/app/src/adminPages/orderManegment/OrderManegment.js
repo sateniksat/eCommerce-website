@@ -17,8 +17,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(firstName, id, fat, purchaseTotal, orderDate) {
+  return { firstName, id, fat, purchaseTotal, orderDate };
 }
 
 const rows = [
@@ -73,20 +73,20 @@ function OrderManegment() {
             <TableRow>
               <TableCell align="right">نام کاربر</TableCell>
               <TableCell align="right"> مجموع مبلغ</TableCell>
-              <TableCell align="center">زمان ثبت سفارش</TableCell>
+              <TableCell align="right">زمان ثبت سفارش</TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
+            {rows.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" align="right">
-                  {row.customerDetail.firstName}-{row.customerDetail.lastName}
+                  {row.firstName}-{row.firstName}
                 </TableCell>
-                <TableCell align="right">{row.purchaseTotal}</TableCell>
+                <TableCell align="right">{row.purchaseTotal} تومان</TableCell>
                 <TableCell align="right">{row.orderDate}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="success">

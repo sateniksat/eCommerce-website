@@ -63,7 +63,7 @@ export function Login() {
       const token=res.data.token;
       localStorage.setItem("token",token)
       serAuthorizationToken(token)
-    }).catch((error)=>console.log(error))
+    }).catch((error)=>alert("please try again"))
     navigate("/admin-productmanage")
   };
 
