@@ -42,7 +42,7 @@ const [data,setdata]=useState([])
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <div>کالا ها</div>
         <Button variant="contained" color="success">
-          افزودن کالا
+          افزودن  کالا
         </Button>
       </Box>
       <TableContainer component={Paper}>
