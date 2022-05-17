@@ -1,34 +1,40 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import userReducer from "./userSlice";
-// const loadPreLoadState = () => {
-//   try {
-//     const serializedstate = localStorage.getItem("token");
-//     if (serializedstate) {
-//       return JSON.parse(serializedstate);
-//     } else {
-//       return undefined;
-//     }
-//   } catch (error) {
-//     return undefined;
-//   }
-// };
-// export const store = configureStore({
-//   devTools: true,
-//   preloadedState: loadPreLoadState(),
-//   reducer: {
-//     user: userReducer,
-//   },
-// });
-// const saveToken = (Token) => {
-//   try {
-//     const nextToken = JSON.stringify(Token);
-//     localStorage.setItem("Token", nextToken);
-//   } catch (error) {
-//     console.log("error");
-//   }
-// };
+import { configureStore } from "@reduxjs/toolkit";
+import tokenReducer from "./tokenslice";
+const loadPreLoadState = () => {
+  try {
+    const serializedstate = localStorage.getItem("Token");
+    if (serializedstate) {
+        // const getToken=JSON.parse(serializedstate)
+        // return getToken.token;
+      return JSON.parse(serializedstate);
+    //   return serializedstate
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    return undefined;
+  }
+};
+export const store = configureStore({
+  devTools: true,
+  preloadedState: loadPreLoadState(),
+  reducer: {
+    token: tokenReducer,
+  },
+});
+const saveToken = (tokenArg) => {
+  try {
+    const nextToken = JSON.stringify(tokenArg);
+    // const nextToken = tokenArg;
+    console.log(tokenArg)
+    localStorage.setItem("Token", nextToken);
+  } catch (error) {
+    console.log("error");
+  }
+};
 
-// store.subscribe(() => {
-//   savestate({ user: store.getState()?.token });
-// });
-// export default store;
+store.subscribe(() => {
+    // console.log({ token: store.getState()?.token })
+  saveToken({ token: store.getState()?.token });
+});
+export default store;
