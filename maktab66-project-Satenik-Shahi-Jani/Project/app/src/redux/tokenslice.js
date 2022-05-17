@@ -1,15 +1,16 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// const tokenSlice = createSlice({
-//     name: "token", 
-//     initialState: {},
-//     reducers: {
-//         addtoken: (token, action) => {
-//             return action.payload
-//         }
-//     }
-// })
+const tokenSlice = createSlice({
+    name: "token", 
+    initialState: false,
+    reducers: {
+        addtoken: (token, action) => {
+            console.log(action.payload)
+            return action.payload
+        }
+    }
+})
 
-// export const { addtoken } = tokenSlice.actions
+export const { addtoken } = tokenSlice.actions
 
-// export default tokenSlice.reducer
+export default tokenSlice.reducer

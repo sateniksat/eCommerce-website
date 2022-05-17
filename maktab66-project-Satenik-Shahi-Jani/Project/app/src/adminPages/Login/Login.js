@@ -16,12 +16,16 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { serAuthorizationToken } from "../../api/api";
+import { useDispatch } from "react-redux";
+import { addtoken } from "../../redux/tokenslice";
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // const theme = createTheme();
 
 export function Login() {
   const navigate=useNavigate();
+
+  const dispatch=useDispatch()
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   const data = new FormData(event.currentTarget);
@@ -56,15 +60,19 @@ export function Login() {
     return errors;
   };
   const submitForm = (values) => {
-    // event.preventDefault();
-    console.log(values);
-    axios.post("http://localhost:3002/auth/login", values).then(res=>{
-      console.log(res.data.token)
-      const token=res.data.token;
-      localStorage.setItem("token",token)
-      serAuthorizationToken(token)
-    }).catch((error)=>alert("please try again"))
-    navigate("/admin-productmanage")
+    (async()=>{
+      try{
+        const response=await axios.post("http://localhost:3002/auth/login", values).then(res=>res.data);
+        const token=await response.token;
+        console.log(response)
+        localStorage.setItem("token",token)
+        dispatch(addtoken(token));
+        serAuthorizationToken(token);
+        navigate("/admin-productmanage")
+      }catch(error){
+        alert(`please try again ${error}`)
+      }
+    })()
   };
 
   return (
