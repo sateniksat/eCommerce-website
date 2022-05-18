@@ -86,7 +86,7 @@ function Product() {
                     type="number"
                     sx={{
                       width: "10%",
-                      p: "0%",
+                      p: "0",
                     }}
                     InputLabelProps={{
                       shrink: true,
