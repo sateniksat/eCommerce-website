@@ -540,6 +540,34 @@
       "role": "admin"
     }
   ],
+  "orders": [
+    {
+      "customerDetail": {
+        "username": "admin",
+        "firstName": "حسین",
+        "lastName": "رئیسی",
+        "phone": "09121211211",
+        "billingAddress": "Tehran - tajrish",
+        "shippingAddress": "Tehran- azadi"
+      },
+      "id": 1,
+      "location": "21111,2000,3333",
+      "orderNumber": "2122",
+      "orderDate": 1643396897495,
+      "purchaseTotal": "220000",
+      "orderStatus": 6,
+      "delivery": 1643396897495,
+      "deliveredAt": 1646222643757,
+      "orderItems": [
+        {
+          "name": "Test product",
+          "thumbnail": "65ddd8b1bbce4d8396b62611147fa1d6",
+          "price": "12000",
+          "quantity": "12"
+        }
+      ]
+    }
+  ],
   "orderlist": [
     {
       "customerDetail": {
@@ -555,7 +583,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -581,7 +609,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -607,7 +635,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 3,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
@@ -633,7 +661,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 3,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
@@ -659,7 +687,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
@@ -685,7 +713,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -711,7 +739,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 3,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
@@ -722,8 +750,7 @@
           "quantity": "12"
         }
       ]
-    }
-    ,
+    },
     {
       "customerDetail": {
         "username": "admin",
@@ -738,7 +765,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -764,7 +791,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 3,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
@@ -790,7 +817,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -816,7 +843,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 5,
+      "orderStatus": 6,
       "delivery": 1643396897495,
       "deliveredAt": 1646222643757,
       "orderItems": [
@@ -842,7 +869,7 @@
       "orderNumber": "2122",
       "orderDate": 1643396897495,
       "purchaseTotal": "220000",
-      "orderStatus": 1,
+      "orderStatus": 3,
       "delivery": 1643396897495,
       "deliveredAt": null,
       "orderItems": [
