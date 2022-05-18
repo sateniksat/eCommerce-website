@@ -13,7 +13,7 @@ function Cards(props) {
     return (
       
       <Card sx={{ minWidth:"20%",mx:"2%",mb:"2%" }}>
-      <Link to={`/product/${props.product.id}`}>
+      <Link to={`/products/${props.product.id}`}>
       <CardMedia
         component="img"
         alt="green iguana"
