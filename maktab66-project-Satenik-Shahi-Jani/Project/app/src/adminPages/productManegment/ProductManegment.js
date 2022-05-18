@@ -11,6 +11,8 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import axios from "axios";
+import { Axios } from "../../api/api";
+
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -29,7 +31,7 @@ const [data,setdata]=useState([])
   useEffect(()=>{
     (async()=>{
       try{
-        const response=await axios.get("http://localhost:3002/products").then((res)=>res.data);
+        const response=await Axios.get("http://localhost:3002/products").then((res)=>res.data);
         setdata(response);
         console.log(response)
       }catch(error){
@@ -61,8 +63,8 @@ const [data,setdata]=useState([])
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row" align="right">
-                  {item.name}
+                <TableCell  align="right">
+                  <img width={"10%"} src={`http://localhost:3002/files/${item.images[0]}`}/>
                 </TableCell>
                 <TableCell align="right">{item.name}</TableCell>
                 <TableCell align="right">{item.categoryName}</TableCell>

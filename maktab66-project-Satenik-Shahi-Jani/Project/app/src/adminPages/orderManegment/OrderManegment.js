@@ -16,6 +16,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { Axios } from "../../api/api";
 
 function createData(firstName, id, fat, purchaseTotal, orderDate) {
   return { firstName, id, fat, purchaseTotal, orderDate };
@@ -34,8 +35,8 @@ function OrderManegment() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios
-          .get("http://localhost:3002/orders")
+        const response = await Axios
+          .get("http://localhost:3002/orderlist")
           .then((res) => res.data);
         setdata(response);
         console.log(response);
@@ -78,13 +79,13 @@ function OrderManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row" align="right">
-                  {row.firstName}-{row.firstName}
+                  {row.customerDetail.firstName}-{row.customerDetail.lastName}
                 </TableCell>
                 <TableCell align="right">{row.purchaseTotal} تومان</TableCell>
                 <TableCell align="right">{row.orderDate}</TableCell>

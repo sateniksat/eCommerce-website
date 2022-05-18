@@ -18,6 +18,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { serAuthorizationToken } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../../redux/tokenslice";
+// import api from "../../api/api"
+import {Axios} from "../../api/api"
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // const theme = createTheme();
@@ -62,12 +64,13 @@ export function Login() {
   const submitForm = (values) => {
     (async()=>{
       try{
-        const response=await axios.post("http://localhost:3002/auth/login", values).then(res=>res.data);
+        const response=await Axios.post("http://localhost:3002/auth/login", values).then(res=>res.data);
         const token=await response.token;
         console.log(response)
         localStorage.setItem("token",token)
         dispatch(addtoken(token));
         serAuthorizationToken(token);
+        // api.configuration(token)
         navigate("/admin-productmanage")
       }catch(error){
         alert(`please try again ${error}`)
