@@ -18,8 +18,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { serAuthorizationToken } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../../redux/tokenslice";
-// import api from "../../api/api"
-import {Axios} from "../../api/api"
+import {api} from "../../api/api"
+// import {Axios} from "../../api/api"
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // const theme = createTheme();
@@ -28,17 +28,6 @@ export function Login() {
   const navigate=useNavigate();
 
   const dispatch=useDispatch()
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   console.log({
-  //     username: data.get("username"),
-  //     password: data.get("password"),
-  //   });
-  // };
-
-  // <ThemeProvider theme={theme}>
-  //       </ThemeProvider>
 
   const initialValues = {
     username: "",
@@ -64,13 +53,14 @@ export function Login() {
   const submitForm = (values) => {
     (async()=>{
       try{
-        const response=await Axios.post("http://localhost:3002/auth/login", values).then(res=>res.data);
+        const response=await api.post("/auth/login", values).then(res=>res.data);
         const token=await response.token;
         console.log(response)
         localStorage.setItem("token",token)
         dispatch(addtoken(token));
-        serAuthorizationToken(token);
-        // api.configuration(token)
+        // serAuthorizationToken(token);
+        // api.configuration({config:token})
+        // api.http.interceptors.request.use(token)
         navigate("/admin-productmanage")
       }catch(error){
         alert(`please try again ${error}`)

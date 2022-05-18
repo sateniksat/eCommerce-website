@@ -14,14 +14,16 @@ const useFetch = (url, config = {}) => {
     (async () => {
       try {
         setLoading(true);
-        const response = await api.get(url, config);
+        const response = await api.get(url, config).then(res=>res.data);
         await delay();
+        console.log(response)
         setData(response);
       } catch (error) {
         setError(error);
-      } finally {
-        setLoading(false);
       }
+      //  finally {
+      //   setLoading(false);
+      // }
     })();
   }, [url]);
 

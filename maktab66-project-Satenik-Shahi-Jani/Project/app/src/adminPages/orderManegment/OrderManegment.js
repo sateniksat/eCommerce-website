@@ -10,41 +10,55 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
-import axios from "axios";
+// import axios from "axios";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { Axios } from "../../api/api";
+// import { Axios } from "../../api/api";
+import { api } from "../../api/api";
 
-function createData(firstName, id, fat, purchaseTotal, orderDate) {
-  return { firstName, id, fat, purchaseTotal, orderDate };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+// Axios.get("http://localhost:3002/orderlist")
+// ,{
+//   headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': 'Bearer '+token
+//   }}
 
 function OrderManegment() {
+
+
+  const [selectedValue,setSelectedValue]=useState("Delivered")
+  const [filtered,setFiltered]=useState([])
   const [data, setdata] = useState([]);
+
+
+
+  const filtering=(collection,status)=>{
+    setFiltered(collection.filter(item=> item.orderStatus===status))
+  }
+
+  const handleChange=(event)=>{
+    setSelectedValue(event.target.value);
+   filtering(data, Number(event.target.name))
+  }
   useEffect(() => {
     (async () => {
       try {
-        const response = await Axios
-          .get("http://localhost:3002/orderlist")
-          .then((res) => res.data);
+        const token = localStorage.getItem("token");
+        const response = await api.get("/orderlist").then((res) => res.data);
         setdata(response);
         console.log(response);
+        filtering(response,6)
       } catch (error) {
         console.log(error);
       }
     })();
+
+
   }, []);
+
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -56,14 +70,20 @@ function OrderManegment() {
             name="row-radio-buttons-group"
           >
             <FormControlLabel
-              value="female"
+              value="Delivered"
+              checked={selectedValue === "Delivered"}
+              onChange={(event)=>handleChange(event)}
               control={<Radio />}
               label="سفارش های نحویل شده"
+              name="6"
             />
             <FormControlLabel
-              value="male"
+              value="Processing"
+              checked={selectedValue === "Processing"}
+              onChange={(event)=>handleChange(event)}
               control={<Radio />}
               label="سفارش های در انتظار ارسال"
+              name="3"
             />
           </RadioGroup>
         </FormControl>
@@ -79,7 +99,7 @@ function OrderManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
+            {filtered.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -88,7 +108,9 @@ function OrderManegment() {
                   {row.customerDetail.firstName}-{row.customerDetail.lastName}
                 </TableCell>
                 <TableCell align="right">{row.purchaseTotal} تومان</TableCell>
-                <TableCell align="right">{row.orderDate}</TableCell>
+                <TableCell align="right">
+                  {new Date(row.orderDate).toLocaleDateString("fa-IR")}
+                </TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="success">
                     بررسی سفارش
