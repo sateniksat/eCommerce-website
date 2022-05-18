@@ -64,7 +64,7 @@ function ProductManegment() {
                 <TableCell sx={{ width: "20%" }} align="right">
                   <img
                     width={"50%"}
-                    src={`http://localhost:3002/files/${item.images[0]}`}
+                    src={`http://localhost:3002/files/${item.thumbnail}`}
                   />
                 </TableCell>
                 <TableCell align="right">{item.name}</TableCell>

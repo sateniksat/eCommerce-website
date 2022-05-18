@@ -37,6 +37,11 @@ class API {
     this.http.interceptors.request.use(
       (config) => {
         // add `access token` if it exists
+        
+        const token=localStorage.getItem('token');
+        if(token){
+          config.headers['Authorization']=`${token}`
+        }
         return config;
       },
       (error) => {
