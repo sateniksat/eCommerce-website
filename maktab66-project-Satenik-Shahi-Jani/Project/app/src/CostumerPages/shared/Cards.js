@@ -16,7 +16,7 @@ function Cards(props) {
       <Link to={`/products/${props.product.id}`}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="img"
         height="200"
         image={`http://localhost:3002/files/${props.product.thumbnail}`}
       />

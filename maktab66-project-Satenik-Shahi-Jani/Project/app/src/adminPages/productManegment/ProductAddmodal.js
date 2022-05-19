@@ -26,32 +26,32 @@ export default function TransitionsModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-    const [values, setValues] = useState({})
-    const [isSubmit, setIsSubmit] = useState(false)
+    // const [values, setValues] = useState({})
+    // const [isSubmit, setIsSubmit] = useState(false)
 
-    function handleChange(e){
-        console.log(e)
-        if(e.target.name!=="image"){
+    // function handleChange(e){
+    //     console.log(e)
+    //     if(e.target.name!=="image"){
             
-            setValues((prevState)=>({...prevState, [e.target.name]: e.target.value}))
-        }else{
-            var files = e.target.files[0]
-            setValues((prevState)=>({...prevState,[e.target.name]:files}))
-        }
-    }
+    //         setValues((prevState)=>({...prevState, [e.target.name]: e.target.value}))
+    //     }else{
+    //         var files = e.target.files[0]
+    //         setValues((prevState)=>({...prevState,[e.target.name]:files}))
+    //     }
+    // }
 
-    function submit(){
-        const formData = new FormData();
+    // function submit(){
+    //     const formData = new FormData();
 
-        Object.entries(values).map(entry=>{
-            formData.append(entry[0], entry[1])
-        })
-        const res = api.post('http://localhost:3002/upload', formData, {
+    //     Object.entries(values).map(entry=>{
+    //         formData.append(entry[0], entry[1])
+    //     })
+    //     const res = api.post('http://localhost:3002/upload', formData, {
 
-        }).then(res=>{
-            console.log(res)
-        })
-    }
+    //     }).then(res=>{
+    //         console.log(res)
+    //     })
+    // }
 
   
   return (
@@ -105,7 +105,7 @@ export default function TransitionsModal() {
                 name="username"
                 autoComplete="username"
                 autoFocus
-                onChange={handleChange}
+                // onChange={handleChange}
               />
             </Box>
           </Box>

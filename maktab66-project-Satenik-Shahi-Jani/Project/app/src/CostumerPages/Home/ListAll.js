@@ -19,7 +19,7 @@ function ListAll(props) {
         <Box dir="rtl" sx={{ display: "flex", alignItems: "center" }}>
           <CardMedia
             component="img"
-            alt="green iguana"
+            alt="img"
             height="140"
             image={`http://localhost:3002/files/${props.category.icon}`}
             sx={{ width: "8%", height: "8%", borderRadius: "30px", mx: "2%" }}
