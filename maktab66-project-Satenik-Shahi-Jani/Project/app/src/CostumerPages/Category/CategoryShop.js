@@ -41,6 +41,7 @@ function CategoryShop() {
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
               {categoryData?.data.data[0].name}
+              
             </Box>
           </Box>
         </Link>
