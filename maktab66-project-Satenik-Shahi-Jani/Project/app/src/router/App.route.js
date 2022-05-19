@@ -11,7 +11,7 @@ import Product from "../costumerPages/Product/Product";
 import ShopForm from "../costumerPages/ShopForm/ShopForm";
 import Shaparak from "../costumerPages/Shaparak/Shaparak";
 import SuccessOperation from "../costumerPages/SuccessOperation/SuccessOperation";
-import NotFound from "../notFound/NotFound";
+// import NotFound from "../notFound/NotFound";
 import CategoryShop from "../costumerPages/Category/CategoryShop";
 import { Login } from "../adminPages/Login/Login";
 import OrderManegment from "../adminPages/orderManegment/OrderManegment";

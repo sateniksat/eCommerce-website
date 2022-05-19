@@ -13,9 +13,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Formik } from "formik";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
+// import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { serAuthorizationToken } from "../../api/api";
+// import { serAuthorizationToken } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../../redux/tokenslice";
 import {api} from "../../api/api"
@@ -55,7 +55,7 @@ export function Login() {
       try{
         const response=await api.post("/auth/login", values).then(res=>res.data);
         const token=await response.token;
-        console.log(response)
+        // console.log(response)
         localStorage.setItem("token",token)
         dispatch(addtoken(token));
         // serAuthorizationToken(token);
@@ -94,10 +94,10 @@ export function Login() {
         >
           {(formik) => {
             const {
-              values,
+              // values,
               handleChange,
               handleSubmit,
-              resetForm,
+              // resetForm,
               errors,
               // touched,
               // handleBlur,

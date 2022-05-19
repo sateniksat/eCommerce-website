@@ -16,7 +16,7 @@ const useFetch = (url, config = {}) => {
         setLoading(true);
         const response = await api.get(url, config).then(res=>res);
         await delay();
-        console.log(response)
+        // console.log(response)
         setData(response);
       } catch (error) {
         setError(error);

@@ -12,7 +12,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 export function AdminNav() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const [alignment, setAlignment] = React.useState("");
 
@@ -20,12 +20,12 @@ export function AdminNav() {
     setAlignment(newAlignment);
   };
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
@@ -34,6 +34,7 @@ export function AdminNav() {
           <Tooltip title="رفتن به صفحه اصلی">
             <Link to="/" style={{ width: "5%" }}>
               <img
+                alt="logo"
                 src={Logo}
                 width="100%"
                 style={{ backgroundColor: "#ffffff9f", borderRadius: "10px" }}

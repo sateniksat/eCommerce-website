@@ -21,7 +21,7 @@ function Product() {
   const params = useParams();
   const productNumber = params.productId;
 
-  const { data, loading, error } = useFetch(`products?id=${productNumber}`);
+  const { data, loading } = useFetch(`products?id=${productNumber}`);
   return (
     <Container
       sx={{
@@ -35,7 +35,6 @@ function Product() {
           sx={{
             width: 1,
             height: "100vh",
-            width: 1,
             mx: "auto",
             display: "flex",
             flexDirection: "column",
@@ -47,7 +46,7 @@ function Product() {
       ) : (
         <>
           {data.data.map((item) => (
-            <Card sx={{ display: "flex", height: "95%" }}>
+            <Card key={item.id} sx={{ display: "flex", height: "95%" }}>
               <Box dir="rtl" sx={{ display: "flex", flexDirection: "column" }}>
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Typography component="div" variant="h5">

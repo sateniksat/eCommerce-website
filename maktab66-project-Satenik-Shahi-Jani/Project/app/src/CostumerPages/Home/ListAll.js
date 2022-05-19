@@ -8,11 +8,11 @@ function ListAll(props) {
   // const params = {
   //   category: `${props.category.id}`,
   //   favorite: true };
-  const { data, loading, error } = useFetch(
+  const { data, loading } = useFetch(
     `products?category=${props.category.id}&favorite=true`
   );
   // products?_category=${props.category.id}&_favorite=${true}`
-  console.log(data);
+  // console.log(data);
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
       <Link to={`/category/${props.category.id}`}>
@@ -65,7 +65,7 @@ function ListAll(props) {
         ) : (
           <>
             {data?.data.map((product) => (
-              <Cards product={product} />
+              <Cards key={product.id} product={product} />
             ))}
           </>
         )}

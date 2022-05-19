@@ -1,11 +1,11 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
+// import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
+// import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import Tooltip from "@mui/material/Tooltip";
@@ -57,13 +57,13 @@ import { Link } from "react-router-dom";
 // }));
 
 export default function CostumerNav() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
@@ -72,13 +72,14 @@ export default function CostumerNav() {
           <Tooltip title="رفتن به صفحه اصلی">
             <Link to="/" style={{ width: "5%" }}>
               <img
+                alt="logo"
                 src={Logo}
                 width="100%"
                 style={{ backgroundColor: "#ffffff9f", borderRadius: "10px" }}
               />
             </Link>
           </Tooltip>
-          
+
           <Typography
             dir="rtl"
             variant="h6"
@@ -86,9 +87,7 @@ export default function CostumerNav() {
             component="div"
             sx={{ flexGrow: 1, p: "2%" }}
           >
-            <Link to="/" >
-            سلام
-          </Link>
+            <Link to="/">سلام</Link>
           </Typography>
           {/* <Search>
             <SearchIconWrapper>
@@ -101,18 +100,18 @@ export default function CostumerNav() {
             ورود
           </Search> */}
           <Link to="/admin-inventory">
-          <Button color="inherit"> مدیریت</Button>
+            <Button color="inherit"> مدیریت</Button>
           </Link>
-          <Link to='/checkout'>
-          <IconButton
-            size="large"
-            aria-label="show 17 new notifications"
-            color="inherit"
-          >
-            <Badge badgeContent={17} color="error">
-              <ShoppingCartOutlinedIcon />
-            </Badge>
-          </IconButton>
+          <Link to="/checkout">
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <ShoppingCartOutlinedIcon />
+              </Badge>
+            </IconButton>
           </Link>
         </Toolbar>
       </AppBar>

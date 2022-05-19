@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, {useState,useMemo } from "react";
+// import { useEffect } from "react";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,49 +16,57 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+// import FormLabel from "@mui/material/FormLabel";
 // import { Axios } from "../../api/api";
-import { api } from "../../api/api";
+// import { api } from "../../api/api";
+import { Pagination } from "@mui/material";
+import { useFetch } from "../../hooks/useFetch";
 
-// Axios.get("http://localhost:3002/orderlist")
-// ,{
-//   headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': 'Bearer '+token
-//   }}
 
 function OrderManegment() {
 
 
-  const [selectedValue,setSelectedValue]=useState("Delivered")
-  const [filtered,setFiltered]=useState([])
-  const [data, setdata] = useState([]);
+  const [selectedValue,setSelectedValue]=useState("6")
+  // const [filtered,setFiltered]=useState([])
+  // const [data, setdata] = useState([]);
 
+  const limit = useMemo(() => 5, []);
+  const [activePage, setActivePage] = useState(1);
 
+  // const filtering=(collection,status)=>{
+  //   const endLimit=activePage*limit-1;
+  //   const startLimit=(activePage-1)*limit;
+  //   setFiltered(collection.filter((item,index)=> item.orderStatus===status && index<=endLimit && index>=startLimit))
+  // }
 
-  const filtering=(collection,status)=>{
-    setFiltered(collection.filter(item=> item.orderStatus===status))
-  }
+  const { data, loading, error } = useFetch(
+    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
+  );
+
 
   const handleChange=(event)=>{
     setSelectedValue(event.target.value);
-   filtering(data, Number(event.target.name))
+  //  filtering(data, Number(event.target.name))
   }
-  useEffect(() => {
-    (async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await api.get("/orderlist").then((res) => res.data);
-        setdata(response);
-        console.log(response);
-        filtering(response,6)
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       const response = await api.get("/orderlist").then((res) => res.data);
+  //       setdata(response);
+  //       console.log(response);
+  //       filtering(response,6)
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
 
-  }, []);
+
+  // useEffect(()=>{
+
+  // },[activePage])
 
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
@@ -70,20 +79,20 @@ function OrderManegment() {
             name="row-radio-buttons-group"
           >
             <FormControlLabel
-              value="Delivered"
-              checked={selectedValue === "Delivered"}
+              name="Delivered"
+              checked={selectedValue === "6"}
               onChange={(event)=>handleChange(event)}
               control={<Radio />}
               label="سفارش های نحویل شده"
-              name="6"
+              value="6"
             />
             <FormControlLabel
-              value="Processing"
-              checked={selectedValue === "Processing"}
+              name="Processing"
+              checked={selectedValue === "3"}
               onChange={(event)=>handleChange(event)}
               control={<Radio />}
               label="سفارش های در انتظار ارسال"
-              name="3"
+              value="3"
             />
           </RadioGroup>
         </FormControl>
@@ -99,7 +108,7 @@ function OrderManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filtered.map((row) => (
+            {data?.data.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -121,6 +130,25 @@ function OrderManegment() {
           </TableBody>
         </Table>
       </TableContainer>
+      <Box
+        sx={{
+          my:"5%",
+          mx: "auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Pagination
+          sx={{ mx: "auto", alignItems: "center", width: "content" }}
+          variant="outlined"
+          color="secondary"
+          defaultPage={1}
+          page={activePage}
+          count={Math.ceil(data?.headers["x-total-count"]/ limit)}
+          onChange={(_, page) => setActivePage(page)}
+        />
+      </Box>
     </Container>
   );
 }

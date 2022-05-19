@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, {  useState, useMemo } from "react";
+// import { useEffect } from "react";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,8 +13,9 @@ import Box from "@mui/material/Box";
 import { Pagination, Button } from "@mui/material";
 // import axios from "axios";
 // import { Axios } from "../../api/api";
-import { api } from "../../api/api";
+// import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
+import TransitionsModal from "./ProductAddmodal";
 
 function ProductManegment() {
   const limit = useMemo(() => 9, []);
@@ -22,27 +24,37 @@ function ProductManegment() {
   //   `/products?_page=${activePage}&_limit=${limit}}`
   // );
   // console.log(data)
-  const [data, setdata] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await api
-          .get(`/products?_page=${activePage}&_limit=${limit}}`)
-          .then((res) => res.data);
-        setdata(response);
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [activePage]);
+  // const [data, setdata] = useState([]);
+
+
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response = await api
+  //         .get(`/products?_page=${activePage}&_limit=${limit}}`)
+  //         .then((res) => res.data);
+  //       setdata(response);
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [activePage]);
+
+
+  const { data, loading, error } = useFetch(
+    `/products?_page=${activePage}&_limit=${limit}}`
+  );
+
+
   return (
     <Container sx={{ mt: "5%" }}>
       <Box dir="rtl" sx={{ display: "flex", justifyContent: "space-between" }}>
         <div>کالا ها</div>
-        <Button variant="contained" color="success">
+        {/* <Button variant="contained" color="success">
           افزودن کالا
-        </Button>
+        </Button> */}
+        <TransitionsModal/>
       </Box>
 
       <TableContainer component={Paper} dir="rtl">
@@ -56,13 +68,14 @@ function ProductManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((item) => (
+            {data?.data.map((item) => (
               <TableRow
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell sx={{ width: "20%" }} align="right">
                   <img
+                  alt="img"
                     width={"50%"}
                     src={`http://localhost:3002/files/${item.thumbnail}`}
                   />
@@ -97,7 +110,7 @@ function ProductManegment() {
           color="secondary"
           defaultPage={1}
           page={activePage}
-          count={Math.ceil(30 / limit)}
+          count={Math.ceil(data?.headers["x-total-count"]/ limit)}
           onChange={(_, page) => setActivePage(page)}
         />
       </Box>
