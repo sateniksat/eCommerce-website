@@ -1,4 +1,4 @@
-import React, {  useState, useMemo } from "react";
+import React, {  useState, useMemo,useEffect } from "react";
 // import { useEffect } from "react";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import { Pagination, Button } from "@mui/material";
 // import axios from "axios";
 // import { Axios } from "../../api/api";
-// import { api } from "../../api/api";
+import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 import TransitionsModal from "./ProductAddmodal";
 
@@ -24,7 +24,7 @@ function ProductManegment() {
   //   `/products?_page=${activePage}&_limit=${limit}}`
   // );
   // console.log(data)
-  // const [data, setdata] = useState([]);
+  const [getedData, setGetedData] = useState([]);
 
 
   // useEffect(() => {
@@ -45,7 +45,17 @@ function ProductManegment() {
   const { data, loading, error } = useFetch(
     `/products?_page=${activePage}&_limit=${limit}}`
   );
+  useEffect(()=>{
 
+    setGetedData(data?.data)
+  },[data])
+
+  async function deleteItemHandeler(item){
+    console.log(item)
+   const response= await api.get(`/products/${item.id}`)
+   console.log(response)
+   const deleted=await api.delete(`/products/${item.id}`).then(()=>setGetedData(getedData.filter(i=>i.id!==item.id)))
+  }
 
   return (
     <Container sx={{ mt: "5%" }}>
@@ -68,7 +78,7 @@ function ProductManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.data.map((item) => (
+            {getedData?.map((item) => (
               <TableRow
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -86,7 +96,7 @@ function ProductManegment() {
                   <Button variant="contained" color="success">
                     ویرایش
                   </Button>
-                  <Button variant="outlined" color="error">
+                  <Button variant="outlined" color="error" onClick={()=>deleteItemHandeler(item)}>
                     حذف
                   </Button>
                 </TableCell>
