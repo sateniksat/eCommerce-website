@@ -21,6 +21,7 @@ import FormControl from "@mui/material/FormControl";
 // import { api } from "../../api/api";
 import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
+import NotSentOrder from "./NotSentOrder";
 
 
 function OrderManegment() {
@@ -121,9 +122,10 @@ function OrderManegment() {
                   {new Date(row.orderDate).toLocaleDateString("fa-IR")}
                 </TableCell>
                 <TableCell align="center">
-                  <Button variant="contained" color="success">
+                  {/* <Button variant="contained" color="success">
                     بررسی سفارش
-                  </Button>
+                  </Button> */}
+                  <NotSentOrder order={row}/>
                 </TableCell>
               </TableRow>
             ))}
