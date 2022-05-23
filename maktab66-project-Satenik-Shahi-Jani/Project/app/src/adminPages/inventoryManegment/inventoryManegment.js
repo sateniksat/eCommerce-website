@@ -29,6 +29,12 @@ import { useFetch } from "../../hooks/useFetch";
 //     editable: true,
 //   },
 //   {
+//     field: "name",
+//     headerName: "نام کالا",
+//     width: 150,
+//     editable: true,
+//   },
+//   {
 //     field: "price",
 //     headerName: "قیمت",
 //     width: 150,
