@@ -1,6 +1,6 @@
 import React from "react";
 import { useMemo,useState } from "react";
-import CostumerPageDrower from "../../layouts/CostumerPageDrower";
+// import CostumerPageDrower from "../../layouts/CostumerPageDrower";
 import { useFetch } from "../../hooks/useFetch";
 import Cards from "../shared/Cards";
 import { Container, CircularProgress, Box, CardMedia,Pagination } from "@mui/material";
@@ -50,16 +50,6 @@ function CategoryShop() {
           </Box>
         </Link>
       )}
-      {/* <Box
-      sx={{
-        my:"5%",
-        mx: "auto",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-    </Box> */}
       <Container
         sx={{
           mt: "5%",
@@ -111,4 +101,4 @@ function CategoryShop() {
   );
 }
 
-export default CostumerPageDrower(CategoryShop);
+export default CategoryShop;

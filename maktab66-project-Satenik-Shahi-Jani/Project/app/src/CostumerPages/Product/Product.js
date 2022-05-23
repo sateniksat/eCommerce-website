@@ -1,4 +1,4 @@
-import CostumerPageLayout from "../../layouts/CostumerPageLayout";
+// import CostumerPageLayout from "../../layouts/CostumerPageLayout";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -111,4 +111,4 @@ function Product() {
   );
 }
 
-export default CostumerPageLayout(Product);
+export default Product;

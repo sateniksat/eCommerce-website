@@ -4,7 +4,7 @@ import InventoryManegment from "../adminPages/inventoryManegment/InventoryManegm
 import ProtectedRout from "../adminPages/ProtectedRoute/ProtectedRoute";
 import Cart from "../costumerPages/Cart/Cart";
 // import CategoryShop from "../CostumerPages/Category/CategoryShop";
-import FailedOperation from "../costumerPages/FailedOperation/FailedOperation";
+// import FailedOperation from "../costumerPages/FailedOperation/FailedOperation";
 import AllCategories from "../costumerPages/Home/AllCategories";
 // import Welcome from "../CostumerPages/Home/Welcome";
 import Product from "../costumerPages/Product/Product";
@@ -16,27 +16,87 @@ import CategoryShop from "../costumerPages/Category/CategoryShop";
 import { Login } from "../adminPages/Login/Login";
 import OrderManegment from "../adminPages/orderManegment/OrderManegment";
 import ProductManegment from "../adminPages/productManegment/ProductManegment";
+import CostumerPageLayout from "../layouts/CostumerPageLayout";
+import AdminPageLayout from "../layouts/AdminPageLayout"
+import SimpleLayout from "../layouts/SimpleLayout";
 
 export default function AppRoute() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"/>
-        <Route index={true} element={<AllCategories />} />
-        <Route path="category/:categoryId" element={<CategoryShop />} />
-        <Route path="products/:productId" element={<Product />} />
-        <Route path="checkout" element={<Cart />}>
-          <Route path="purchaseform" element={<ShopForm />} />
+        <Route path="/" />
+        <Route
+          index={true}
+          element={
+            <CostumerPageLayout>
+              <AllCategories />
+            </CostumerPageLayout>
+          }
+        />
+        <Route
+          path="category/:categoryId"
+          element={
+            <CostumerPageLayout slider={true}>
+              <CategoryShop />
+            </CostumerPageLayout>
+          }
+        />
+        <Route
+          path="products/:productId"
+          element={
+            <CostumerPageLayout>
+              <Product />
+            </CostumerPageLayout>
+          }
+        />
+        <Route
+          path="checkout"
+          element={
+            <CostumerPageLayout>
+              <Cart />
+            </CostumerPageLayout>
+          }
+        >
+          <Route
+            path="purchaseform"
+            element={
+              <CostumerPageLayout>
+                <ShopForm />
+              </CostumerPageLayout>
+            }
+          />
         </Route>
-        <Route path={"shaparak"} element={<Shaparak />} />
-        <Route path={"login"} element={<Login />} />
-        <Route path="successfuloperation" element={<SuccessOperation />} />
-        <Route path="failedoperation" element={<FailedOperation />} />
+        <Route
+          path={"shaparak"}
+          element={
+            <CostumerPageLayout>
+              <Shaparak />
+            </CostumerPageLayout>
+          }
+        />
+        <Route
+          path={"login"}
+          element={
+            <SimpleLayout>
+              <Login />
+            </SimpleLayout>
+          }
+        />
+        <Route
+          path="successfuloperation"
+          element={
+            <CostumerPageLayout>
+              <SuccessOperation />
+            </CostumerPageLayout>
+          }
+        />
         <Route
           path="/admin-inventory"
           element={
             <ProtectedRout>
-              <InventoryManegment />
+              <AdminPageLayout>
+                <InventoryManegment />
+              </AdminPageLayout>
             </ProtectedRout>
           }
         />
@@ -44,7 +104,9 @@ export default function AppRoute() {
           path="/admin-order"
           element={
             <ProtectedRout>
-              <OrderManegment />
+              <AdminPageLayout>
+                <OrderManegment />
+              </AdminPageLayout>
             </ProtectedRout>
           }
         />
@@ -52,7 +114,9 @@ export default function AppRoute() {
           path="/admin-productmanage"
           element={
             <ProtectedRout>
-              <ProductManegment />
+              <AdminPageLayout>
+                <ProductManegment />
+              </AdminPageLayout>
             </ProtectedRout>
           }
         />

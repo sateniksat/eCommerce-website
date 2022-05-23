@@ -1,6 +1,6 @@
 import React, {useState,useMemo } from "react";
 // import { useEffect } from "react";
-import AdminPageLayout from "../../layouts/AdminPageLayout";
+// import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+// import { Button } from "@mui/material";
 // import axios from "axios";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -22,6 +22,7 @@ import FormControl from "@mui/material/FormControl";
 import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
 import NotSentOrder from "./NotSentOrder";
+import ModalPage from "../../components/withModal";
 
 
 function OrderManegment() {
@@ -41,7 +42,7 @@ function OrderManegment() {
   // }
 
   const { data, loading, error } = useFetch(
-    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
+    `orders?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
   );
 
 
@@ -71,6 +72,7 @@ function OrderManegment() {
 
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
+      <ModalPage/>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <div>سفارش ها </div>
         <FormControl>
@@ -155,4 +157,4 @@ function OrderManegment() {
   );
 }
 
-export default AdminPageLayout(OrderManegment);
+export default OrderManegment;

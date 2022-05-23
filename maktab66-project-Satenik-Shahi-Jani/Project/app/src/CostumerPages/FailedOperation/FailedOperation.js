@@ -1,10 +1,10 @@
-import React from 'react'
-import CostumerPageLayout from '../../layouts/CostumerPageLayout'
+// import React from 'react'
+// import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 
-function FailedOperation() {
-  return (
-    <div>FailedOperation</div>
-  )
-}
+// function FailedOperation() {
+//   return (
+//     <div>FailedOperation</div>
+//   )
+// }
 
-export default CostumerPageLayout(FailedOperation)
+// export default CostumerPageLayout(FailedOperation)

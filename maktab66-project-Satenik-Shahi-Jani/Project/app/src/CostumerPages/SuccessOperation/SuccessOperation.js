@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageLayout from '../../layouts/CostumerPageLayout'
+// import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 
 function SuccessOperation() {
   return (
@@ -7,4 +7,4 @@ function SuccessOperation() {
   )
 }
 
-export default CostumerPageLayout(SuccessOperation)
+export default SuccessOperation

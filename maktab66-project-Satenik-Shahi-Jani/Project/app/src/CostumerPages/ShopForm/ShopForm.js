@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageLayout from '../../layouts/CostumerPageLayout'
+// import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 
 export function ShopForm() {
   return (
@@ -7,4 +7,4 @@ export function ShopForm() {
   )
 }
 
-export default CostumerPageLayout(ShopForm) 
+export default ShopForm

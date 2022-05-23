@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageLayout from '../../layouts/CostumerPageLayout';
+// import CostumerPageLayout from '../../layouts/CostumerPageLayout';
 
 function Cart() {
   return (
@@ -7,4 +7,4 @@ function Cart() {
   )
 }
 
-export default CostumerPageLayout(Cart);
+export default Cart;

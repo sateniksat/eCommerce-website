@@ -1,5 +1,5 @@
 import React from 'react'
-import CostumerPageDrower from '../layouts/CostumerPageDrower'
+// import CostumerPageDrower from '../layouts/CostumerPageDrower'
 
 function Subcategory() {
   return (
@@ -7,4 +7,4 @@ function Subcategory() {
   )
 }
 
-export default CostumerPageDrower(Subcategory) ;
+export default Subcategory ;

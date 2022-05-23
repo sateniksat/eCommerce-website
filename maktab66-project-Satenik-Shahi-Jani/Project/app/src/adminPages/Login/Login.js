@@ -60,6 +60,9 @@ export function Login() {
         dispatch(addtoken(token));
         // serAuthorizationToken(token);
         // api.configuration({config:token})
+        api.configuration();
+        // console.log(api.configuration())
+        // console.log(api.configuration)
         // api.http.interceptors.request.use(token)
         navigate("/admin-productmanage")
       }catch(error){
