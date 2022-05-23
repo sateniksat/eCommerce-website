@@ -26,7 +26,7 @@ const saveToken = (tokenArg) => {
   try {
     const nextToken = JSON.stringify(tokenArg);
     // const nextToken = tokenArg;
-    console.log(tokenArg)
+    // console.log(tokenArg)
     localStorage.setItem("Token", nextToken);
   } catch (error) {
     console.log("error");

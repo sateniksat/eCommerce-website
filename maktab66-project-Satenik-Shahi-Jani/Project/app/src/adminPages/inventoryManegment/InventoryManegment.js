@@ -1,6 +1,6 @@
 import React, { useState ,useMemo} from "react";
 // import { useEffect } from "react";
-import AdminPageLayout from "../../layouts/AdminPageLayout";
+// import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -22,6 +22,12 @@ import { useFetch } from "../../hooks/useFetch";
 
 // const columns = [
 //   { field: "id", headerName: "ID", width: 90 },
+//   {
+//     field: "name",
+//     headerName: "نام کالا",
+//     width: 150,
+//     editable: true,
+//   },
 //   {
 //     field: "name",
 //     headerName: "نام کالا",
@@ -161,4 +167,4 @@ function InventoryManegment() {
   );
 }
 
-export default AdminPageLayout(InventoryManegment);
+export default InventoryManegment;

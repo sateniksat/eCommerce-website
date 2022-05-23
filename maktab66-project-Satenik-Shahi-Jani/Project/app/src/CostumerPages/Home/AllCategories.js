@@ -1,5 +1,5 @@
 import React from "react";
-import CostumerPageLayout from "../../layouts/CostumerPageLayout";
+// import CostumerPageLayout from "../../layouts/CostumerPageLayout";
 import { useFetch } from "../../hooks/useFetch";
 import { Container, CircularProgress, Box } from "@mui/material";
 import ListAll from "./ListAll"
@@ -31,4 +31,4 @@ function AllCategories() {
   );
 }
 
-export default CostumerPageLayout(AllCategories);
+export default AllCategories;

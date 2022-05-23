@@ -125,8 +125,8 @@ export default function DrawerComponent() {
         </DrawerHeader>
         <List>
           {data?.data.map((item) => (
-          <Link to={`/category/${item.id}`}>
-            <ListItem key={item.id} disablePadding sx={{ display: "block" }}>
+          <Link key={item.id} to={`/category/${item.id}`}>
+            <ListItem  disablePadding sx={{ display: "block" }}>
               <ListItemButton
                 sx={{
                   minHeight: 48,

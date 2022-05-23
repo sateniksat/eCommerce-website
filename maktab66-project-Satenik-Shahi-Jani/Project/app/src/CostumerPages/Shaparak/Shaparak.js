@@ -1,5 +1,5 @@
 import React from 'react'
-import SimpleLayout from '../../layouts/SimpleLayout';
+// import SimpleLayout from '../../layouts/SimpleLayout';
 
 export function Shaparak() {
   return (
@@ -7,6 +7,6 @@ export function Shaparak() {
   )
 }
 
-export default SimpleLayout(Shaparak);
+export default Shaparak
 
 
