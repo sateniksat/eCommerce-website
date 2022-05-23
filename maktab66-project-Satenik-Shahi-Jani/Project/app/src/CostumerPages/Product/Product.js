@@ -22,6 +22,7 @@ function Product() {
   const productNumber = params.productId;
 
   const { data, loading } = useFetch(`products?id=${productNumber}`);
+
   return (
     <Container
       sx={{
@@ -57,7 +58,8 @@ function Product() {
                     color="text.secondary"
                     component="div"
                   >
-                    {item.description}
+                    {/* {stringToHTML(item.description)} */}
+                    <div dangerouslySetInnerHTML={{__html:item.description}}/>
                   </Typography>
                 </CardContent>
                 <Box
