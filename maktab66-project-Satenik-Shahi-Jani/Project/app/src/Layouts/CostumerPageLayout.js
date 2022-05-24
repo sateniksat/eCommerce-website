@@ -1,6 +1,7 @@
 import React from "react";
 import CostumerNav from "../components/CostumerNav";
 import DrawerComponent from "../components/DrawerComponent";
+import Footer from "../components/Footer";
 
 // const CostumerPageLayout = (Component) => {
 //   return function CostumerPage(props) {
@@ -20,6 +21,7 @@ const CostumerPageLayout = (props) => {
         <CostumerNav />
         {props.slider ? < DrawerComponent/> : null}
         {props.children}
+        <Footer/>
       </>
     );
 

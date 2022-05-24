@@ -1,9 +1,13 @@
-import React from 'react'
+import React from "react";
+import ModalPage from "../../components/withModal";
 
-function DeliverdOrder() {
+function DeliverdOrder(props) {
   return (
-    <div>DeliverdOrder</div>
-  )
+    <>
+      <div>DeliverdOrder</div>
+      <button onClick={props.handleClose}>oooo</button>
+    </>
+  );
 }
 
-export default DeliverdOrder
+export default ModalPage(DeliverdOrder);

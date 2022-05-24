@@ -99,7 +99,7 @@ export default function CostumerNav() {
             />
             ورود
           </Search> */}
-          <Link to="/admin-inventory">
+          <Link to="/admin-productmanage">
             <Button color="inherit"> مدیریت</Button>
           </Link>
           <Link to="/checkout">

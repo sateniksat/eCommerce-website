@@ -17,6 +17,7 @@ import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 import TransitionsModal from "./ProductAddmodal";
 
+
 function ProductManegment() {
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
@@ -71,9 +72,9 @@ function ProductManegment() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">تصویر</TableCell>
-              <TableCell align="right">نام کالا</TableCell>
-              <TableCell align="right">دسته بندی</TableCell>
+              <TableCell align="left">تصویر</TableCell>
+              <TableCell align="left">نام کالا</TableCell>
+              <TableCell align="left">دسته بندی</TableCell>
               <TableCell align="center">تغییرات</TableCell>
             </TableRow>
           </TableHead>
@@ -83,15 +84,15 @@ function ProductManegment() {
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell sx={{ width: "20%" }} align="right">
+                <TableCell sx={{ width: "20%" }} align="left">
                   <img
                   alt="img"
                     width={"50%"}
                     src={`http://localhost:3002/files/${item.thumbnail}`}
                   />
                 </TableCell>
-                <TableCell align="right">{item.name}</TableCell>
-                <TableCell align="right">{item.categoryName}</TableCell>
+                <TableCell align="left">{item.name}</TableCell>
+                <TableCell align="left">{item.categoryName}</TableCell>
                 <TableCell align="center">
                   <Button variant="contained" color="success">
                     ویرایش

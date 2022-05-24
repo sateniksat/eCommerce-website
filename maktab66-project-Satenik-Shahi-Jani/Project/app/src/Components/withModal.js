@@ -15,66 +15,66 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80%",
+  // width: "80%",
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
-export default function ModalPage(props) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+export default function ModalPage(Component) {
+  return function WithModal(props) {
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-  return (
-    <div>
-      <Button variant="contained" onClick={handleOpen} color="success">
-        بررسی سفارش
-      </Button>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Box
-              dir="rtl"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                
-              }}
-            >
-              <Typography variant="h5" gutterBottom component="div">
-                h5. Heading
-              </Typography>
-
-              <IconButton
-                aria-label="close"
-                onClick={handleClose}
+    return (
+      <div>
+        <Button variant="contained" onClick={handleOpen} color="success">
+        {props.title}
+        </Button>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <Box sx={{...style,width:props.ModalWidth}}>
+              <Box
+                dir="rtl"
                 sx={{
-                  // position: "absolute",
-                  // left: 10,
-                  // top: 10,
-                  color: (theme) => theme.palette.grey[500],
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
-                <CloseIcon />
-              </IconButton>
+                <Typography variant="h5" gutterBottom component="div">
+                {props.title}
+                </Typography>
+
+                <IconButton
+                  aria-label="close"
+                  onClick={handleClose}
+                  sx={{
+                    color: (theme) => theme.palette.grey[500],
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+              <Divider />
+
+              <Component handleClose={handleClose} {...props}/>
             </Box>
-            <Divider />
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
-  );
+          </Fade>
+        </Modal>
+      </div>
+    );
+  };
 }

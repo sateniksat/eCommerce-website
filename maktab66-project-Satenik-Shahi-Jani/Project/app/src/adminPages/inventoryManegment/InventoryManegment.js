@@ -12,7 +12,8 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Button,Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
-
+// import { CacheProvider } from "@emotion/react";
+// import {cacheRtl} from "../../App";
 
 // import axios from "axios";
 // import { Axios } from "../../api/api";
@@ -95,20 +96,21 @@ function InventoryManegment() {
   );
 
   return (
-    <Container sx={{ mt: "5%" }} dir="rtl">
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+    <Container sx={{ mt: "5%" }} >
+       {/* <CacheProvider value={cacheRtl}> */}
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}  dir="rtl">
         <div>موجودی و قیمت ها </div>
         <Button variant="contained" color="success">
           ذخیره
         </Button>
       </Box>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper}  dir="rtl">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">نام کالا</TableCell>
-              <TableCell align="right"> قیمت</TableCell>
-              <TableCell align="right">موجودی</TableCell>
+              <TableCell align="left">نام کالا</TableCell>
+              <TableCell align="left"> قیمت</TableCell>
+              <TableCell align="left">موجودی</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -117,18 +119,18 @@ function InventoryManegment() {
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row" align="right">
+                <TableCell component="th" scope="row" align="left">
                   {item.name}
                 </TableCell>
-                <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right">{item.count}</TableCell>
+                <TableCell align="left">{item.price}</TableCell>
+                <TableCell align="left">{item.count}</TableCell>
                 
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-
+      {/* </CacheProvider> */}
       <Box
         sx={{
           my:"5%",
