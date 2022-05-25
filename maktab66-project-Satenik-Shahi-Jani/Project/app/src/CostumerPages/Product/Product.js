@@ -29,6 +29,7 @@ function Product() {
         mt: "5%",
         display: "flex",
         alignItems: "center",
+        minHeight: '95vh'
       }}
     >
       {loading ? (

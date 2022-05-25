@@ -1,4 +1,4 @@
-import React, { useState ,useMemo} from "react";
+import React, { useState, useMemo, useEffect } from "react";
 // import { useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
@@ -10,25 +10,17 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Button,Pagination } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
-// import { CacheProvider } from "@emotion/react";
-// import {cacheRtl} from "../../App";
-
 // import axios from "axios";
 // import { Axios } from "../../api/api";
 // import { api } from "../../api/api";
 
-// import { DataGrid } from "@mui/x-data-grid";
 
+
+
+// import { DataGrid } from "@mui/x-data-grid";
 // const columns = [
-//   { field: "id", headerName: "ID", width: 90 },
-//   {
-//     field: "name",
-//     headerName: "نام کالا",
-//     width: 150,
-//     editable: true,
-//   },
 //   {
 //     field: "name",
 //     headerName: "نام کالا",
@@ -37,43 +29,33 @@ import { useFetch } from "../../hooks/useFetch";
 //   },
 //   {
 //     field: "price",
-//     headerName: "قیمت",
+//     headerName: " قیمت",
 //     width: 150,
 //     editable: true,
 //   },
 //   {
 //     field: "count",
 //     headerName: "موجودی",
-//     // type: 'number',
-//     width: 150,
+//     type: "number",
+//     width: 110,
 //     editable: true,
 //   },
-  // {
-  //   field: 'fullName',
-  //   headerName: 'Full name',
-  //   description: 'This column has a value getter and is not sortable.',
-  //   sortable: false,
-  //   width: 160,
-  //   valueGetter: (params) =>
-  //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  // },
 // ];
 
-// const rows = [
-//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-//   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-//   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-//   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-// ];
+
+
+// {
+//   field: "fullName",
+//   headerName: "Full name",
+//   description: "This column has a value getter and is not sortable.",
+//   sortable: false,
+//   width: 160,
+//   valueGetter: (params) =>
+//     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+// },
+
 
 function InventoryManegment() {
-  // const [pageSize, setPageSize] = useState(5);
-
   // const [data, setdata] = useState([]);
 
   // useEffect(() => {
@@ -87,86 +69,147 @@ function InventoryManegment() {
   //     }
   //   })();
   // }, []);\\
+  // const [pageSize, setPageSize] = useState(10);
+  // const [newData, setNewData] = useState([]);
+  // const { data, loading, error } = useFetch(`/products`);
+  // const row = data?.data.map((item) => {
+  //   return {
+  //     name: item?.name,
+  //     price: item?.price,
+  //     count: item?.count,
+  //     id: item?.id,
+  //   };
+  // });
+  // const handleCommit=(params,event)=>{
+  //   event.stopPropagation()
+  //   console.log(params)
+  // const array=data.data.map(item=>{
+  //   if(item.id===e.id){
+  //     return{...item,[e.field]:e.value}
+  //   }else{
+  //     return{...item}
+  //   }
+  // })
+  // setNewData(array);
+  // console.log(newData)
+  // }
 
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
 
+  const [readInput,setReadInput]=useState(true)
+
   const { data, loading, error } = useFetch(
     `/products?_page=${activePage}&_limit=${limit}}`
   );
+  const handleInputClick=()=>{
+    console.log("hi")
+  }
+
+  const handleChange=()=>{
+    console.log("hi")
+  }
+
+
 
   return (
-    <Container sx={{ mt: "5%" }} >
-       {/* <CacheProvider value={cacheRtl}> */}
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}  dir="rtl">
-        <div>موجودی و قیمت ها </div>
-        <Button variant="contained" color="success">
-          ذخیره
-        </Button>
-      </Box>
-      <TableContainer component={Paper}  dir="rtl">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="left">نام کالا</TableCell>
-              <TableCell align="left"> قیمت</TableCell>
-              <TableCell align="left">موجودی</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.data.map((item) => (
-              <TableRow
-                key={item.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row" align="left">
-                  {item.name}
-                </TableCell>
-                <TableCell align="left">{item.price}</TableCell>
-                <TableCell align="left">{item.count}</TableCell>
-                
+    <>
+      <Container sx={{ mt: "5%", minHeight: "100vh" }}>
+        <Box 
+          sx={{ display: "flex", justifyContent: "space-between" }}
+          dir="rtl"
+        >
+          <div>موجودی و قیمت ها </div>
+          <Button variant="contained" color="success">
+            ذخیره
+          </Button>
+        </Box>
+        <TableContainer component={Paper} dir="rtl">
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="left">نام کالا</TableCell>
+                <TableCell align="left"> قیمت</TableCell>
+                <TableCell align="left">موجودی</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {/* </CacheProvider> */}
-      <Box
-        sx={{
-          my:"5%",
-          mx: "auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Pagination
-          sx={{ mx: "auto", alignItems: "center", width: "content" }}
-          variant="outlined"
-          color="secondary"
-          defaultPage={1}
-          page={activePage}
-          count={Math.ceil(data?.headers["x-total-count"]/ limit)}
-          onChange={(_, page) => setActivePage(page)}
-        />
-      </Box>
+            </TableHead>
+            <TableBody>
+              {data?.data.map((item) => (
+                <TableRow
+                  key={item.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" align="left">
+                    {item.name}
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      id={item.id}
+                      name="price"
+                      defaultValue={item.price}
+                      onClick={()=>handleInputClick()}
+                      onChange={(e)=>handleChange(e)}
+                      InputProps={{
+                        readOnly: readInput,
+                      }}
+                      variant="standard"
+                    />
+                  </TableCell>
+                  <TableCell align="left">
+                    <TextField
+                      id={item.id}
+                      name="count"
+                      defaultValue={item.count}
+                      onChange={(e)=>handleChange(e)}
+                      InputProps={{
+                        readOnly: readInput,
+                      }}
+                      variant="standard"
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      {/* <Box sx={{ width: "100%" }}>
+        <Box
+          sx={{
+            my: "5%",
+            mx: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Pagination
+            sx={{ mx: "auto", alignItems: "center", width: "content" }}
+            variant="outlined"
+            color="secondary"
+            defaultPage={1}
+            page={activePage}
+            count={Math.ceil(data?.headers["x-total-count"] / limit)}
+            onChange={(_, page) => setActivePage(page)}
+          />
+        </Box>
+      </Container>
+      {/* <Box dir="rtl" sx={{ height: "90vh", width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={row}
           columns={columns}
           pageSize={pageSize}
           onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
           rowsPerPageOptions={[5, 10, 20]}
-          pagination
-
-          {...data}
-          checkboxSelection
-          disableSelectionOnClick
+          // onCellFocusOut={handleCommit}
+          onCellEditStop={handleCommit}
         />
       </Box> */}
-    </Container>
+    </>
   );
 }
 
 export default InventoryManegment;
+
+{
+  /* */
+}

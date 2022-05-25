@@ -1,9 +1,9 @@
-import React from 'react'
+import * as React from 'react';
 
-function Table() {
+
+export default function BasicEditingGrid() {
   return (
-    <div>Table</div>
-  )
+   <></>
+  );
 }
 
-export default Table

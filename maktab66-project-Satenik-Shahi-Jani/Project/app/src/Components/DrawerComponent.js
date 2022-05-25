@@ -1,7 +1,7 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -71,7 +71,7 @@ const Drawer = styled(MuiDrawer, {
 export default function DrawerComponent() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("1");
+  const [alignment, setAlignment] = useState("1");
 
   const { data, loading } = useFetch("/category");
 
@@ -79,7 +79,15 @@ export default function DrawerComponent() {
   // console.log(searchParams.getAll())
   const splitedPath = location.pathname.split("/");
   const endPoint = splitedPath[splitedPath.length - 1];
-  console.log(endPoint);
+
+  useEffect(() => {
+
+    console.log(endPoint);
+    setAlignment(endPoint);
+    console.log(alignment);
+  }, [location]);
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,83 +98,87 @@ export default function DrawerComponent() {
   };
 
   return (
-    <Box sx={{ display: "flex", alignContent: "flex-end" }}>
+    <>
+       {/* sx={{ display: "flex", justifyContent: "flex-end" }} */}
       <CssBaseline />
       <Drawer
         variant="permanent"
         open={open}
-        sx={{ display: "flex", alignContent: "flex-end" }}
+        // sx={{zIndex:1,minHeight:"30vh"}}
+        // sx={{ display: "flex",flexDirection: "column", justifyContent: "flex-start" }}
       >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <IconButton onClick={handleDrawerClose}>
-                {" "}
-                <ChevronRightIcon />{" "}
-              </IconButton>
-            ) : (
-              <IconButton onClick={handleDrawerOpen}>
-                {" "}
-                <ChevronLeftIcon />{" "}
-              </IconButton>
-            )}
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            sx={{
-              marginRight: 0,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </DrawerHeader>
-        <List>
+
+        <List sx={{mt:"auto"}}>
           {data?.data.map((item) => (
-          <Link key={item.id} to={`/category/${item.id}`}>
-            <ListItem  disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
+            <Link key={item.id} to={`/category/${item.id}`}>
+              <ListItem disablePadding sx={{ display: "block" }}>
+                <ListItemButton
                   sx={{
-                    maxWidth: "10%",
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    alt="img"
-                   width={"10%"}
-                    image={`http://localhost:3002/files/${item.icon}`}
+                  <ListItemIcon
                     sx={{
-                      borderRadius: "30px",
+                      maxWidth: "10%",
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
                     }}
+                  >
+                    <CardMedia
+                      component="img"
+                      alt="img"
+                      width={"10%"}
+                      image={`http://localhost:3002/files/${item.icon}`}
+                      sx={{
+                        borderRadius: "30px",
+                        border:
+                          item.id === alignment ? "solid 2px #1976D2" : null,
+                      }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.name}
+                    sx={{ opacity: open ? 1 : 0 }}
+                    // sx={{ opacity:  1  }}
                   />
-                </ListItemIcon>
-                <ListItemText
-                  primary={item.name}
-                  sx={{ opacity: open ? 1 : 0 }}
-                  // sx={{ opacity:  1  }}
-                />
-              </ListItemButton>
-            </ListItem>
-        <Divider />
-        </Link>
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </Link>
+                  
           ))}
         </List>
+        <DrawerHeader>
+                    <IconButton onClick={handleDrawerClose}>
+                      {theme.direction === "rtl" ? (
+                        <IconButton onClick={handleDrawerClose}>
+                          <ChevronRightIcon />
+                        </IconButton>
+                      ) : (
+                        <IconButton onClick={handleDrawerOpen}>
+                          <ChevronLeftIcon />
+                        </IconButton>
+                      )}
+                    </IconButton>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={handleDrawerOpen}
+                      sx={{
+                        marginRight: 0,
+                        ...(open && { display: "none" }),
+                      }}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                  </DrawerHeader>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-      </Box>
-    </Box>
+      </Box> */}
+    </>
   );
 }
 

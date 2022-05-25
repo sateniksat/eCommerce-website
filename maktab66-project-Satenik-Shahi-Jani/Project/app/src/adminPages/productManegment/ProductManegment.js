@@ -1,4 +1,4 @@
-import React, {  useState, useMemo,useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 // import { useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
@@ -10,13 +10,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Pagination, Button } from "@mui/material";
+import { Pagination } from "@mui/material";
 // import axios from "axios";
 // import { Axios } from "../../api/api";
 import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
-import TransitionsModal from "./ProductAddmodal";
-
+import ProductAdd from "./ProductAdd";
+import ProductDelete from "./ProductDelete";
 
 function ProductManegment() {
   const limit = useMemo(() => 9, []);
@@ -26,7 +26,6 @@ function ProductManegment() {
   // );
   // console.log(data)
   const [getedData, setGetedData] = useState([]);
-
 
   // useEffect(() => {
   //   (async () => {
@@ -42,30 +41,30 @@ function ProductManegment() {
   //   })();
   // }, [activePage]);
 
+  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`);
+  useEffect(() => {
+    setGetedData(data?.data);
+  }, [data]);
 
-  const { data, loading, error } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`
-  );
-  useEffect(()=>{
-
-    setGetedData(data?.data)
-  },[data])
-
-  async function deleteItemHandeler(item){
-    console.log(item)
-   const response= await api.get(`/products/${item.id}`)
-   console.log(response)
-   const deleted=await api.delete(`/products/${item.id}`).then(()=>setGetedData(getedData.filter(i=>i.id!==item.id)))
+  async function deleteItemHandeler(item) {
+    console.log(item);
+    const response = await api.get(`/products/${item.id}`);
+    console.log(response);
+    const deleted = await api
+      .delete(`/products/${item.id}`)
+      .then(() => setGetedData(getedData.filter((i) => i.id !== item.id)));
   }
 
   return (
-    <Container sx={{ mt: "5%" }}>
+    <Container sx={{ mt: "5%", minHeight: "100vh" }}>
       <Box dir="rtl" sx={{ display: "flex", justifyContent: "space-between" }}>
         <div>کالا ها</div>
-        {/* <Button variant="contained" color="success">
-          افزودن کالا
-        </Button> */}
-        <TransitionsModal/>
+        <ProductAdd
+          title=" افزودن کالا"
+          buttonColor="success"
+          buttonVarient="contained"
+          ModalWidth={"50%"}
+        />
       </Box>
 
       <TableContainer component={Paper} dir="rtl">
@@ -86,7 +85,7 @@ function ProductManegment() {
               >
                 <TableCell sx={{ width: "20%" }} align="left">
                   <img
-                  alt="img"
+                    alt="img"
                     width={"50%"}
                     src={`http://localhost:3002/files/${item.thumbnail}`}
                   />
@@ -94,12 +93,22 @@ function ProductManegment() {
                 <TableCell align="left">{item.name}</TableCell>
                 <TableCell align="left">{item.categoryName}</TableCell>
                 <TableCell align="center">
-                  <Button variant="contained" color="success">
-                    ویرایش
-                  </Button>
-                  <Button variant="outlined" color="error" onClick={()=>deleteItemHandeler(item)}>
-                    حذف
-                  </Button>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <ProductAdd
+                      title="ویرایش"
+                      buttonColor="success"
+                      buttonVarient="contained"
+                      ModalWidth={"50%"}
+                      product={item}
+                    />
+                    <ProductDelete
+                      title="حذف"
+                      buttonColor="error"
+                      buttonVarient="outlined"
+                      ModalWidth={"50%"}
+                      deleteMethod={() => deleteItemHandeler(item)}
+                    />
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
@@ -108,7 +117,7 @@ function ProductManegment() {
       </TableContainer>
       <Box
         sx={{
-          my:"5%",
+          my: "5%",
           mx: "auto",
           display: "flex",
           flexDirection: "column",
@@ -121,7 +130,7 @@ function ProductManegment() {
           color="secondary"
           defaultPage={1}
           page={activePage}
-          count={Math.ceil(data?.headers["x-total-count"]/ limit)}
+          count={Math.ceil(data?.headers["x-total-count"] / limit)}
           onChange={(_, page) => setActivePage(page)}
         />
       </Box>

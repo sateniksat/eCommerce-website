@@ -21,9 +21,7 @@ import FormControl from "@mui/material/FormControl";
 // import { api } from "../../api/api";
 import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
-import NotSentOrder from "./NotSentOrder";
-import ModalPage from "../../components/withModal";
-import DeliverdOrder from "./DeliverdOrder";
+import Order from "./DeliverdOrder";
 
 function OrderManegment() {
   const [selectedValue, setSelectedValue] = useState("6");
@@ -39,7 +37,7 @@ function OrderManegment() {
   //   setFiltered(collection.filter((item,index)=> item.orderStatus===status && index<=endLimit && index>=startLimit))
   // }
 
-  const { data, loading, error } = useFetch(
+  const { data } = useFetch(
     `orders?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
   );
 
@@ -66,7 +64,7 @@ function OrderManegment() {
   // },[activePage])
 
   return (
-    <Container sx={{ mt: "5%" }}>
+    <Container sx={{ mt: "5%", minHeight: "100vh" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }} dir="rtl">
         <div>سفارش ها </div>
         <FormControl>
@@ -121,8 +119,14 @@ function OrderManegment() {
                   {/* <Button variant="contained" color="success">
                     بررسی سفارش
                   </Button> */}
-                  <NotSentOrder order={row} />
-                  <DeliverdOrder title=" بررسی سفارش" ModalWidth={"80%"} />
+
+                  <Order
+                    title=" بررسی سفارش"
+                    ModalWidth={"80%"}
+                    buttonColor="primary"
+                    buttonVarient="contained"
+                    order={row}
+                  />
                 </TableCell>
               </TableRow>
             ))}

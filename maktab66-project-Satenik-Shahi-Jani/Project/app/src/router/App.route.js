@@ -101,7 +101,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="/admin-order"
+          path="/admin-orders"
           element={
             <ProtectedRout>
               <AdminPageLayout>
@@ -111,7 +111,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="/admin-productmanage"
+          path="/admin-productmanagement"
           element={
             <ProtectedRout>
               <AdminPageLayout>

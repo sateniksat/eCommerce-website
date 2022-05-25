@@ -17,7 +17,7 @@ function CategoryShop() {
   const { data, loading } = useFetch(`products?_page=${activePage}&_limit=${limit}}&category=${categoryNumber}`);
 
   return (
-    <Container sx={{ mt: "5%" }} >
+    <Container sx={{ mt: "5%",minHeight: '95vh' }} >
       {categoryData.loading ? (
         <Box
           sx={{

@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import React from "react";
 import CostumerNav from "../components/CostumerNav";
 import DrawerComponent from "../components/DrawerComponent";
@@ -17,12 +18,12 @@ import Footer from "../components/Footer";
 const CostumerPageLayout = (props) => {
 
     return (
-      <>
-        <CostumerNav />
+      <Box sx={{ height: '100vh' }}>
+        <CostumerNav slider={props.slider}/>
         {props.slider ? < DrawerComponent/> : null}
         {props.children}
-        <Footer/>
-      </>
+        <Footer backgroundColor={"linear-gradient(#1976d2ca,#1976d2ca)"}/>
+      </Box>
     );
 
 };

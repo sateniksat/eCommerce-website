@@ -30,7 +30,7 @@ export default function ModalPage(Component) {
 
     return (
       <div>
-        <Button variant="contained" onClick={handleOpen} color="success">
+        <Button variant={props.buttonVarient} onClick={handleOpen} color={props.buttonColor} sx={{ml:2}}>
         {props.title}
         </Button>
         <Modal

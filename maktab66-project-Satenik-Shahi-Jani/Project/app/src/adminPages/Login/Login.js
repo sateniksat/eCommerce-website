@@ -18,16 +18,16 @@ import { Link, useNavigate } from "react-router-dom";
 // import { serAuthorizationToken } from "../../api/api";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../../redux/tokenslice";
-import {api} from "../../api/api"
+import { api } from "../../api/api";
 // import {Axios} from "../../api/api"
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // const theme = createTheme();
 
 export function Login() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
   const initialValues = {
     username: "",
@@ -39,10 +39,11 @@ export function Login() {
 
     if (!values.username) {
       errors.username = "لطفا فیلد نام کاربری را پر کنید.";
-    } else if(values.username.length < 5) {
-      errors.username = "نام کاربری کوتاه است -باید حداقل ۵ کاراکتر داشته باشد.";
+    } else if (values.username.length < 5) {
+      errors.username =
+        "نام کاربری کوتاه است -باید حداقل ۵ کاراکتر داشته باشد.";
     }
-    
+
     if (!values.password) {
       errors.password = "لطفا فیلد کلمه عبور را پر کنید.";
     } else if (values.password.length < 5) {
@@ -51,12 +52,14 @@ export function Login() {
     return errors;
   };
   const submitForm = (values) => {
-    (async()=>{
-      try{
-        const response=await api.post("/auth/login", values).then(res=>res.data);
-        const token=await response.token;
+    (async () => {
+      try {
+        const response = await api
+          .post("/auth/login", values)
+          .then((res) => res.data);
+        const token = await response.token;
         // console.log(response)
-        localStorage.setItem("token",token)
+        localStorage.setItem("token", token);
         dispatch(addtoken(token));
         // serAuthorizationToken(token);
         // api.configuration({config:token})
@@ -64,56 +67,71 @@ export function Login() {
         // console.log(api.configuration())
         // console.log(api.configuration)
         // api.http.interceptors.request.use(token)
-        navigate("/admin-productmanage")
-      }catch(error){
-        alert(`please try again ${error}`)
+        navigate("/admin-productmanage");
+      } catch (error) {
+        alert(`please try again ${error}`);
       }
-    })()
+    })();
   };
 
   return (
-    <Container dir="rtl" component="main"  sx={{width:"50%"}}>
-      <CssBaseline />
-      <Box
-      
-        sx={{
-          marginTop: 10,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+    <Box
+      sx={{
+        width: "100%",
+        background: " linear-gradient(to right, #007991, #78ffd6)",
+        p: 7,
+        height: "100vh",
+      }}
+    >
+      <Container
+        dir="rtl"
+        component="main"
+        sx={{ width: "50%", background: "white", borderRadius: "20px", p: 3 }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          ورود به صفحه ی مدیریت
-        </Typography>
-        <Formik
-        width="100%"
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={submitForm}
+        <CssBaseline />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          {(formik) => {
-            const {
-              // values,
-              handleChange,
-              handleSubmit,
-              // resetForm,
-              errors,
-              // touched,
-              // handleBlur,
-              // isValid,
-              // dirty,
-            } = formik;
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            ورود به صفحه ی مدیریت
+          </Typography>
+          <Formik
+            width="100%"
+            initialValues={initialValues}
+            validate={validate}
+            onSubmit={submitForm}
+          >
+            {(formik) => {
+              const {
+                // values,
+                handleChange,
+                handleSubmit,
+                // resetForm,
+                errors,
+                // touched,
+                // handleBlur,
+                // isValid,
+                // dirty,
+              } = formik;
 
-            return (
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 4 }} width="100%">
-                  
-                    <label>نام کاربری</label>
-                  
+              return (
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  sx={{ mt: 4 }}
+                  width="100%"
+                >
+                  <label>نام کاربری</label>
+
                   <TextField
+                    dir="ltr"
                     margin="normal"
                     required
                     fullWidth
@@ -126,11 +144,11 @@ export function Login() {
                   {errors.username && (
                     <Alert severity="error">{errors.username}</Alert>
                   )}
-                  
-                    <label>رمز عبور</label>
-                  
+
+                  <label>رمز عبور</label>
+
                   <TextField
-                    dir="rtl"
+                    dir="ltr"
                     margin="normal"
                     required
                     fullWidth
@@ -151,15 +169,18 @@ export function Login() {
                   >
                     ورود
                   </Button>
-                  <br/>
-                  <br/>
-                  <Link to="/"><Alert severity="info" >بازگشت به سایت</Alert></Link>
+                  <br />
+                  <br />
+                  <Link to="/">
+                    <Alert severity="info">بازگشت به سایت</Alert>
+                  </Link>
                 </Box>
-            );
-          }}
-        </Formik>
-      </Box>
-    </Container>
+              );
+            }}
+          </Formik>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 export default SimpleLayout(Login);

@@ -56,7 +56,7 @@ import { Link } from "react-router-dom";
 //   },
 // }));
 
-export default function CostumerNav() {
+export default function CostumerNav(props) {
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const handleOpenUserMenu = (event) => {
   //   setAnchorElUser(event.currentTarget);
@@ -65,11 +65,14 @@ export default function CostumerNav() {
   //   setAnchorElUser(null);
   // };
 
+
+  // sx={{zIndex:10}}
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
-      <AppBar position="static">
+      <AppBar position="static" >
         <Toolbar>
-          <Tooltip title="رفتن به صفحه اصلی">
+          {(props.slider) ? <Box width={"5%"}></Box>:<></>}
+          <Tooltip title="رفتن به صفحه اصلی" >
             <Link to="/" style={{ width: "5%" }}>
               <img
                 alt="logo"
@@ -99,7 +102,7 @@ export default function CostumerNav() {
             />
             ورود
           </Search> */}
-          <Link to="/admin-productmanage">
+          <Link to="/admin-productmanagement">
             <Button color="inherit"> مدیریت</Button>
           </Link>
           <Link to="/checkout">
