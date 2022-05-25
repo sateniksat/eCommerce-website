@@ -67,7 +67,7 @@ export function Login() {
         // console.log(api.configuration())
         // console.log(api.configuration)
         // api.http.interceptors.request.use(token)
-        navigate("/admin-productmanage");
+        navigate("/admin-productmanagement");
       } catch (error) {
         alert(`please try again ${error}`);
       }

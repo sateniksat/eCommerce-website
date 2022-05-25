@@ -12,115 +12,55 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Button, Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
+import InputActive from "./InputActive";
 // import axios from "axios";
 // import { Axios } from "../../api/api";
-// import { api } from "../../api/api";
-
-
-
-
-// import { DataGrid } from "@mui/x-data-grid";
-// const columns = [
-//   {
-//     field: "name",
-//     headerName: "نام کالا",
-//     width: 150,
-//     editable: true,
-//   },
-//   {
-//     field: "price",
-//     headerName: " قیمت",
-//     width: 150,
-//     editable: true,
-//   },
-//   {
-//     field: "count",
-//     headerName: "موجودی",
-//     type: "number",
-//     width: 110,
-//     editable: true,
-//   },
-// ];
-
-
-
-// {
-//   field: "fullName",
-//   headerName: "Full name",
-//   description: "This column has a value getter and is not sortable.",
-//   sortable: false,
-//   width: 160,
-//   valueGetter: (params) =>
-//     `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-// },
-
+import { api } from "../../api/api";
 
 function InventoryManegment() {
-  // const [data, setdata] = useState([]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await api.get("/products").then((res) => res.data);
-  //       setdata(response);
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);\\
-  // const [pageSize, setPageSize] = useState(10);
-  // const [newData, setNewData] = useState([]);
-  // const { data, loading, error } = useFetch(`/products`);
-  // const row = data?.data.map((item) => {
-  //   return {
-  //     name: item?.name,
-  //     price: item?.price,
-  //     count: item?.count,
-  //     id: item?.id,
-  //   };
-  // });
-  // const handleCommit=(params,event)=>{
-  //   event.stopPropagation()
-  //   console.log(params)
-  // const array=data.data.map(item=>{
-  //   if(item.id===e.id){
-  //     return{...item,[e.field]:e.value}
-  //   }else{
-  //     return{...item}
-  //   }
-  // })
-  // setNewData(array);
-  // console.log(newData)
-  // }
-
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
-
-  const [readInput,setReadInput]=useState(true)
+  const [changes, setchanges] = useState([]);
 
   const { data, loading, error } = useFetch(
     `/products?_page=${activePage}&_limit=${limit}}`
   );
-  const handleInputClick=()=>{
-    console.log("hi")
-  }
+  useEffect(() => {
+    setchanges(data?.data);
+  }, [data]);
+  const handleChange = (e) => {
+    // console.log(data)
+    console.log(e.target.id);
+    const newchanges = changes?.map((row) => {
+      if (row.id === +e.target.id) {
+        return { ...row, [e.target.name]: e.target.value };
+      } else {
+        return { ...row };
+      }
+    });
+    console.log(newchanges);
+    setchanges(newchanges);
+  };
 
-  const handleChange=()=>{
-    console.log("hi")
-  }
-
-
-
+  const handleSave = () => {
+    changes.map((item) => {
+      console.log(item)
+      api
+        .patch(`/products/${item.id}`, item, {
+          headers: { "Content-Type": "application/json" ,token:localStorage.getItem("token")},
+        })
+        .then((res) => console.log(res));
+    });
+  };
   return (
     <>
       <Container sx={{ mt: "5%", minHeight: "100vh" }}>
-        <Box 
+        <Box
           sx={{ display: "flex", justifyContent: "space-between" }}
           dir="rtl"
         >
           <div>موجودی و قیمت ها </div>
-          <Button variant="contained" color="success">
+          <Button variant="contained" color="success" onClick={handleSave}>
             ذخیره
           </Button>
         </Box>
@@ -143,28 +83,19 @@ function InventoryManegment() {
                     {item.name}
                   </TableCell>
                   <TableCell align="left">
-                    <TextField
-                      id={item.id}
+                    <InputActive
+                      item={item}
                       name="price"
-                      defaultValue={item.price}
-                      onClick={()=>handleInputClick()}
-                      onChange={(e)=>handleChange(e)}
-                      InputProps={{
-                        readOnly: readInput,
-                      }}
-                      variant="standard"
+                      field={item.price}
+                      handleChange={handleChange}
                     />
                   </TableCell>
                   <TableCell align="left">
-                    <TextField
-                      id={item.id}
+                    <InputActive
+                      item={item}
                       name="count"
-                      defaultValue={item.count}
-                      onChange={(e)=>handleChange(e)}
-                      InputProps={{
-                        readOnly: readInput,
-                      }}
-                      variant="standard"
+                      field={item.count}
+                      handleChange={handleChange}
                     />
                   </TableCell>
                 </TableRow>
@@ -186,6 +117,7 @@ function InventoryManegment() {
             sx={{ mx: "auto", alignItems: "center", width: "content" }}
             variant="outlined"
             color="secondary"
+            // onClick={()=>alert("hi")}
             defaultPage={1}
             page={activePage}
             count={Math.ceil(data?.headers["x-total-count"] / limit)}
@@ -193,23 +125,8 @@ function InventoryManegment() {
           />
         </Box>
       </Container>
-      {/* <Box dir="rtl" sx={{ height: "90vh", width: "100%" }}>
-        <DataGrid
-          rows={row}
-          columns={columns}
-          pageSize={pageSize}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          rowsPerPageOptions={[5, 10, 20]}
-          // onCellFocusOut={handleCommit}
-          onCellEditStop={handleCommit}
-        />
-      </Box> */}
     </>
   );
 }
 
 export default InventoryManegment;
-
-{
-  /* */
-}
