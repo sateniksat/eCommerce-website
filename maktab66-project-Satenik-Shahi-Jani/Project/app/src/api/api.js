@@ -18,7 +18,7 @@ class API {
   constructor() {
     this.http = axios.create({
       baseURL: "http://localhost:3002",
-      timeout: 5000,
+      // timeout: 5000,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",

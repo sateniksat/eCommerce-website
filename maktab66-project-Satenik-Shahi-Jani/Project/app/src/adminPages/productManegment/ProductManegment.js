@@ -26,7 +26,10 @@ function ProductManegment() {
   // );
   // console.log(data)
   const [getedData, setGetedData] = useState([]);
-
+//   const [refresh,setrefresh]=useState(true)
+// const refreshTry=()=>{
+//   setrefresh(!refresh);
+// }
   // useEffect(() => {
   //   (async () => {
   //     try {
@@ -50,9 +53,11 @@ function ProductManegment() {
     console.log(item);
     const response = await api.get(`/products/${item.id}`);
     console.log(response);
-    const deleted = await api
-      .delete(`/products/${item.id}`)
-      .then(() => setGetedData(getedData.filter((i) => i.id !== item.id)));
+    const deleted = await api.delete(`/products/${item.id}`).then((res) => {
+      if (res.status === 200) {
+        setGetedData(getedData.filter((i) => i.id !== item.id));
+      }
+    });
   }
 
   return (
@@ -63,7 +68,8 @@ function ProductManegment() {
           title=" افزودن کالا"
           buttonColor="success"
           buttonVarient="contained"
-          ModalWidth={"50%"}
+          ModalWidth={"65%"}
+          // refreshTry={refreshTry()}
         />
       </Box>
 
@@ -100,6 +106,7 @@ function ProductManegment() {
                       buttonVarient="contained"
                       ModalWidth={"50%"}
                       product={item}
+                      // refreshTry={refreshTry()}
                     />
                     <ProductDelete
                       title="حذف"
@@ -130,7 +137,7 @@ function ProductManegment() {
           color="secondary"
           defaultPage={1}
           page={activePage}
-          count={Math.ceil(data?.headers["x-total-count"] / limit)}
+          count={Math.ceil(+data?.headers["x-total-count"] / limit)}
           onChange={(_, page) => setActivePage(page)}
         />
       </Box>

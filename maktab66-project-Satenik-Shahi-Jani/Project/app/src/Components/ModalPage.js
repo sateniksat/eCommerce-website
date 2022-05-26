@@ -19,6 +19,7 @@ const style = {
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
+  overflow:"scroll",
   p: 4,
 };
 
@@ -29,7 +30,7 @@ export default function ModalPage(Component) {
     const handleClose = () => setOpen(false);
 
     return (
-      <div>
+      <Box>
         <Button variant={props.buttonVarient} onClick={handleOpen} color={props.buttonColor} sx={{ml:2}}>
         {props.title}
         </Button>
@@ -43,18 +44,20 @@ export default function ModalPage(Component) {
           BackdropProps={{
             timeout: 500,
           }}
+          // sx={{overflow:"scroll",}}
         >
           <Fade in={open}>
-            <Box sx={{...style,width:props.ModalWidth}}>
+            <Box sx={{...style,width:props.ModalWidth,}}>
               <Box
                 dir="rtl"
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
+               
                 }}
               >
-                <Typography variant="h5" gutterBottom component="div">
+                <Typography variant="h5" gutterBottom component="Box">
                 {props.title}
                 </Typography>
 
@@ -69,12 +72,13 @@ export default function ModalPage(Component) {
                 </IconButton>
               </Box>
               <Divider />
-
+              <Box sx={{overflow:"auto",maxHeight:"70vh"}}>
               <Component handleClose={handleClose} {...props}/>
+              </Box>
             </Box>
           </Fade>
         </Modal>
-      </div>
+      </Box>
     );
   };
 }
