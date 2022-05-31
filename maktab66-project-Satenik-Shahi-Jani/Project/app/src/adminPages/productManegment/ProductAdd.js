@@ -84,7 +84,7 @@ export function ProductAdd(props) {
   };
   const handleSendNewData = (e) => {
     e.preventDefault();
-    if (
+    if(
       product.description === "" ||
       product.name === "" ||
       product.price === "" ||
@@ -93,22 +93,15 @@ export function ProductAdd(props) {
       product.category === "" ||
       product.images === "" ||
       product.thymbnail === ""
-    ) {
+    ){
       alert("fill all feilds");
-    } else {
-      setProduct({
-        ...product,
-        ["createdAt"]: Date.now(),
-      });
-      data?.data.map((item) => {
-        // console.log(item.id)
-        // console.log(product.category)
+    }else{
+      setProduct({ ...product, ["createdAt"]: Date.now() });
+      data.data.map((item) => {
+        console.log(item.id);
+        console.log(Number(product.category));
         if (item.id === Number(product.category)) {
-
-          setProduct({
-            ...product,
-            ["categoryName"]: item.name,
-          });
+          setProduct({ ...product, ["categoryName"]: item.name });
         }
       });
       const tempRequest = api.post("/products", product);
@@ -118,17 +111,20 @@ export function ProductAdd(props) {
     }
   };
 
-
-
-  const handleEditData=(e)=>{
+  const handleEditData = (e) => {
     e.preventDefault();
     api
-    .patch(`/products/${props.poduct?.id}`, product, {
-      headers: { "Content-Type": "application/json" ,token:localStorage.getItem("token")},
-    })
-    .then((res) => console.log(res));
+      .patch(`/products/${props.product?.id}`, product, {
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => console.log(res));
     props.handleClose();
-  }
+    props.setActivePage(props.activePage);
+    // props.refreshing();
+  };
   return (
     <form>
       <Box dir="rtl" sx={{ mt: "2%" }}>
@@ -139,7 +135,7 @@ export function ProductAdd(props) {
             justifyContent: "space-between",
             alignContent: "center",
             width: "100%",
-            overflow: "auto",
+            // overflow: "auto",
           }}
         >
           <Box
@@ -262,7 +258,12 @@ export function ProductAdd(props) {
           }}
         >
           {props.product ? (
-            <Button variant="contained" color="success" onClick={(e)=>handleEditData(e)} sx={{ width: "50%" }}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={(e) => handleEditData(e)}
+              sx={{ width: "50%" }}
+            >
               ویرایش
             </Button>
           ) : (
@@ -271,7 +272,7 @@ export function ProductAdd(props) {
               type="submit"
               color="success"
               sx={{ width: "50%" }}
-              onClick={(e)=>handleSendNewData(e)}
+              onClick={(e) => handleSendNewData(e)}
             >
               افزودن
             </Button>

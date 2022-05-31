@@ -1,5 +1,6 @@
 // import CostumerPageLayout from "../../layouts/CostumerPageLayout";
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -18,24 +19,39 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 function Product() {
+  const [input, setInput] = useState("0");
+  const [error, setError] = useState(false);
   const params = useParams();
   const productNumber = params.productId;
 
   const { data, loading } = useFetch(`products?id=${productNumber}`);
 
+  const handlechange = (e) => {
+    console.log(e.target.value)
+    console.log(data.data[0].count)
+    if (+(e.target.value) > +(data.data[0].count)) {
+      setError(true);
+      setInput(data?.data[0].count);
+    } else {
+      setError(false);
+
+      setInput(e.target.value);
+    }
+  };
   return (
     <Container
       sx={{
+        width: "100%",
         mt: "5%",
         display: "flex",
         alignItems: "center",
-        minHeight: '95vh'
+        minHeight: "95vh",
       }}
     >
       {loading ? (
         <Box
           sx={{
-            width: 1,
+            width: "100%",
             height: "100vh",
             mx: "auto",
             display: "flex",
@@ -48,7 +64,7 @@ function Product() {
       ) : (
         <>
           {data.data.map((item) => (
-            <Card key={item.id} sx={{ display: "flex", height: "95%" }}>
+            <Card key={item.id} sx={{ width: "100%", display: "flex" }}>
               <Box dir="rtl" sx={{ display: "flex", flexDirection: "column" }}>
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Typography component="div" variant="h5">
@@ -60,7 +76,9 @@ function Product() {
                     component="div"
                   >
                     {/* {stringToHTML(item.description)} */}
-                    <div dangerouslySetInnerHTML={{__html:item.description}}/>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
                   </Typography>
                 </CardContent>
                 <Box
@@ -85,7 +103,10 @@ function Product() {
                   </Button>
                   <TextField
                     id="outlined-number"
+                    onChange={(e) => handlechange(e)}
                     type="number"
+                    value={input}
+                    defaultValue={input}
                     sx={{
                       width: "10%",
                       p: "0",
@@ -96,6 +117,7 @@ function Product() {
                     color="primary"
                     focused
                   />
+                  {error && <Box>erorr</Box>}
                 </Box>
               </Box>
               <CardMedia

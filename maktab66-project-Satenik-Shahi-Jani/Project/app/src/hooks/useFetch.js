@@ -5,7 +5,7 @@ const delay = () => {
   return new Promise((resolve) => setTimeout(() => resolve("delay"), 3000));
 };
 
-const useFetch = (url, config = {}) => {
+const useFetch = (url, config = {},refresh) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,7 @@ const useFetch = (url, config = {}) => {
         setLoading(false);
       }
     })();
-  }, [url]);
+  }, [url,refresh]);
 
   return { data, loading, error };
 };

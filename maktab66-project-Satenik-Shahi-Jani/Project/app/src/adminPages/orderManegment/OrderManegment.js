@@ -38,7 +38,7 @@ function OrderManegment() {
   // }
 
   const { data } = useFetch(
-    `orders?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
+    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
   );
 
   const handleChange = (event) => {

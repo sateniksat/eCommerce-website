@@ -26,6 +26,10 @@ function ProductManegment() {
   // );
   // console.log(data)
   const [getedData, setGetedData] = useState([]);
+  const [refresh,setrefresh]= useState(true);
+  const refreshing=()=>{
+    setrefresh(!refresh)
+  }
 //   const [refresh,setrefresh]=useState(true)
 // const refreshTry=()=>{
 //   setrefresh(!refresh);
@@ -44,7 +48,7 @@ function ProductManegment() {
   //   })();
   // }, [activePage]);
 
-  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`);
+  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`,{},refresh);
   useEffect(() => {
     setGetedData(data?.data);
   }, [data]);
@@ -104,9 +108,12 @@ function ProductManegment() {
                       title="ویرایش"
                       buttonColor="success"
                       buttonVarient="contained"
-                      ModalWidth={"50%"}
+                      ModalWidth={"65%"}
                       product={item}
+                      setActivePage={setActivePage}
+                      activePage={activePage}
                       // refreshTry={refreshTry()}
+                      // refreshing={refreshing()}
                     />
                     <ProductDelete
                       title="حذف"

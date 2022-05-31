@@ -21,9 +21,14 @@ function InventoryManegment() {
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
   const [changes, setchanges] = useState([]);
+  const [changedID,setChangeID]=useState([]);
+  const [refresh,setrefresh]= useState(true);
+  const refreshing=()=>{
+    setrefresh(!refresh)
+  }
 
   const { data, loading, error } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`
+    `/products?_page=${activePage}&_limit=${limit}}`,{} ,refresh
   );
   useEffect(() => {
     setchanges(data?.data);
@@ -33,6 +38,9 @@ function InventoryManegment() {
     console.log(e.target.id);
     const newchanges = changes?.map((row) => {
       if (row.id === +e.target.id) {
+        if(!changedID.includes(row.id)){
+          setChangeID((prevState)=>([...prevState , row.id]))
+        }
         return { ...row, [e.target.name]: e.target.value };
       } else {
         return { ...row };
@@ -43,14 +51,16 @@ function InventoryManegment() {
   };
 
   const handleSave = () => {
-    changes.map((item) => {
-      console.log(item)
+    changedID.map((item) => {
+      const found=changes.find(product=>product.id===item)
+      console.log(found)
       api
-        .patch(`/products/${item.id}`, item, {
+        .patch(`/products/${item}`, found, {
           headers: { "Content-Type": "application/json" ,token:localStorage.getItem("token")},
         })
         .then((res) => console.log(res));
     });
+    // refreshing();
   };
   return (
     <>

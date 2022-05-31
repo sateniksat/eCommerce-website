@@ -72,7 +72,8 @@ export default function ModalPage(Component) {
                 </IconButton>
               </Box>
               <Divider />
-              <Box sx={{overflow:"auto",maxHeight:"70vh"}}>
+              {/* overflow:"auto" */}
+              <Box sx={{maxHeight:"70vh"}}>
               <Component handleClose={handleClose} {...props}/>
               </Box>
             </Box>
