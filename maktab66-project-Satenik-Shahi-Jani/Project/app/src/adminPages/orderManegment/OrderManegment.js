@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo,useEffect } from "react";
 // import { useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
@@ -23,6 +23,8 @@ import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
 import Order from "./DeliverdOrder";
 
+
+
 function OrderManegment() {
   const [selectedValue, setSelectedValue] = useState("6");
   // const [filtered,setFiltered]=useState([])
@@ -30,7 +32,7 @@ function OrderManegment() {
 
   const limit = useMemo(() => 5, []);
   const [activePage, setActivePage] = useState(1);
-
+  const [changes, setchanges] = useState([]);
   // const filtering=(collection,status)=>{
   //   const endLimit=activePage*limit-1;
   //   const startLimit=(activePage-1)*limit;
@@ -40,7 +42,14 @@ function OrderManegment() {
   const { data } = useFetch(
     `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
   );
-
+  const fillterData=(id)=>{
+    const filltered=changes.filter(item=>item.id!==id)
+    setchanges(filltered);
+    // console.log("hiiii")
+  }
+  useEffect(() => {
+    setchanges(data?.data);
+  }, [data]);
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
     //  filtering(data, Number(event.target.name))
@@ -103,7 +112,7 @@ function OrderManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.data.map((row) => (
+            {changes?.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -126,6 +135,7 @@ function OrderManegment() {
                     buttonColor="primary"
                     buttonVarient="contained"
                     order={row}
+                    fillterData={fillterData}
                   />
                 </TableCell>
               </TableRow>

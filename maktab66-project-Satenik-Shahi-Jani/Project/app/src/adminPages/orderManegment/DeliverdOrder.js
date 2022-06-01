@@ -11,10 +11,40 @@ import {
   Paper,
   TableBody,
 } from "@mui/material";
-// import { api } from "../../api/api";
+import { api } from "../../api/api";
 import Typography from "@mui/material/Typography";
 
 function DeliverdOrder(props) {
+  const handleOreder = (item) => {
+    // console.log(item.id);
+    const timeNow = Date.now();
+    // console.log(timeNow);
+    const newObj = {
+      deliveredAt: timeNow,
+      orderStatus: 6,
+    };
+    // console.log(newObj);
+    let status;
+    (async () => {
+      const response = await api
+        .patch(`/orderlist/${item.id}`, newObj, {
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          // console.log(res);
+          status = res.status;
+          // console.log(status);
+        });
+        if (status === 200) {
+          props.fillterData(item.id);
+        }
+    })();
+    props.handleClose();
+  };
+
   return (
     <Box
       sx={{ display: "flex", flexDirection: "column", p: 4, my: 3 }}
@@ -151,8 +181,8 @@ function DeliverdOrder(props) {
       ) : (
         <Button
           variant="contained"
-          onClick={props.handleClose}
-          sx={{ width: "40%", mx: "auto", my: 3 }}
+          onClick={() => handleOreder(props.order)}
+          sx={{ width: "40%", mx: "auto", mt: 2 }}
           color="success"
         >
           تحویل سفارش
@@ -161,7 +191,7 @@ function DeliverdOrder(props) {
       <Button
         variant="contained"
         onClick={props.handleClose}
-        sx={{ width: "40%", mx: "auto", my: 3 }}
+        sx={{ width: "40%", mx: "auto", my: 2 }}
         color="secondary"
       >
         بستن

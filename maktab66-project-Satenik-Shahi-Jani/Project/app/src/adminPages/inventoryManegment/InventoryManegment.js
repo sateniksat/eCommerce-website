@@ -27,7 +27,7 @@ function InventoryManegment() {
     setrefresh(!refresh)
   }
 
-  const { data, loading, error } = useFetch(
+  const { data } = useFetch(
     `/products?_page=${activePage}&_limit=${limit}}`,{} ,refresh
   );
   useEffect(() => {
