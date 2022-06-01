@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import tokenReducer from "./tokenslice";
 const loadPreLoadState = () => {
   try {
-    const serializedstate = localStorage.getItem("Token");
+    const serializedstate = localStorage.getItem("Token"); 
+    console.log(serializedstate)
     if (serializedstate) {
         // const getToken=JSON.parse(serializedstate)
         // return getToken.token;

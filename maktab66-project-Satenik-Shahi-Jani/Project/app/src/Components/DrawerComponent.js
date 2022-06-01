@@ -57,6 +57,7 @@ const Drawer = styled(MuiDrawer, {
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
+  
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),

@@ -9,7 +9,7 @@ import AllCategories from "../costumerPages/Home/AllCategories";
 // import Welcome from "../CostumerPages/Home/Welcome";
 import Product from "../costumerPages/Product/Product";
 import ShopForm from "../costumerPages/ShopForm/ShopForm";
-import Shaparak from "../costumerPages/Shaparak/Shaparak";
+// import Shaparak from "../costumerPages/Shaparak/Shaparak";
 import SuccessOperation from "../costumerPages/SuccessOperation/SuccessOperation";
 import NotFound from "../notFound/NotFound";
 import CategoryShop from "../costumerPages/Category/CategoryShop";
@@ -77,14 +77,6 @@ export default function AppRoute() {
           />
         </Route>
         <Route
-          path={"shaparak"}
-          element={
-            <CostumerPageLayout>
-              <Shaparak />
-            </CostumerPageLayout>
-          }
-        />
-        <Route
           path={"login"}
           element={
             <SimpleLayout>
@@ -93,7 +85,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="successfuloperation"
+          path="operation/:operationID"
           element={
             <CostumerPageLayout>
               <SuccessOperation />

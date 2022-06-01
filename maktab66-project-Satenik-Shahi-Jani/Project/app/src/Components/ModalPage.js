@@ -19,7 +19,7 @@ const style = {
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
-  overflow:"scroll",
+  overflow: "auto",
   p: 4,
 };
 
@@ -31,8 +31,13 @@ export default function ModalPage(Component) {
 
     return (
       <Box>
-        <Button variant={props.buttonVarient} onClick={handleOpen} color={props.buttonColor} sx={{ml:2}}>
-        {props.title}
+        <Button
+          variant={props.buttonVarient}
+          onClick={handleOpen}
+          color={props.buttonColor}
+          sx={{ ml: 2 }}
+        >
+          {props.title}
         </Button>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -47,20 +52,19 @@ export default function ModalPage(Component) {
           // sx={{overflow:"scroll",}}
         >
           <Fade in={open}>
-            <Box sx={{...style,width:props.ModalWidth,}}>
+            <Box sx={{ ...style, width: props.ModalWidth }}>
               <Box
                 dir="rtl"
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-               
                 }}
               >
-                <Typography variant="h5" gutterBottom component="Box">
+                {/* <Typography variant="h5" gutterBottom component="Box">
                 {props.title}
-                </Typography>
-
+                </Typography> */}
+                <h2> {props.title}</h2>
                 <IconButton
                   aria-label="close"
                   onClick={handleClose}
@@ -71,10 +75,8 @@ export default function ModalPage(Component) {
                   <CloseIcon />
                 </IconButton>
               </Box>
-              <Divider />
-              {/* overflow:"auto" */}
-              <Box sx={{maxHeight:"70vh"}}>
-              <Component handleClose={handleClose} {...props}/>
+              <Box sx={{ maxHeight: "70vh" }}>
+                <Component handleClose={handleClose} {...props} />
               </Box>
             </Box>
           </Fade>
