@@ -113,14 +113,21 @@ export function ProductAdd(props) {
 
   const handleEditData = (e) => {
     e.preventDefault();
-    api
+    (async () => {
+      const response = await api
       .patch(`/products/${props.product?.id}`, product, {
         headers: {
           "Content-Type": "application/json",
           token: localStorage.getItem("token"),
         },
       })
-      .then((res) => console.log(res));
+      .then((res) => res);
+      console.log(response)
+      if(response.status===200){
+        props.handleProductEdit(response.data)
+        console.log("hellooo")
+      }
+    })()
     props.handleClose();
     props.setActivePage(props.activePage);
     // props.refreshing();

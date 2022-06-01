@@ -25,15 +25,15 @@ function ProductManegment() {
   //   `/products?_page=${activePage}&_limit=${limit}}`
   // );
   // console.log(data)
-  const [getedData, setGetedData] = useState([]);
-  const [refresh,setrefresh]= useState(true);
-  const refreshing=()=>{
-    setrefresh(!refresh)
-  }
-//   const [refresh,setrefresh]=useState(true)
-// const refreshTry=()=>{
-//   setrefresh(!refresh);
-// }
+  const [getData, setGetData] = useState([]);
+  const [refresh, setrefresh] = useState(true);
+  const refreshing = () => {
+    setrefresh(!refresh);
+  };
+  //   const [refresh,setrefresh]=useState(true)
+  // const refreshTry=()=>{
+  //   setrefresh(!refresh);
+  // }
   // useEffect(() => {
   //   (async () => {
   //     try {
@@ -48,9 +48,13 @@ function ProductManegment() {
   //   })();
   // }, [activePage]);
 
-  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`,{},refresh);
+  const { data } = useFetch(
+    `/products?_page=${activePage}&_limit=${limit}}`,
+    {},
+    refresh
+  );
   useEffect(() => {
-    setGetedData(data?.data);
+    setGetData(data?.data);
   }, [data]);
 
   async function deleteItemHandeler(item) {
@@ -59,11 +63,21 @@ function ProductManegment() {
     console.log(response);
     const deleted = await api.delete(`/products/${item.id}`).then((res) => {
       if (res.status === 200) {
-        setGetedData(getedData.filter((i) => i.id !== item.id));
+        setGetData(getData.filter((i) => i.id !== item.id));
       }
     });
   }
-
+  const handleProductEdit = (responseData) => {
+    const filterData = getData.map((item) => {
+      if (item.id === responseData.id) {
+        return responseData;
+      } else {
+        return item;
+      }
+    });
+    setGetData(filterData);
+    console.log("hiii");
+  };
   return (
     <Container sx={{ mt: "5%", minHeight: "100vh" }}>
       <Box dir="rtl" sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -88,7 +102,7 @@ function ProductManegment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {getedData?.map((item) => (
+            {getData?.map((item) => (
               <TableRow
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -112,6 +126,7 @@ function ProductManegment() {
                       product={item}
                       setActivePage={setActivePage}
                       activePage={activePage}
+                      handleProductEdit={handleProductEdit}
                       // refreshTry={refreshTry()}
                       // refreshing={refreshing()}
                     />

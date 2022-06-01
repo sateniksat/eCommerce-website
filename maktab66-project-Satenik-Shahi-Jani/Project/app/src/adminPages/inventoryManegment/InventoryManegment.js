@@ -33,15 +33,15 @@ function InventoryManegment() {
   useEffect(() => {
     setchanges(data?.data);
   }, [data]);
-  const handleChange = (e) => {
+  const handleChange = (newchangeInput) => {
     // console.log(data)
-    console.log(e.target.id);
+    console.log(newchangeInput.id);
     const newchanges = changes?.map((row) => {
-      if (row.id === +e.target.id) {
+      if (row.id === +newchangeInput.id) {
         if(!changedID.includes(row.id)){
           setChangeID((prevState)=>([...prevState , row.id]))
         }
-        return { ...row, [e.target.name]: e.target.value };
+        return { ...row, [newchangeInput.name]: newchangeInput.value };
       } else {
         return { ...row };
       }
