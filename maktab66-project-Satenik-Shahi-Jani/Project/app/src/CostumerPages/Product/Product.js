@@ -1,6 +1,6 @@
 // import CostumerPageLayout from "../../layouts/CostumerPageLayout";
 import * as React from "react";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -15,29 +15,90 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+// import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  addToCart,
+  clearCart,
+  decreaseCart,
+  removeFromCart,
+} from "../../redux/cartSlice";
+// import { useEffect } from "react";
+// import { addToCart } from "../../redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
+// import RemoveCircleOutline from "@mui/icons-material/RemoveCircleOutline";
+import RemoveCircleOutline from "@mui/icons-material/Remove";
 
 function Product() {
-  const [input, setInput] = useState("0");
-  const [error, setError] = useState(false);
+  const [input, setInput] = useState(0);
+  const [error, setError] = useState("");
   const params = useParams();
   const productNumber = params.productId;
 
   const { data, loading } = useFetch(`products?id=${productNumber}`);
 
+  const cart = useSelector((state) => state.cart);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    cart?.cartItems.map(item=>{
+      console.log(item.id)
+      console.log(productNumber)
+      if(item.id=== +(productNumber)){
+        setInput(item.cartQuantity)
+      }
+    })
+  }, []);
+
+  // useEffect(() => {
+    
+  // }, [cart, dispatch]);
+const errorText={
+  min:"بزرگ تر از صفر وارد کنید.",
+  max:"موجودی کالا کافی نیست."
+}
+  const handleAddToCart = (product) => {
+    let add=input+1;
+    if (add > +data.data[0].count) {
+      setError(errorText.max);
+      setInput(data?.data[0].count);
+    } else {
+      setError("");
+      setInput(add);
+      dispatch(addToCart(product));
+    }
+  };
+  const handleDecreaseCart = (product) => {
+    let minus=input-1;
+    if (minus <0) {
+      setError(errorText.min);
+      setInput(0);
+    } else {
+      setError("");
+      setInput(minus);
+      dispatch(decreaseCart(product));
+    }
+  };
+  const handleRemoveFromCart = (product) => {
+    setInput(0);
+    dispatch(removeFromCart(product));
+  };
+
   const handlechange = (e) => {
-    console.log(e.target.value)
-    console.log(data.data[0].count)
-    if (+(e.target.value) > +(data.data[0].count)) {
+    console.log(e.target.value);
+    console.log(data.data[0].count);
+    if (+e.target.value > +data.data[0].count) {
       setError(true);
       setInput(data?.data[0].count);
     } else {
       setError(false);
-
       setInput(e.target.value);
     }
   };
+
   return (
     <Container
       sx={{
@@ -81,6 +142,7 @@ function Product() {
                     />
                   </Typography>
                 </CardContent>
+                <Box sx={{color:"red"}}>{error}</Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -90,34 +152,54 @@ function Product() {
                     mr: "5%",
                   }}
                 >
-                  <Box>{item.price}</Box>
-                  <IconButton color="primary" aria-label="add to shopping cart">
+                  <Box
+                    sx={{
+                      width: "10%",
+                      mx: 5,
+                    }}
+                  >
+                    {item.price}
+                  </Box>
+                  {/* <IconButton color="primary" aria-label="add to shopping cart">
                     <AddShoppingCartIcon />
-                  </IconButton>
+                  </IconButton> */}
                   <Button
+                    onClick={() => handleRemoveFromCart(item)}
                     dir="ltr"
                     variant="contained"
                     endIcon={<DeleteIcon />}
                   >
-                    delete
+                    حذف
                   </Button>
-                  <TextField
-                    id="outlined-number"
-                    onChange={(e) => handlechange(e)}
-                    type="number"
-                    value={input}
-                    defaultValue={input}
+                  <Fab color="secondary" size="small" aria-label="add" onClick={()=>handleAddToCart(item)}>
+                    <AddIcon />
+                  </Fab>
+                  <Box
                     sx={{
                       width: "10%",
-                      p: "0",
+                      mx: 2,
+                      display:"flex",
+                      flexDirection:"column"
                     }}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    color="primary"
-                    focused
-                  />
-                  {error && <Box>erorr</Box>}
+                  >
+                    
+                    <TextField
+                      id="filled-number"
+                      onChange={(e) => handlechange(e)}
+                      type="number"
+                      value={input}
+                      defaultValue={input}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      color="primary"
+                      variant="filled"
+                    />
+                    
+                  </Box>
+                  <Fab color="primary" size="small" aria-label="add" onClick={()=>handleDecreaseCart(item)}>
+                    <RemoveCircleOutline />
+                  </Fab>
                 </Box>
               </Box>
               <CardMedia

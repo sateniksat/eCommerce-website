@@ -6,6 +6,7 @@ body {
 }
 a {
   all: unset;
+  width: max-content;
   cursor: pointer;
 }
 * {
@@ -13,6 +14,7 @@ a {
   padding: 0;
   box-sizing: border-box;
 }
+
 #root {
   width: 100%;
 }

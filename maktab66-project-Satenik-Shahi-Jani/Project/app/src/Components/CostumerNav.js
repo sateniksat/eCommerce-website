@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Logo from "../assets/images/shop.png";
 import { Link } from "react-router-dom";
+import {  useSelector } from "react-redux";
 // import SearchIcon from '@mui/icons-material/Search';
 
 // const Search = styled("div")(({ theme }) => ({
@@ -65,7 +66,7 @@ export default function CostumerNav(props) {
   //   setAnchorElUser(null);
   // };
 
-
+  const cart = useSelector((state) => state.cart);
   // sx={{zIndex:10}}
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
@@ -108,10 +109,10 @@ export default function CostumerNav(props) {
           <Link to="/checkout">
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label={`show ${cart.cartTotalQuantity} new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={cart.cartTotalQuantity} color="error">
                 <ShoppingCartOutlinedIcon />
               </Badge>
             </IconButton>

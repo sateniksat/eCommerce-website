@@ -1,5 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tokenReducer from "./tokenslice";
+import cartReducer from "./cartSlice"
+
+
+
+
 const loadPreLoadState = () => {
   try {
     const serializedstate = localStorage.getItem("Token"); 
@@ -16,13 +21,20 @@ const loadPreLoadState = () => {
     return undefined;
   }
 };
+
+
 export const store = configureStore({
   devTools: true,
   preloadedState: loadPreLoadState(),
   reducer: {
     token: tokenReducer,
+    cart: cartReducer,
   },
+
 });
+
+
+
 const saveToken = (tokenArg) => {
   try {
     const nextToken = JSON.stringify(tokenArg);

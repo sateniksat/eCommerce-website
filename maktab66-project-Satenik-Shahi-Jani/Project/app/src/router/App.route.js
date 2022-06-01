@@ -17,7 +17,7 @@ import { Login } from "../adminPages/Login/Login";
 import OrderManegment from "../adminPages/orderManegment/OrderManegment";
 import ProductManegment from "../adminPages/productManegment/ProductManegment";
 import CostumerPageLayout from "../layouts/CostumerPageLayout";
-import AdminPageLayout from "../layouts/AdminPageLayout"
+import AdminPageLayout from "../layouts/AdminPageLayout";
 import SimpleLayout from "../layouts/SimpleLayout";
 
 export default function AppRoute() {
@@ -66,16 +66,15 @@ export default function AppRoute() {
               <Cart />
             </CostumerPageLayout>
           }
-        >
-          <Route
-            path="purchaseform"
-            element={
-              <CostumerPageLayout>
-                <ShopForm />
-              </CostumerPageLayout>
-            }
-          />
-        </Route>
+        />
+        <Route
+          path="purchaseform"
+          element={
+            <CostumerPageLayout>
+              <ShopForm />
+            </CostumerPageLayout>
+          }
+        />
         <Route
           path={"login"}
           element={

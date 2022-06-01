@@ -1,7 +1,8 @@
 import React from "react";
 // import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 
-import { Typography, Box } from "@mui/material";
+import {  Box } from "@mui/material";
+// import {Typography} from "@mui/material";
 import { useParams } from "react-router-dom";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
@@ -17,6 +18,7 @@ function SuccessOperation() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          minHeight:"95vh"
         }}
       >
         {operation !== "success" ? (
@@ -24,28 +26,34 @@ function SuccessOperation() {
             sx={{
               display: "flex",
               alignItems: "center",
+              minHeight:"95vh",
+              color:"red",
+              fontSize:"80px"
             }}
           >
             <Box>
-              <DisabledByDefaultIcon />
+              <DisabledByDefaultIcon sx={{fontSize:"300px"}} />
             </Box>
-            <Typography component="h1" variant="h5">
-              نا موفق
-            </Typography>
+            <h1>
+              ناموفق
+            </h1>
           </Box>
         ) : (
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
+              minHeight:"95vh",
+              color:"green",
+              fontSize:"80px"
             }}
           >
-            <Box>
-              <CheckCircleOutlineIcon />
+            <Box >
+              <CheckCircleOutlineIcon sx={{fontSize:"300px",color:"success"}} />
             </Box>
-            <Typography component="h1" variant="h5">
+            <h1 >
               موفق
-            </Typography>
+            </h1>
           </Box>
         )}
       </Box>

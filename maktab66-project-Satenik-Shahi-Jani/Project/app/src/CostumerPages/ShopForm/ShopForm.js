@@ -1,6 +1,5 @@
-import React from 'react'
+import React from "react";
 // import CostumerPageLayout from '../../layouts/CostumerPageLayout'
-
 
 import { useState } from "react";
 import Button from "@mui/material/Button";
@@ -16,24 +15,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { api } from "../../api/api";
 
-
 // import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 // import moment from "moment";
 // import jMoment from "moment-jalaali";
 // import JalaliUtils from "@date-io/jalaali";
 // jMoment.loadPersian({ dialect: "persian-modern", usePersianDigits: true });
 
-
-
-
 export function ShopForm() {
-
   // const [selectedDate, handleDateChange] = useState(moment());
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
 
   const initialValues = {
     firstName: "",
@@ -65,8 +57,9 @@ export function ShopForm() {
   };
 
   const submitForm = (values) => {
+    alert("hi");
     console.log(values);
-    console.log(Date.parse(values.delivery));
+    // console.log(Date.parse(values.delivery));
     // (async () => {
     //   try {
     //     const response = await api.post("/auth/login", values);
@@ -92,9 +85,7 @@ export function ShopForm() {
         sx={{ width: "100%", borderRadius: "20px", p: 3 }}
       >
         <CssBaseline />
-        <Typography component="h1" variant="h5">
-          نهایی کردن خرید
-        </Typography>
+        <h2>نهایی کردن خرید</h2>
         <Box
           sx={{
             display: "flex",
@@ -219,8 +210,8 @@ export function ShopForm() {
                     />
                   </MuiPickersUtilsProvider> */}
                   </Box>
-                  <Box sx={{  width: "60%" }}>
-                  <Link to="/">
+                  <Box sx={{ width: "60%" }}>
+                    <Link to="/">
                       <Alert severity="info">بازگشت به سایت</Alert>
                     </Link>
                     <Button
@@ -242,16 +233,10 @@ export function ShopForm() {
   );
 }
 
-
-
-
-
-
-
 // export function ShopForm() {
 //   return (
 //     <div>ShopForm</div>
 //   )
 // }
 
-export default ShopForm
+export default ShopForm;
