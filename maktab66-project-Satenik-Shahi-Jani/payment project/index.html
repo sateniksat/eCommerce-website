@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>Welcome</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        align-items: center;
+      }
+      .title {
+        width: 100%;
+        color: white;
+        background-color: rgba(33, 191, 183, 0.67);
+        padding: 2%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3 class="title">خوش آمدید...</h3>
+    <!-- <div class="row justify-content-center w-100 p-5">
+      <button
+        type="button"
+        class="btn btn-success m-2 w-25"
+        onclick="payFunction()"
+      >
+        پرداخت
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger m-2 w-25"
+        onclick="leaveFunction()"
+      >
+        انصراف
+      </button>
+    </div> -->
+    <div class="row justify-content-center w-100 p-5">
+      <button
+        type="button"
+        class="btn btn-success m-2 w-25"
+        onclick="window.location.href='http://localhost:3000/operation/success'"
+      >
+        پرداخت
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger m-2 w-25"
+        onclick="window.location.href='http://localhost:3000/operation/failed'"
+      >
+        انصراف
+      </button>
+    </div>
+    <script>
+      function payFunction() {
+        window.open("http://localhost:3000/operation/success");
+      }
+      function leaveFunction() {
+        window.open("http://localhost:3000/operation/failed");
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

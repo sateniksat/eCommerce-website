@@ -22,15 +22,13 @@ function InventoryManegment() {
   const [activePage, setActivePage] = useState(1);
   const [changes, setchanges] = useState([]);
   const [changedID, setChangeID] = useState([]);
-  const [refresh, setrefresh] = useState(true);
-  const refreshing = () => {
-    setrefresh(!refresh);
-  };
+  // const [refresh, setrefresh] = useState(true);
+  // const refreshing = () => {
+  //   setrefresh(!refresh);
+  // };
 
   const { data } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`,
-    {},
-    refresh
+    `/products?_page=${activePage}&_limit=${limit}}`
   );
   useEffect(() => {
     setchanges(data?.data);
