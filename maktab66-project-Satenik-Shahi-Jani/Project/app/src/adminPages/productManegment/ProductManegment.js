@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-// import { useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,48 +10,21 @@ import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { Pagination } from "@mui/material";
-// import axios from "axios";
-// import { Axios } from "../../api/api";
 import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 import ProductAdd from "./ProductAdd";
 import ProductDelete from "./ProductDelete";
 
+
+
+
 function ProductManegment() {
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
-  // const { data, loading, error } = useFetch(
-  //   `/products?_page=${activePage}&_limit=${limit}}`
-  // );
-  // console.log(data)
   const [getData, setGetData] = useState([]);
-  const [refresh, setrefresh] = useState(true);
-  const refreshing = () => {
-    setrefresh(!refresh);
-  };
-  //   const [refresh,setrefresh]=useState(true)
-  // const refreshTry=()=>{
-  //   setrefresh(!refresh);
-  // }
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response = await api
-  //         .get(`/products?_page=${activePage}&_limit=${limit}}`)
-  //         .then((res) => res.data);
-  //       setdata(response);
-  //       console.log(response);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, [activePage]);
 
-  const { data } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`,
-    {},
-    refresh
-  );
+
+  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`);
   useEffect(() => {
     setGetData(data?.data);
   }, [data]);
@@ -60,7 +32,6 @@ function ProductManegment() {
   async function deleteItemHandeler(item) {
     console.log(item);
     const response = await api.get(`/products/${item.id}`);
-    console.log(response);
     const deleted = await api.delete(`/products/${item.id}`).then((res) => {
       if (res.status === 200) {
         setGetData(getData.filter((i) => i.id !== item.id));
@@ -76,7 +47,7 @@ function ProductManegment() {
       }
     });
     setGetData(filterData);
-    console.log("hiii");
+    // console.log("hiii");
   };
   return (
     <Container sx={{ mt: "5%", minHeight: "100vh" }}>
@@ -87,7 +58,6 @@ function ProductManegment() {
           buttonColor="success"
           buttonVarient="contained"
           ModalWidth={"65%"}
-          // refreshTry={refreshTry()}
         />
       </Box>
 
@@ -127,8 +97,6 @@ function ProductManegment() {
                       setActivePage={setActivePage}
                       activePage={activePage}
                       handleProductEdit={handleProductEdit}
-                      // refreshTry={refreshTry()}
-                      // refreshing={refreshing()}
                     />
                     <ProductDelete
                       title="حذف"

@@ -1,11 +1,9 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-// import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-// import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -74,10 +72,9 @@ export default function DrawerComponent() {
   const [open, setOpen] = useState(false);
   const [alignment, setAlignment] = useState("1");
 
-  const { data, loading } = useFetch("/category");
+  const { data } = useFetch("/category");
 
   const location = useLocation();
-  // console.log(searchParams.getAll())
   const splitedPath = location.pathname.split("/");
   const endPoint = splitedPath[splitedPath.length - 1];
 
@@ -100,13 +97,10 @@ export default function DrawerComponent() {
 
   return (
     <>
-       {/* sx={{ display: "flex", justifyContent: "flex-end" }} */}
       <CssBaseline />
       <Drawer
         variant="permanent"
         open={open}
-        // sx={{zIndex:1,minHeight:"30vh"}}
-        // sx={{ display: "flex",flexDirection: "column", justifyContent: "flex-start" }}
       >
 
         <List sx={{mt:"auto"}}>
@@ -142,7 +136,6 @@ export default function DrawerComponent() {
                   <ListItemText
                     primary={item.name}
                     sx={{ opacity: open ? 1 : 0 }}
-                    // sx={{ opacity:  1  }}
                   />
                 </ListItemButton>
               </ListItem>
@@ -176,13 +169,7 @@ export default function DrawerComponent() {
                     </IconButton>
                   </DrawerHeader>
       </Drawer>
-      {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-      </Box> */}
     </>
   );
 }
 
-{
-  /* export default DrawerComponent */
-}

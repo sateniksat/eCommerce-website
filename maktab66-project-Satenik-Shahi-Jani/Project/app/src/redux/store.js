@@ -9,7 +9,7 @@ import userReducer from "./userSlice"
 const loadPreLoadState = () => {
   try {
     const serializedstate = localStorage.getItem("Token"); 
-    console.log(serializedstate)
+    // console.log(serializedstate)
     if (serializedstate) {
         // const getToken=JSON.parse(serializedstate)
         // return getToken.token;

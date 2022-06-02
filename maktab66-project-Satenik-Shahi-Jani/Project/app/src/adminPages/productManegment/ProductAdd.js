@@ -5,8 +5,6 @@ import {
   TextField,
   Box,
   InputLabel,
-  MenuItem,
-  Select,
   Input,
   FormControl,
   Button,
@@ -27,18 +25,18 @@ export function ProductAdd(props) {
   //   fileReader.readAsDataURL(file);
   // };
 
-  const { data, loading } = useFetch("/category");
+  const { data } = useFetch("/category");
 
   const [product, setProduct] = useState({});
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
-    console.log(product);
+    // console.log(product);
   };
 
   const changeHanler = async (e) => {
     const files = Array.from(e.target.files);
     // preview(files[0]);
-    console.log(files);
+    // console.log(files);
     let temp = [];
     files.map((item) => {
       const formData = new FormData();
@@ -53,13 +51,13 @@ export function ProductAdd(props) {
       ...product,
       [e.target.name]: arrayResponse.map((i) => i.data.filename),
     });
-    console.log(product);
+    // console.log(product);
   };
 
   const changeHanlerThumbnail = async (e) => {
     const files = Array.from(e.target.files);
     // preview(files[0]);
-    console.log(files);
+    // console.log(files);
     let tempThum = [];
     files.map((item) => {
       const formData = new FormData();
@@ -68,19 +66,19 @@ export function ProductAdd(props) {
       tempThum.push(tempRequest);
     });
     const arrayResponseThumb = await Promise.all(tempThum);
-    console.log(arrayResponseThumb);
+    // console.log(arrayResponseThumb);
 
     setProduct({
       ...product,
       [e.target.name]: arrayResponseThumb[0].data.filename,
     });
-    console.log(product);
+    // console.log(product);
   };
 
   const handleEditor = (event, editor) => {
     const data = editor.getData();
     setProduct({ ...product, ["description"]: data });
-    console.log(product);
+    // console.log(product);
   };
   const handleSendNewData = (e) => {
     e.preventDefault();
@@ -98,14 +96,14 @@ export function ProductAdd(props) {
     }else{
       setProduct({ ...product, ["createdAt"]: Date.now() });
       data.data.map((item) => {
-        console.log(item.id);
-        console.log(Number(product.category));
+        // console.log(item.id);
+        // console.log(Number(product.category));
         if (item.id === Number(product.category)) {
           setProduct({ ...product, ["categoryName"]: item.name });
         }
       });
       const tempRequest = api.post("/products", product);
-      console.log(product);
+      // console.log(product);
       props.handleClose();
       // props. refreshTry();
     }
@@ -122,10 +120,10 @@ export function ProductAdd(props) {
         },
       })
       .then((res) => res);
-      console.log(response)
+      // console.log(response)
       if(response.status===200){
         props.handleProductEdit(response.data)
-        console.log("hellooo")
+        // console.log("hellooo")
       }
     })()
     props.handleClose();

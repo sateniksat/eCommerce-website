@@ -8,13 +8,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import { addToUser, removeUser } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  // addToCart,
-  clearCart,
-  // decreaseCart,
-  // removeFromCart,
-  setcartTotalAmount,
-} from "../../redux/cartSlice";
+import { clearCart } from "../../redux/cartSlice";
 import { api } from "../../api/api";
 import { Link } from "react-router-dom";
 
@@ -26,26 +20,40 @@ function SuccessOperation() {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
 
-  // headers: {
-  //   "Content-Type": "application/json",
-  //   token: localStorage.getItem("token"),
-  // }
   async function sendCustomerDetails() {
-    dispatch(addToUser({ ...user, orderDate: Date.now() }));
+    // dispatch(addToUser({ ...user, orderDate: Date.now() }));
     const responseServer = await api
-      .post("/orderlist", user)
-      .then((res) => res).catch(error=>console.log(error));
+      .patch(
+        `/orderlist/${user.id}`,
+        { orderDate: Date.now(), orderStatus: 3 },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+        }
+      )
+      .then((res) => res)
+      .catch((error) => console.log(error));
     if (responseServer?.status >= 400) {
       dispatch(addToUser({ ...user, orderDate: null }));
     } else {
-      let temp=[];
-      cart.cartItems.map(item=>{
-        let leftCount=item.count-item.cartQuantity;
-        const sendCount= api.patch(`/products/${item.id}`,{count:leftCount},  {headers: {
-            "Content-Type": "application/json",
-            token: localStorage.getItem("token"),
-          }});
+      let temp = [];
+      // console.log("hi");
+      cart.cartItems.map((item) => {
+        let leftCount = item.count - item.cartQuantity;
+        const sendCount = api.patch(
+          `/products/${item.id}`,
+          { count: leftCount },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              token: localStorage.getItem("token"),
+            },
+          }
+        );
         temp.push(sendCount);
+        return true;
       });
       const arrayResponse = await Promise.all(temp);
       console.log(arrayResponse);
@@ -65,7 +73,7 @@ function SuccessOperation() {
       <Box
         sx={{
           display: "flex",
-          width:"100%",
+          width: "100%",
           flexDirection: "column",
           alignItems: "center",
           minHeight: "95vh",

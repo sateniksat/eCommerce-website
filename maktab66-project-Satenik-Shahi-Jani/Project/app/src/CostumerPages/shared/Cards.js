@@ -40,13 +40,14 @@ function Cards(props) {
   };
 
   useEffect(() => {
-    cart?.cartItems.map(item=>{
+    cart.cartItems.map(item=>{
       // console.log(item.id)
       if(item.id=== +(props.product.id)){
         setInput(item.cartQuantity)
       }
+      return true
     })
-  }, []);
+  }, [cart,props]);
 
   const errorText={
     min:"بزرگ تر از صفر وارد کنید.",

@@ -21,46 +21,51 @@ function InventoryManegment() {
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
   const [changes, setchanges] = useState([]);
-  const [changedID,setChangeID]=useState([]);
-  const [refresh,setrefresh]= useState(true);
-  const refreshing=()=>{
-    setrefresh(!refresh)
-  }
+  const [changedID, setChangeID] = useState([]);
+  const [refresh, setrefresh] = useState(true);
+  const refreshing = () => {
+    setrefresh(!refresh);
+  };
 
   const { data } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`,{} ,refresh
+    `/products?_page=${activePage}&_limit=${limit}}`,
+    {},
+    refresh
   );
   useEffect(() => {
     setchanges(data?.data);
   }, [data]);
   const handleChange = (newchangeInput) => {
     // console.log(data)
-    console.log(newchangeInput.id);
+    // console.log(newchangeInput.id);
     const newchanges = changes?.map((row) => {
       if (row.id === +newchangeInput.id) {
-        if(!changedID.includes(row.id)){
-          setChangeID((prevState)=>([...prevState , row.id]))
+        if (!changedID.includes(row.id)) {
+          setChangeID((prevState) => [...prevState, row.id]);
         }
         return { ...row, [newchangeInput.name]: newchangeInput.value };
       } else {
         return { ...row };
       }
     });
-    console.log(newchanges);
+    // console.log(newchanges);
     setchanges(newchanges);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    let temp = [];
     changedID.map((item) => {
-      const found=changes.find(product=>product.id===item)
-      console.log(found)
-      api
-        .patch(`/products/${item}`, found, {
-          headers: { "Content-Type": "application/json" ,token:localStorage.getItem("token")},
-        })
-        .then((res) => console.log(res));
+      const found = changes.find((product) => product.id === item);
+      // console.log(found)
+      const tempRequest = api.patch(`/products/${item}`, found, {
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.getItem("token"),
+        },
+      });
+      temp.push(tempRequest);
     });
-    // refreshing();
+    const arrayResponse = await Promise.all(temp);
   };
   return (
     <>

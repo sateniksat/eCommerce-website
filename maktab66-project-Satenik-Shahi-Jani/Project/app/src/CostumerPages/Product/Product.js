@@ -11,24 +11,18 @@ import { useFetch } from "../../hooks/useFetch";
 import {
   Container,
   CircularProgress,
-  IconButton,
   Button,
   TextField,
 } from "@mui/material";
-// import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   addToCart,
-  clearCart,
   decreaseCart,
   removeFromCart,
 } from "../../redux/cartSlice";
-// import { useEffect } from "react";
-// import { addToCart } from "../../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-// import RemoveCircleOutline from "@mui/icons-material/RemoveCircleOutline";
 import RemoveCircleOutline from "@mui/icons-material/Remove";
 
 function Product() {
@@ -160,9 +154,6 @@ const errorText={
                   >
                     {item.price}
                   </Box>
-                  {/* <IconButton color="primary" aria-label="add to shopping cart">
-                    <AddShoppingCartIcon />
-                  </IconButton> */}
                   <Button
                     onClick={() => handleRemoveFromCart(item)}
                     dir="ltr"

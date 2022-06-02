@@ -4,9 +4,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
-import { Divider } from "@mui/material";
-// import { Input } from "@mui/material";
-import Typography from "@mui/material/Typography";
+// import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -15,7 +13,6 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  // width: "80%",
   bgcolor: "background.paper",
   border: "1px solid #000",
   boxShadow: 24,
@@ -61,9 +58,6 @@ export default function ModalPage(Component) {
                   justifyContent: "space-between",
                 }}
               >
-                {/* <Typography variant="h5" gutterBottom component="Box">
-                {props.title}
-                </Typography> */}
                 <h2> {props.title}</h2>
                 <IconButton
                   aria-label="close"

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 // import CostumerPageLayout from '../../layouts/CostumerPageLayout';
-
 import {
   TableCell,
   TableBody,
@@ -17,20 +16,19 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreditScore from "@mui/icons-material/CreditScore";
-// import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  // addToCart,
-  // clearCart,
-  // decreaseCart,
   removeFromCart,
   setcartTotalAmount,
   updateData,
+  updateQuantity,
 } from "../../redux/cartSlice";
 import InputCart from "./InputCart";
 import { Link } from "react-router-dom";
-// import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
+
+
+
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
@@ -41,48 +39,57 @@ function Cart() {
   };
   function totalCount() {
     let total = 0;
-    const totalMap = cart.cartItems?.map((item) => {
-      total = item.price * item.cartQuantity + total;
-      return total;
-    });
+    if (cart.cartItems !== []) {
+cart.cartItems?.map((item) => {
+        total = item?.price * item?.cartQuantity + total;
+        return total;
+      });
+    }
     dispatch(setcartTotalAmount(total));
     return total;
   }
 
-  // function genrateUrl() {
-  //   let urlString = "";
-  //   const mapOnCart = cart.cartItems?.map((item, index) => {
-  //     if (index === cart.cartItems.length - 1) {
-  //       urlString = urlString + `id=${item.id}`;
-  //     } else {
-  //       urlString = urlString + `id=${item.id}&`;
-  //     }
-  //   });
-  //   return urlString;
-  // }
-  // const { data } = useFetch(`/products?${genrateUrl()}`);
-  // console.log(data)
-  // function getDataCartUpdate() {
-  //   const mapOnResiveDat = data?.data.map((item) => {
-  //     const productcheck = cart?.cartItems.find(
-  //       (newItem) => newItem.id === item.id
-  //     );
-  //     // console.log(productcheck.price)
-  //     // console.log(productcheck.count)
-  //     // console.log(item.price)
-  //     // console.log(item.count)
-  //     if (
-  //       productcheck?.price !== item?.price ||
-  //       productcheck?.count !== item?.count
-  //     ) {
-  //       dispatch(updateData(item));
-  //       console.log(item.id);
-  //     }
-  //   });
-  // }
-  // useEffect(() => {
-  //   getDataCartUpdate();
-  // },[data]);
+  function genrateUrl() {
+    let urlString = "";
+    if (cart.cartTotalQuantity !== 0) {
+ cart.cartItems?.map((item, index) => {
+        if (index === cart.cartItems.length - 1) {
+          urlString = urlString + `id=${item.id}`;
+        } else {
+          urlString = urlString + `id=${item.id}&`;
+        }
+      });
+      return urlString;
+    }
+  }
+  const { data } = useFetch(`/products?${genrateUrl()}`);
+
+  function getDataCartUpdate() {
+    if (cart.cartTotalQuantity !== 0) {
+ data?.data.map((item) => {
+        const productcheck = cart?.cartItems.find(
+          (newItem) => newItem.id === item.id
+        );
+
+        if (
+          productcheck?.price !== item?.price &&
+          productcheck?.count !== item?.count
+        ) {
+          dispatch(updateData(item));
+          dispatch(updateQuantity({ id: item.id, count: item.count }));
+          console.log(item.id);
+        } else if (productcheck?.price !== item?.price) {
+          dispatch(updateData(item));
+          console.log(item.id);
+        } else if (productcheck?.count !== item?.count) {
+          dispatch(updateData({ id: item.id, count: item.count }));
+        }
+      });
+    }
+  }
+  useEffect(() => {
+    getDataCartUpdate();
+  }, [data]);
 
   return (
     <Box dir="rtl" sx={{ my: "5%", minHeight: "95vh" }}>
@@ -121,7 +128,6 @@ function Cart() {
                     <TableCell align="left">{item.name}</TableCell>
                     <TableCell align="center">{item.price}</TableCell>
                     <TableCell align="center">
-                      {/* {item.cartQuantity} */}
                       <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <InputCart item={item} />
                       </Box>
@@ -176,7 +182,6 @@ function Cart() {
           }}
         >
           <Button
-            // onClick={() => handleRemoveFromCart(item)}
             variant="contained"
             sx={{ width: "40%", fontSize: "large" }}
           >

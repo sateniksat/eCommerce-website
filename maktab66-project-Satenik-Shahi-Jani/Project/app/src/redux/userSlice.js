@@ -19,7 +19,7 @@ const userSlice = createSlice({
     },
     removeUser(state, action) {
       state =false;
-      localStorage.setItem("cart", JSON.stringify(state));
+      localStorage.setItem("user", JSON.stringify(state));
       return false
     },
   },
