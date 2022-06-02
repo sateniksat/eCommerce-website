@@ -14,7 +14,6 @@ import { Button, Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
 import InputActive from "./InputActive";
 // import axios from "axios";
-// import { Axios } from "../../api/api";
 import { api } from "../../api/api";
 
 function InventoryManegment() {
