@@ -1,10 +1,30 @@
-body{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Almarai', sans-serif;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Almarai", sans-serif;
 }
-a{
-    all: unset;
-    cursor: pointer;
+a {
+  all: unset;
+  width: max-content;
+  cursor: pointer;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+}
+.ck-editor__editable {
+  min-height: 200px !important;
+}
+/* .ck-editor__top {
+  min-width: 1000px;
+} */
+input:read-only{
+  all:unset;
+  width: 100%;
 }

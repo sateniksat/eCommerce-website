@@ -1,4 +1,4 @@
-import React, {useState,useMemo } from "react";
+import React, { useState, useMemo,useEffect } from "react";
 // import { useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
@@ -21,35 +21,39 @@ import FormControl from "@mui/material/FormControl";
 // import { api } from "../../api/api";
 import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
-import NotSentOrder from "./NotSentOrder";
-import ModalPage from "../../components/withModal";
+import Order from "./DeliverdOrder";
+
 
 
 function OrderManegment() {
-
-
-  const [selectedValue,setSelectedValue]=useState("6")
+  const [selectedValue, setSelectedValue] = useState("6");
   // const [filtered,setFiltered]=useState([])
   // const [data, setdata] = useState([]);
 
   const limit = useMemo(() => 5, []);
   const [activePage, setActivePage] = useState(1);
-
+  const [changes, setchanges] = useState([]);
   // const filtering=(collection,status)=>{
   //   const endLimit=activePage*limit-1;
   //   const startLimit=(activePage-1)*limit;
   //   setFiltered(collection.filter((item,index)=> item.orderStatus===status && index<=endLimit && index>=startLimit))
   // }
 
-  const { data, loading, error } = useFetch(
-    `orders?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
+  const { data } = useFetch(
+    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
   );
-
-
-  const handleChange=(event)=>{
-    setSelectedValue(event.target.value);
-  //  filtering(data, Number(event.target.name))
+  const fillterData=(id)=>{
+    const filltered=changes.filter(item=>item.id!==id)
+    setchanges(filltered);
+    // console.log("hiiii")
   }
+  useEffect(() => {
+    setchanges(data?.data);
+  }, [data]);
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    //  filtering(data, Number(event.target.name))
+  };
   // useEffect(() => {
   //   (async () => {
   //     try {
@@ -64,16 +68,13 @@ function OrderManegment() {
   //   })();
   // }, []);
 
-
-
   // useEffect(()=>{
 
   // },[activePage])
 
   return (
-    <Container sx={{ mt: "5%" }} dir="rtl">
-      <ModalPage/>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+    <Container sx={{ mt: "5%", minHeight: "100vh" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }} dir="rtl">
         <div>سفارش ها </div>
         <FormControl>
           <RadioGroup
@@ -84,7 +85,7 @@ function OrderManegment() {
             <FormControlLabel
               name="Delivered"
               checked={selectedValue === "6"}
-              onChange={(event)=>handleChange(event)}
+              onChange={(event) => handleChange(event)}
               control={<Radio />}
               label="سفارش های نحویل شده"
               value="6"
@@ -92,7 +93,7 @@ function OrderManegment() {
             <FormControlLabel
               name="Processing"
               checked={selectedValue === "3"}
-              onChange={(event)=>handleChange(event)}
+              onChange={(event) => handleChange(event)}
               control={<Radio />}
               label="سفارش های در انتظار ارسال"
               value="3"
@@ -100,34 +101,42 @@ function OrderManegment() {
           </RadioGroup>
         </FormControl>
       </Box>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} dir="rtl">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">نام کاربر</TableCell>
-              <TableCell align="right"> مجموع مبلغ</TableCell>
-              <TableCell align="right">زمان ثبت سفارش</TableCell>
+              <TableCell align="left">نام کاربر</TableCell>
+              <TableCell align="left"> مجموع مبلغ</TableCell>
+              <TableCell align="left">زمان ثبت سفارش</TableCell>
               <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.data.map((row) => (
+            {changes?.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row" align="right">
+                <TableCell component="th" scope="row" align="left">
                   {row.customerDetail.firstName}-{row.customerDetail.lastName}
                 </TableCell>
-                <TableCell align="right">{row.purchaseTotal} تومان</TableCell>
-                <TableCell align="right">
+                <TableCell align="left">{row.purchaseTotal} تومان</TableCell>
+                <TableCell align="left">
                   {new Date(row.orderDate).toLocaleDateString("fa-IR")}
                 </TableCell>
                 <TableCell align="center">
                   {/* <Button variant="contained" color="success">
                     بررسی سفارش
                   </Button> */}
-                  <NotSentOrder order={row}/>
+
+                  <Order
+                    title=" بررسی سفارش"
+                    ModalWidth={"80%"}
+                    buttonColor="primary"
+                    buttonVarient="contained"
+                    order={row}
+                    fillterData={fillterData}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -136,7 +145,7 @@ function OrderManegment() {
       </TableContainer>
       <Box
         sx={{
-          my:"5%",
+          my: "5%",
           mx: "auto",
           display: "flex",
           flexDirection: "column",
@@ -149,7 +158,7 @@ function OrderManegment() {
           color="secondary"
           defaultPage={1}
           page={activePage}
-          count={Math.ceil(data?.headers["x-total-count"]/ limit)}
+          count={Math.ceil(data?.headers["x-total-count"] / limit)}
           onChange={(_, page) => setActivePage(page)}
         />
       </Box>

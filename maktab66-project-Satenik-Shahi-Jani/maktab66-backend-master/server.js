@@ -26,9 +26,10 @@ server.use((req, res, next) => {
   const entityProtection = protections[entity];
   const methodSpecificProtection = protections[entity + '.' + req.method.toLowerCase()];
   const protectionRule = methodSpecificProtection === false ? false : (methodSpecificProtection || entityProtection);
-
+  if(!protectionRule) return next();
   const token = req.headers.token || req.headers.Token;
   if (protectionRule && !token) return res.status(401).send();
+  if(token && !protectionRule) return next();
   if (!token) return next();
 
   jwt.verify(token, AUTH_JWT_SECRET, (err, decoded) => {

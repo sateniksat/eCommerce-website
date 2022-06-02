@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,15 +12,51 @@ import { Link } from "react-router-dom";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-export function AdminNav() {
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Logout from "@mui/icons-material/Logout";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import { useDispatch } from "react-redux";
+import { addtoken } from "../redux/tokenslice";
+import { api } from "../api/api";
+import { useNavigate, useLocation } from "react-router-dom";
 
-  const [alignment, setAlignment] = React.useState("");
+const ITEM_HEIGHT = 48;
+
+export function AdminNav() {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const location = useLocation();
+  const splitedPath = location.pathname.split(/[-/]/);
+  const endPoint = splitedPath[splitedPath.length - 1];
+
+  const [alignment, setAlignment] = useState("productmanagement");
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
-
+  useEffect(() => {
+    setAlignment(endPoint);
+  }, [endPoint]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("Token");
+    dispatch(addtoken(false));
+    api.configuration();
+    navigate("/");
+  };
   // const handleOpenUserMenu = (event) => {
   //   setAnchorElUser(event.currentTarget);
   // };
@@ -58,20 +95,53 @@ export function AdminNav() {
             exclusive
             onChange={handleChange}
           >
-            <ToggleButton value="productmanage">
-              <Link to="/admin-productmanage">کالا ها</Link>
+            <ToggleButton value="productmanagement">
+              <Link to="/admin-productmanagement">کالا ها</Link>
             </ToggleButton>
             <ToggleButton value="inventory">
               <Link to="/admin-inventory">موجودی و قیمت ها </Link>
             </ToggleButton>
-            <ToggleButton value="order">
-              <Link to="/admin-order">سفارس ها </Link>
+            <ToggleButton value="orders">
+              <Link to="/admin-orders">سفارس ها </Link>
             </ToggleButton>
           </ToggleButtonGroup>
           {/* </Box> */}
           <Link to="/">
             <Button color="inherit"> بازگشت به سایت</Button>
           </Link>
+
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? "long-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: "20ch",
+              },
+            }}
+          >
+            <MenuItem onClick={handleLogOut} dir={"rtl"}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              خروج
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>

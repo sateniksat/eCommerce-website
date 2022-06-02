@@ -9,15 +9,15 @@ import AllCategories from "../costumerPages/Home/AllCategories";
 // import Welcome from "../CostumerPages/Home/Welcome";
 import Product from "../costumerPages/Product/Product";
 import ShopForm from "../costumerPages/ShopForm/ShopForm";
-import Shaparak from "../costumerPages/Shaparak/Shaparak";
+// import Shaparak from "../costumerPages/Shaparak/Shaparak";
 import SuccessOperation from "../costumerPages/SuccessOperation/SuccessOperation";
-// import NotFound from "../notFound/NotFound";
+import NotFound from "../notFound/NotFound";
 import CategoryShop from "../costumerPages/Category/CategoryShop";
 import { Login } from "../adminPages/Login/Login";
 import OrderManegment from "../adminPages/orderManegment/OrderManegment";
 import ProductManegment from "../adminPages/productManegment/ProductManegment";
 import CostumerPageLayout from "../layouts/CostumerPageLayout";
-import AdminPageLayout from "../layouts/AdminPageLayout"
+import AdminPageLayout from "../layouts/AdminPageLayout";
 import SimpleLayout from "../layouts/SimpleLayout";
 
 export default function AppRoute() {
@@ -33,6 +33,16 @@ export default function AppRoute() {
             </CostumerPageLayout>
           }
         />
+        {/* <Route
+          path="category/"
+          element={
+            <CostumerPageLayout slider={true}>
+              <CategoryShop />
+            </CostumerPageLayout>
+          }
+        >
+          <Route path="/*" element={<NotFound />} />
+        </Route> */}
         <Route
           path="category/:categoryId"
           element={
@@ -56,21 +66,12 @@ export default function AppRoute() {
               <Cart />
             </CostumerPageLayout>
           }
-        >
-          <Route
-            path="purchaseform"
-            element={
-              <CostumerPageLayout>
-                <ShopForm />
-              </CostumerPageLayout>
-            }
-          />
-        </Route>
+        />
         <Route
-          path={"shaparak"}
+          path="purchaseform"
           element={
             <CostumerPageLayout>
-              <Shaparak />
+              <ShopForm />
             </CostumerPageLayout>
           }
         />
@@ -83,7 +84,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="successfuloperation"
+          path="operation/:operationID"
           element={
             <CostumerPageLayout>
               <SuccessOperation />
@@ -101,7 +102,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="/admin-order"
+          path="/admin-orders"
           element={
             <ProtectedRout>
               <AdminPageLayout>
@@ -111,7 +112,7 @@ export default function AppRoute() {
           }
         />
         <Route
-          path="/admin-productmanage"
+          path="/admin-productmanagement"
           element={
             <ProtectedRout>
               <AdminPageLayout>
@@ -120,7 +121,7 @@ export default function AppRoute() {
             </ProtectedRout>
           }
         />
-        {/* <Route path="/*" element={<NotFound />} /> */}
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

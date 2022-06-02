@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Logo from "../assets/images/shop.png";
 import { Link } from "react-router-dom";
+import {  useSelector } from "react-redux";
 // import SearchIcon from '@mui/icons-material/Search';
 
 // const Search = styled("div")(({ theme }) => ({
@@ -56,7 +57,7 @@ import { Link } from "react-router-dom";
 //   },
 // }));
 
-export default function CostumerNav() {
+export default function CostumerNav(props) {
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const handleOpenUserMenu = (event) => {
   //   setAnchorElUser(event.currentTarget);
@@ -65,11 +66,14 @@ export default function CostumerNav() {
   //   setAnchorElUser(null);
   // };
 
+  const cart = useSelector((state) => state.cart);
+  // sx={{zIndex:10}}
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
-      <AppBar position="static">
+      <AppBar position="static" >
         <Toolbar>
-          <Tooltip title="رفتن به صفحه اصلی">
+          {(props.slider) ? <Box width={"5%"}></Box>:<></>}
+          <Tooltip title="رفتن به صفحه اصلی" >
             <Link to="/" style={{ width: "5%" }}>
               <img
                 alt="logo"
@@ -99,16 +103,16 @@ export default function CostumerNav() {
             />
             ورود
           </Search> */}
-          <Link to="/admin-inventory">
+          <Link to="/admin-productmanagement">
             <Button color="inherit"> مدیریت</Button>
           </Link>
           <Link to="/checkout">
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label={`show ${cart.cartTotalQuantity} new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={cart.cartTotalQuantity} color="error">
                 <ShoppingCartOutlinedIcon />
               </Badge>
             </IconButton>

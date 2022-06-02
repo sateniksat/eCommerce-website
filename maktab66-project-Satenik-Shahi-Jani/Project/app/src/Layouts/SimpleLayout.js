@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 // const SimpleLayout = (Component) => {
@@ -10,6 +11,6 @@ import React from "react";
 //   };
 // };
 const SimpleLayout = (props) => {
-  return <>{props.children}</>;
+  return <Box sx={{ height: '100vh' }}>{props.children}</Box>;
 };
 export default SimpleLayout;
