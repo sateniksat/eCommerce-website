@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import tokenReducer from "./tokenslice";
 import cartReducer from "./cartSlice"
+import userReducer from "./userSlice"
 
 
 
@@ -29,6 +30,7 @@ export const store = configureStore({
   reducer: {
     token: tokenReducer,
     cart: cartReducer,
+    user:userReducer,
   },
 
 });

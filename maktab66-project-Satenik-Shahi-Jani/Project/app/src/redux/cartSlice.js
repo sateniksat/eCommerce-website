@@ -28,7 +28,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // };
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
-  : { cartItems: [], cartTotalQuantity: 0 };
+  : { cartItems: [], cartTotalQuantity: 0 ,cartTotalAmount: 0};
 
 
 
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
 
       if (existingIndex >= 0) {
         state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
+          ...action.payload,
           cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
         };
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
@@ -65,7 +65,7 @@ const cartSlice = createSlice({
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
         state.cartTotalQuantity = state.cartTotalQuantity - 1;
-      } else if (state.cartItems[itemIndex].cartQuantity === 0) {
+      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartItems.filter(
           (item) => item.id !== action.payload.id
         );
@@ -89,6 +89,18 @@ const cartSlice = createSlice({
         localStorage.setItem("cart", JSON.stringify(state));
         return state;
       });
+    },
+    updateData(state,action){
+      const existingIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      console.log(existingIndex)
+      console.log(action.payload)
+      state.cartItems[existingIndex] = {
+        cartQuantity: state.cartItems[existingIndex].cartQuantity, ...action.payload
+      };
+      console.log(state.cartItems[existingIndex])
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     // getTotals(state, action) {
     //   let { total, quantity } = state.cartItems.reduce(
@@ -116,10 +128,13 @@ const cartSlice = createSlice({
       // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       localStorage.setItem("cart", JSON.stringify(state));
     },
+    setcartTotalAmount(state,action){
+      state.cartTotalAmount = action.payload;
+    },
   },
 });
 // getTotals,
-export const { addToCart, decreaseCart, removeFromCart, clearCart } =
+export const { addToCart, decreaseCart, removeFromCart, clearCart,setcartTotalAmount,updateData } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
