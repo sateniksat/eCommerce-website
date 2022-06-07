@@ -25,7 +25,8 @@ const useFetch = (url, config = {},refresh) => {
         setLoading(false);
       }
     })();
-  }, [url,refresh]);
+    // eslint-disable-next-line
+  }, [url,refresh]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return { data, loading, error };
 };

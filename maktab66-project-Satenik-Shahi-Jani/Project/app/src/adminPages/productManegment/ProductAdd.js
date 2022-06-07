@@ -38,7 +38,7 @@ export function ProductAdd(props) {
     // preview(files[0]);
     // console.log(files);
     let temp = [];
-    files.map((item) => {
+    files.forEach((item) => {
       const formData = new FormData();
       formData.append("image", item);
       const tempRequest = api.post("/upload", formData, {
@@ -59,7 +59,7 @@ export function ProductAdd(props) {
     // preview(files[0]);
     // console.log(files);
     let tempThum = [];
-    files.map((item) => {
+    files.forEach((item) => {
       const formData = new FormData();
       formData.append("image", item);
       const tempRequest = api.post("/upload", formData);
@@ -77,12 +77,12 @@ export function ProductAdd(props) {
 
   const handleEditor = (event, editor) => {
     const data = editor.getData();
-    setProduct({ ...product, ["description"]: data });
+    setProduct({ ...product, description: data });
     // console.log(product);
   };
   const handleSendNewData = (e) => {
     e.preventDefault();
-    if(
+    if (
       product.description === "" ||
       product.name === "" ||
       product.price === "" ||
@@ -91,18 +91,18 @@ export function ProductAdd(props) {
       product.category === "" ||
       product.images === "" ||
       product.thymbnail === ""
-    ){
+    ) {
       alert("fill all feilds");
-    }else{
-      setProduct({ ...product, ["createdAt"]: Date.now() });
-      data.data.map((item) => {
-        // console.log(item.id);
-        // console.log(Number(product.category));
+    } else {
+      setProduct({ ...product, createdAt: Date.now() });
+      data.data.forEach((item) => {
+        console.log(item.id);
+        console.log(Number(product.category));
         if (item.id === Number(product.category)) {
-          setProduct({ ...product, ["categoryName"]: item.name });
+          setProduct({ ...product, categoryName: item.name });
         }
       });
-      const tempRequest = api.post("/products", product);
+      api.post("/products", product);
       // console.log(product);
       props.handleClose();
       // props. refreshTry();
@@ -113,22 +113,21 @@ export function ProductAdd(props) {
     e.preventDefault();
     (async () => {
       const response = await api
-      .patch(`/products/${props.product?.id}`, product, {
-        headers: {
-          "Content-Type": "application/json",
-          token: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => res);
+        .patch(`/products/${props.product?.id}`, product, {
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => res);
       // console.log(response)
-      if(response.status===200){
-        props.handleProductEdit(response.data)
+      if (response.status === 200) {
+        props.handleProductEdit(response.data);
         // console.log("hellooo")
       }
-    })()
+    })();
     props.handleClose();
     props.setActivePage(props.activePage);
-    // props.refreshing();
   };
   return (
     <form>
@@ -140,7 +139,6 @@ export function ProductAdd(props) {
             justifyContent: "space-between",
             alignContent: "center",
             width: "100%",
-            // overflow: "auto",
           }}
         >
           <Box

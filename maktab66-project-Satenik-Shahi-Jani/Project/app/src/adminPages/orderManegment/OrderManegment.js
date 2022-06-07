@@ -16,8 +16,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-// import FormLabel from "@mui/material/FormLabel";
-// import { Axios } from "../../api/api";
 // import { api } from "../../api/api";
 import { Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
@@ -27,17 +25,11 @@ import Order from "./DeliverdOrder";
 
 function OrderManegment() {
   const [selectedValue, setSelectedValue] = useState("6");
-  // const [filtered,setFiltered]=useState([])
-  // const [data, setdata] = useState([]);
-
+  
   const limit = useMemo(() => 5, []);
   const [activePage, setActivePage] = useState(1);
   const [changes, setchanges] = useState([]);
-  // const filtering=(collection,status)=>{
-  //   const endLimit=activePage*limit-1;
-  //   const startLimit=(activePage-1)*limit;
-  //   setFiltered(collection.filter((item,index)=> item.orderStatus===status && index<=endLimit && index>=startLimit))
-  // }
+
 
   const { data } = useFetch(
     `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
@@ -52,25 +44,9 @@ function OrderManegment() {
   }, [data]);
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
-    //  filtering(data, Number(event.target.name))
+    setActivePage(1);
   };
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const response = await api.get("/orderlist").then((res) => res.data);
-  //       setdata(response);
-  //       console.log(response);
-  //       filtering(response,6)
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
 
-  // useEffect(()=>{
-
-  // },[activePage])
 
   return (
     <Container sx={{ mt: "5%", minHeight: "100vh" }}>

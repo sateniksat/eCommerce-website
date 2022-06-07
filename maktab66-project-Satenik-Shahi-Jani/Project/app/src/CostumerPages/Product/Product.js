@@ -38,14 +38,16 @@ function Product() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    cart?.cartItems.map(item=>{
-      console.log(item.id)
-      console.log(productNumber)
-      if(item.id=== +(productNumber)){
-        setInput(item.cartQuantity)
-      }
-    })
-  }, []);
+    if(cart){
+      cart.cartItems.forEach(item=>{
+        console.log(item.id)
+        console.log(productNumber)
+        if(item.id=== +(productNumber)){
+          setInput(item.cartQuantity)
+        }
+      })
+    }
+  }, [cart,productNumber]);
 
   // useEffect(() => {
     

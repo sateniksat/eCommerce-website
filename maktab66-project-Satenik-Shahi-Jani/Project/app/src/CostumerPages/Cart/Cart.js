@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+// import { useEffect } from "react";
 // import CostumerPageLayout from '../../layouts/CostumerPageLayout';
 import {
   TableCell,
@@ -20,15 +21,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromCart,
   setcartTotalAmount,
-  updateData,
-  updateQuantity,
+  // updateData,
+  // updateQuantity,
 } from "../../redux/cartSlice";
 import InputCart from "./InputCart";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
-
-
-
+// import { useFetch } from "../../hooks/useFetch";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
@@ -40,7 +38,7 @@ function Cart() {
   function totalCount() {
     let total = 0;
     if (cart.cartItems !== []) {
-cart.cartItems?.map((item) => {
+      cart.cartItems?.map((item) => {
         total = item?.price * item?.cartQuantity + total;
         return total;
       });
@@ -49,47 +47,48 @@ cart.cartItems?.map((item) => {
     return total;
   }
 
-  function genrateUrl() {
-    let urlString = "";
-    if (cart.cartTotalQuantity !== 0) {
- cart.cartItems?.map((item, index) => {
-        if (index === cart.cartItems.length - 1) {
-          urlString = urlString + `id=${item.id}`;
-        } else {
-          urlString = urlString + `id=${item.id}&`;
-        }
-      });
-      return urlString;
-    }
-  }
-  const { data } = useFetch(`/products?${genrateUrl()}`);
+  // function genrateUrl() {
+  //   let urlString = "";
+  //   if (cart.cartTotalQuantity !== 0) {
+  //     cart.cartItems?.forEach((item, index) => {
+  //       if (index === cart.cartItems.length - 1) {
+  //         urlString = urlString + `id=${item.id}`;
+  //       } else {
+  //         urlString = urlString + `id=${item.id}&`;
+  //       }
+  //     });
+  //     return urlString;
+  //   }
+  // }
+  // const { data } = useFetch(`/products?${genrateUrl()}`);
 
-  function getDataCartUpdate() {
-    if (cart.cartTotalQuantity !== 0) {
- data?.data.map((item) => {
-        const productcheck = cart?.cartItems.find(
-          (newItem) => newItem.id === item.id
-        );
+  //   function getDataCartUpdate() {
+  //     if (cart.cartTotalQuantity !== 0) {
+  //  data?.data.forEach((item) => {
+  //         const productcheck = cart?.cartItems.find(
+  //           (newItem) => newItem.id === item.id
+  //         );
 
-        if (
-          productcheck?.price !== item?.price &&
-          productcheck?.count !== item?.count
-        ) {
-          dispatch(updateData(item));
-          dispatch(updateQuantity({ id: item.id, count: item.count }));
-          console.log(item.id);
-        } else if (productcheck?.price !== item?.price) {
-          dispatch(updateData(item));
-          console.log(item.id);
-        } else if (productcheck?.count !== item?.count) {
-          dispatch(updateData({ id: item.id, count: item.count }));
-        }
-      });
-    }
-  }
-  useEffect(() => {
-    getDataCartUpdate();
-  }, [data]);
+  //         if (
+  //           productcheck?.price !== item?.price &&
+  //           productcheck?.count !== item?.count
+  //         ) {
+  //           dispatch(updateData(item));
+  //           dispatch(updateQuantity({ id: item.id, count: item.count }));
+  //           console.log(item.id);
+  //         } else if (productcheck?.price !== item?.price) {
+  //           dispatch(updateData(item));
+  //           console.log(item.id);
+  //         } else if (productcheck?.count !== item?.count) {
+  //           dispatch(updateData({ id: item.id, count: item.count }));
+  //         }
+  //       });
+  //     }
+  //   }
+  // useEffect(() => {
+  //   getDataCartUpdate();
+
+  // }, [data]);
 
   return (
     <Box dir="rtl" sx={{ my: "5%", minHeight: "95vh" }}>
@@ -181,10 +180,7 @@ cart.cartItems?.map((item) => {
             justifyContent: "space-around",
           }}
         >
-          <Button
-            variant="contained"
-            sx={{ width: "40%", fontSize: "large" }}
-          >
+          <Button variant="contained" sx={{ width: "40%", fontSize: "large" }}>
             <Link to="/purchaseform">
               <Box
                 sx={{ width: "100%", alignItems: "center", display: "flex" }}

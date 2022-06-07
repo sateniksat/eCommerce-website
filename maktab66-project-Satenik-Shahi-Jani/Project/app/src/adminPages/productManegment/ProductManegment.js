@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 // import AdminPageLayout from "../../layouts/AdminPageLayout";
-import Table from "@mui/material/Table";
+import {Table} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -30,9 +30,8 @@ function ProductManegment() {
   }, [data]);
 
   async function deleteItemHandeler(item) {
-    console.log(item);
-    const response = await api.get(`/products/${item.id}`);
-    const deleted = await api.delete(`/products/${item.id}`).then((res) => {
+    // console.log(item);
+     await api.delete(`/products/${item.id}`).then((res) => {
       if (res.status === 200) {
         setGetData(getData.filter((i) => i.id !== item.id));
       }

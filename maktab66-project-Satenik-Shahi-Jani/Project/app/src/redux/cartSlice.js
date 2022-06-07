@@ -9,14 +9,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      if (existingIndex >= 0) {
-        state.cartItems[existingIndex] = {
+      if (foundIndex >= 0) {
+        state.cartItems[foundIndex] = {
           ...action.payload,
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+          cartQuantity: state.cartItems[foundIndex].cartQuantity + 1,
         };
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
       } else {
@@ -63,42 +63,42 @@ const cartSlice = createSlice({
       });
     },
     updateData(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      // console.log(existingIndex);
+      // console.log(foundIndex);
       // console.log(action.payload)
-      if (existingIndex >= 0) {
+      if (foundIndex >= 0) {
         state.cartTotalAmount =
           +state.cartTotalAmount -
-          +state.cartItems[existingIndex].cartQuantity *
-            +state.cartItems[existingIndex].price +
-          +state.cartItems[existingIndex].cartQuantity * +action.payload.price;
-        state.cartItems[existingIndex] = {
-          cartQuantity: state.cartItems[existingIndex].cartQuantity,
+          +state.cartItems[foundIndex].cartQuantity *
+            +state.cartItems[foundIndex].price +
+          +state.cartItems[foundIndex].cartQuantity * +action.payload.price;
+        state.cartItems[foundIndex] = {
+          cartQuantity: state.cartItems[foundIndex].cartQuantity,
           ...action.payload,
         };
       }
-      // console.log(state.cartItems[existingIndex])
+      // console.log(state.cartItems[foundIndex])
       localStorage.setItem("cart", JSON.stringify(state));
     },
     updateQuantity(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (existingIndex >= 0) {
+      if (foundIndex >= 0) {
         state.cartTotalAmount =
           +state.cartTotalAmount -
-          +state.cartItems[existingIndex].cartQuantity *
-            +state.cartItems[existingIndex].price +
-          +action.payload.count * +state.cartItems[existingIndex].price;
+          +state.cartItems[foundIndex].cartQuantity *
+            +state.cartItems[foundIndex].price +
+          +action.payload.count * +state.cartItems[foundIndex].price;
         state.cartTotalQuantity =
           +state.cartTotalQuantity -
-          +state.cartItems[existingIndex].cartQuantity +
+          +state.cartItems[foundIndex].cartQuantity +
           +action.payload.count;
-        state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
+        state.cartItems[foundIndex] = {
+          ...state.cartItems[foundIndex],
           cartQuantity: action.payload.count,
         };
       }

@@ -5,14 +5,11 @@ import { Container, CircularProgress, Box, CardMedia } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function ListAll(props) {
-  // const params = {
-  //   category: `${props.category.id}`,
-  //   favorite: true };
+
   const { data, loading } = useFetch(
-    `products?category=${props.category.id}&favorite=true`
+    `products?category=${props.category.id}&favorite=true&_sort=id&_order=desc&_limit=6`
   );
-  // products?_category=${props.category.id}&_favorite=${true}`
-  // console.log(data);
+
   return (
     <Container sx={{ mt: "5%" }} dir="rtl">
       <Link to={`/category/${props.category.id}`}>
@@ -25,23 +22,12 @@ function ListAll(props) {
             sx={{ width: "8%", height: "8%", borderRadius: "30px", mx: "2%" }}
           />
           <Box
-            // component={"h2"}
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
             {props.category.name}
           </Box>
         </Box>
       </Link>
-      {/* <Box
-      sx={{
-        my:"5%",
-        mx: "auto",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-    </Box> */}
       <Container
         sx={{
           mt: "5%",

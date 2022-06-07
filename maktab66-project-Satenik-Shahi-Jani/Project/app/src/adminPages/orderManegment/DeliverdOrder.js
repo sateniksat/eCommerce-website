@@ -26,7 +26,7 @@ function DeliverdOrder(props) {
     // console.log(newObj);
     let status;
     (async () => {
-      const response = await api
+      await api
         .patch(`/orderlist/${item.id}`, newObj, {
           headers: {
             "Content-Type": "application/json",

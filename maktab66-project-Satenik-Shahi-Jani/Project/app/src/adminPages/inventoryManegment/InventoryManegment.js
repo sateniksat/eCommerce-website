@@ -14,6 +14,7 @@ import { Button, Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
 import InputActive from "./InputActive";
 // import axios from "axios";
+// import { Axios } from "../../api/api";
 import { api } from "../../api/api";
 
 function InventoryManegment() {
@@ -51,7 +52,7 @@ function InventoryManegment() {
 
   const handleSave = async () => {
     let temp = [];
-    changedID.map((item) => {
+    changedID.forEach((item) => {
       const found = changes.find((product) => product.id === item);
       // console.log(found)
       const tempRequest = api.patch(`/products/${item}`, found, {
@@ -63,6 +64,7 @@ function InventoryManegment() {
       temp.push(tempRequest);
     });
     const arrayResponse = await Promise.all(temp);
+    console.log(arrayResponse);
   };
   return (
     <>

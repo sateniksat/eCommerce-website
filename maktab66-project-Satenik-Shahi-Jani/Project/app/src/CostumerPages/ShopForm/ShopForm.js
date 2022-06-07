@@ -26,7 +26,7 @@ export function ShopForm() {
 
   function totalCount() {
     let total = 0;
-     cart.cartItems?.map((item) => {
+    cart.cartItems?.map((item) => {
       total = item.price * item.cartQuantity + total;
       return total;
     });
@@ -51,7 +51,7 @@ export function ShopForm() {
     shippingAddress: "",
     phone: "",
   };
-
+  // pattern = '/(\+?98|098|0|0098)?(9\d{9})/'
   const validate = (values) => {
     let errors = {};
     if (!values.firstName) {
@@ -68,6 +68,8 @@ export function ShopForm() {
     }
     if (!values.phone) {
       errors.phone = "لطفا فیلد را پر کنید.";
+    } else if (!/(\+?98|098|0|0098)?(9\d{9})/.test(values.phone)) {
+      errors.phone = "اعداد شماره تلفن خود را اضافه کنید.";
     } else if (values.phone.length < 11) {
       errors.phone = " کوتاه است -باید حداقل 11 کاراکتر داشته باشد.";
     }
@@ -75,8 +77,6 @@ export function ShopForm() {
   };
 
   const submitForm = (values) => {
-
-
     const details = {
       customerDetail: {
         username: values.firstName,
@@ -90,7 +90,7 @@ export function ShopForm() {
       orderNumber: "",
       orderDate: null,
       purchaseTotal: totalCount(),
-      orderStatus: 5,
+      orderStatus: "pending",
       delivery: Date.parse(date.toDate()),
       deliveredAt: null,
       orderItems: totalItemNecessary(),
@@ -108,10 +108,7 @@ export function ShopForm() {
         dispatch(addToUser(responseServer.data));
 
         // console.log(responseServer.data)
-        window.open(
-          "http://127.0.0.1:5501/index.html",
-          "_self"
-        );
+        window.open("http://127.0.0.1:5501/index.html", "_self");
       }
     })();
   };
