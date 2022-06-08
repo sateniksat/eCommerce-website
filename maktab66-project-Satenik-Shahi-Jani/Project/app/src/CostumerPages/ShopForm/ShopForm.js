@@ -26,12 +26,11 @@ export function ShopForm() {
 
   function totalCount() {
     let total = 0;
-    cart.cartItems?.map((item) => {
+    cart.cartItems?.forEech((item) => {
       total = item.price * item.cartQuantity + total;
-      return total;
+
     });
     dispatch(setcartTotalAmount(total));
-    return total;
   }
   function totalItemNecessary() {
     const totalMap = cart.cartItems?.map((item) => {

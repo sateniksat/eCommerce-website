@@ -27,11 +27,34 @@ export function ProductAdd(props) {
 
   const { data } = useFetch("/category");
 
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    description: "",
+    name: "",
+    price: "",
+    count: "",
+    brand: "",
+    category: "",
+    images: [],
+    thumbnail: "",
+    categoryName: "",
+  });
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
-    // console.log(product);
+    console.log(product);
   };
+
+  function handleChangeSelect(e) {
+    handleChangeInput(e);
+    let test = "";
+    data?.data.forEach((item) => {
+      if (item.id === Number(e.target.value)) {
+        test = item.name;
+        console.log(item.name);
+        setProduct((prevState) => ({ ...prevState, categoryName: test }));
+        console.log(product);
+      }
+    });
+  }
 
   const changeHanler = async (e) => {
     const files = Array.from(e.target.files);
@@ -82,31 +105,36 @@ export function ProductAdd(props) {
   };
   const handleSendNewData = (e) => {
     e.preventDefault();
-    if (
-      product.description === "" ||
-      product.name === "" ||
-      product.price === "" ||
-      product.count === "" ||
-      product.brand === "" ||
-      product.category === "" ||
-      product.images === "" ||
-      product.thymbnail === ""
-    ) {
-      alert("fill all feilds");
-    } else {
-      setProduct({ ...product, createdAt: Date.now() });
-      data.data.forEach((item) => {
-        console.log(item.id);
-        console.log(Number(product.category));
-        if (item.id === Number(product.category)) {
-          setProduct({ ...product, categoryName: item.name });
+
+    (async () => {
+      if (
+        product.description === "" ||
+        product.name === "" ||
+        product.price === "" ||
+        product.count === "" ||
+        product.brand === "" ||
+        product.categoryName === "" ||
+        product.category === "" ||
+        product.images === [] ||
+        product.thumbnail === ""
+      ) {
+        alert("لطفا تمام فیلد ها را پر کنید.");
+      } else {
+        setProduct({ ...product, createdAt: Date.now() });
+        const response = await api
+          .post("/products", product)
+          .then((res) => res);
+        if (response?.status === 200 || response?.status === 201) {
+          props.addingProduct("OK");
+        } else {
+          props.addingProduct();
         }
-      });
-      api.post("/products", product);
-      // console.log(product);
-      props.handleClose();
-      // props. refreshTry();
-    }
+
+        props.addingProduct();
+        console.log(product);
+        props.handleClose();
+      }
+    })();
   };
 
   const handleEditData = (e) => {
@@ -121,14 +149,18 @@ export function ProductAdd(props) {
         })
         .then((res) => res);
       // console.log(response)
-      if (response.status === 200) {
+      if (response?.status === 200 || response?.status === 201) {
         props.handleProductEdit(response.data);
         // console.log("hellooo")
+      } else {
+        props.handleProductEdit();
       }
     })();
+    // props.handleProductEdit()
     props.handleClose();
     props.setActivePage(props.activePage);
   };
+
   return (
     <form>
       <Box dir="rtl" sx={{ mt: "2%" }}>
@@ -162,6 +194,7 @@ export function ProductAdd(props) {
               required
               id="outlined-required"
               label="قیمت"
+              InputProps={{ inputProps: { min: 0 } }}
               type="number"
               name="price"
               sx={{ my: 2 }}
@@ -172,6 +205,7 @@ export function ProductAdd(props) {
               required
               id="outlined-required"
               label="موجودی"
+              InputProps={{ inputProps: { min: 0 } }}
               name="count"
               type="number"
               onChange={(e) => handleChangeInput(e)}
@@ -187,7 +221,7 @@ export function ProductAdd(props) {
                   label="دسته بندی"
                   name="category"
                   required
-                  onChange={(e) => handleChangeInput(e)}
+                  onChange={(e) => handleChangeSelect(e)}
                 >
                   {data?.data.map((item) => {
                     return <option value={item.id}>{item.name}</option>;

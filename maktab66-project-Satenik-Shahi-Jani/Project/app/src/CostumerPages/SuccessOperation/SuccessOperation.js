@@ -41,7 +41,7 @@ function SuccessOperation() {
     } else {
       let temp = [];
       // console.log("hi");
-      cart.cartItems.map((item) => {
+      cart.cartItems.forEach((item) => {
         let leftCount = item.count - item.cartQuantity;
         const sendCount = api.patch(
           `/products/${item.id}`,
@@ -54,7 +54,6 @@ function SuccessOperation() {
           }
         );
         temp.push(sendCount);
-        return true;
       });
       const arrayResponse = await Promise.all(temp);
       console.log(arrayResponse);

@@ -24,23 +24,21 @@ function DeliverdOrder(props) {
       orderStatus: 6,
     };
     // console.log(newObj);
-    let status;
+    // let status;
     (async () => {
-      await api
+      const response = await api
         .patch(`/orderlist/${item.id}`, newObj, {
           headers: {
             "Content-Type": "application/json",
             token: localStorage.getItem("token"),
           },
         })
-        .then((res) => {
-          // console.log(res);
-          status = res.status;
-          // console.log(status);
-        });
-        if (status === 200) {
-          props.fillterData(item.id);
-        }
+        .then((res) => res);
+      if (response?.status === 200 || response?.status === 201) {
+        props.fillterData(item.id);
+      }else{
+        props.fillterData();
+      }
     })();
     props.handleClose();
   };
@@ -55,13 +53,14 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
         <label>نام و نام خانوادگی مشتری :</label>
         <Typography id="transition-modal-title" variant="h6" component="h2">
-          {props.order.customerDetail.firstName}-
-          {props.order.customerDetail.lastName}
+          {props.order.customerDetail?.firstName}{" "}
+          {props.order.customerDetail?.lastName}
         </Typography>
       </Box>
       <Box
@@ -69,6 +68,7 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
@@ -82,6 +82,7 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
@@ -96,6 +97,7 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
@@ -109,6 +111,7 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
@@ -122,6 +125,7 @@ function DeliverdOrder(props) {
           display: "flex",
           justifyContent: "space-between",
           width: "50%",
+          alignItems: "center",
           my: 3,
         }}
       >
@@ -133,7 +137,7 @@ function DeliverdOrder(props) {
       </Box>
       <TableContainer component={Paper} dir="rtl" sx={{ my: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" dir="rtl">
-          <TableHead>
+          <TableHead key={"head"}>
             <TableRow>
               <TableCell align="left">تصویر</TableCell>
               <TableCell align="left">نام کالا</TableCell>
@@ -144,7 +148,7 @@ function DeliverdOrder(props) {
           <TableBody>
             {props.order.orderItems.map((row) => (
               <TableRow
-                key={row.id}
+                key={row.id ? row.id : row.name}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
@@ -170,6 +174,7 @@ function DeliverdOrder(props) {
             display: "flex",
             justifyContent: "space-between",
             width: "50%",
+            alignItems: "center",
             my: 3,
           }}
         >

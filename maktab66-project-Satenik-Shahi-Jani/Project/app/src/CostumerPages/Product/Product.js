@@ -24,6 +24,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleOutline from "@mui/icons-material/Remove";
+import { Link } from "react-router-dom";
+
 
 function Product() {
   const [input, setInput] = useState(0);
@@ -124,9 +126,14 @@ const errorText={
             <Card key={item.id} sx={{ width: "100%", display: "flex" }}>
               <Box dir="rtl" sx={{ display: "flex", flexDirection: "column" }}>
                 <CardContent sx={{ flex: "1 0 auto" }}>
-                  <Typography component="div" variant="h5">
+                  <Typography component="div" variant="h4">
                     {item.name}
                   </Typography>
+                  <Link to={`/category/${item.category}`}>
+                  <Typography component="div" variant="h6">
+                    {item.categoryName}
+                  </Typography>
+                  </Link>
                   <Typography
                     variant="subtitle1"
                     color="text.secondary"
@@ -205,6 +212,7 @@ const errorText={
           ))}
         </>
       )}
+
     </Container>
   );
 }

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function ListAll(props) {
 
   const { data, loading } = useFetch(
-    `products?category=${props.category.id}&favorite=true&_sort=id&_order=desc&_limit=6`
+    `products?category=${props.category.id}&favorite=true&_sort=createdAt&_order=desc&_limit=6`
   );
 
   return (

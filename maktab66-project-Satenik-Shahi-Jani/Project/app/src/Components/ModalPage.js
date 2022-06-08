@@ -1,9 +1,9 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 // import Typography from "@mui/material/Typography";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -25,17 +25,28 @@ export default function ModalPage(Component) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    // console.log(props.status);
+    useEffect(() => {
+      if (props.status === "OPEN") {
+        handleOpen();
+      }
+    }, [props.status]);
 
+    useEffect(() => {
+      if (open === false) {
+        props.setOpenModal()
+      }
+    }, [open,props]);
     return (
       <Box>
-        <Button
+        {/* <Button
           variant={props.buttonVarient}
           onClick={handleOpen}
           color={props.buttonColor}
           sx={{ ml: 2 }}
         >
           {props.title}
-        </Button>
+        </Button> */}
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
