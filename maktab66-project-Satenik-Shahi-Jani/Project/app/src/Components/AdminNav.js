@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import HomeIcon from "@mui/icons-material/Home";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../redux/tokenslice";
 import { api } from "../api/api";
@@ -66,8 +67,8 @@ export function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
-      <AppBar position="static" sx={{ bgcolor: "secondary.main" }}>
-        <Toolbar>
+      <AppBar position="static" sx={{ bgcolor: "#fff",display:"flex",flexDirection:"column" }}>
+        <Toolbar sx={{ bgcolor: "secondary.main" }}>
           <Tooltip title="رفتن به صفحه اصلی">
             <Link to="/" style={{ width: "5%" }}>
               <img
@@ -87,27 +88,12 @@ export function AdminNav() {
           >
             پنل مدیریت فروشگاه
           </Typography>
-          {/* <Box sx={{ bgcolor: "#ffff", borderRadius: "10px" }}> */}
-          <ToggleButtonGroup
-            color="primary"
-            sx={{ bgcolor: "#ffff", borderRadius: "10px" }}
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-          >
-            <ToggleButton value="productmanagement">
-              <Link to="/admin-productmanagement">کالا ها</Link>
-            </ToggleButton>
-            <ToggleButton value="inventory">
-              <Link to="/admin-inventory">موجودی و قیمت ها </Link>
-            </ToggleButton>
-            <ToggleButton value="orders">
-              <Link to="/admin-orders">سفارس ها </Link>
-            </ToggleButton>
-          </ToggleButtonGroup>
-          {/* </Box> */}
+
           <Link to="/">
-            <Button color="inherit"> بازگشت به سایت</Button>
+            <Button color="inherit"> 
+            {/* بازگشت به سایت */}
+            <HomeIcon/>
+            </Button>
           </Link>
 
           <IconButton
@@ -143,6 +129,27 @@ export function AdminNav() {
             </MenuItem>
           </Menu>
         </Toolbar>
+        <Box sx={{displa:"flex",justifyContent:"space-around",width:"100%",alignItems:"center"}}>
+          <Box sx={{mx:"auto"}}>
+        <ToggleButtonGroup
+            color="primary"
+            sx={{ bgcolor: "#ffff"}}
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+          >
+            <ToggleButton value="productmanagement">
+              <Link to="/admin-productmanagement">کالا ها</Link>
+            </ToggleButton>
+            <ToggleButton value="inventory">
+              <Link to="/admin-inventory">موجودی و قیمت ها </Link>
+            </ToggleButton>
+            <ToggleButton value="orders">
+              <Link to="/admin-orders">سفارس ها </Link>
+            </ToggleButton>
+          </ToggleButtonGroup>
+          </Box>
+          </Box>
       </AppBar>
     </Box>
   );

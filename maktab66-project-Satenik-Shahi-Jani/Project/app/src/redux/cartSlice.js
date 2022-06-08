@@ -1,4 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// ToastContainer,
+
+function processDone() {
+  toast.success("تغییرات انجام شد.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+
+function processFail() {
+  toast.error("تغییرات حذف انجام شد.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
@@ -19,13 +46,15 @@ const cartSlice = createSlice({
           cartQuantity: state.cartItems[foundIndex].cartQuantity + 1,
         };
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
+        processDone()
       } else {
         // let tempProductItem = { id: action.payload.id, cartQuantity: 1 };
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
+        processDone()
       }
-      console.log(state.cartItems);
+      // console.log(state.cartItems);
       // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       localStorage.setItem("cart", JSON.stringify(state));
     },
@@ -37,12 +66,15 @@ const cartSlice = createSlice({
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
         state.cartTotalQuantity = state.cartTotalQuantity - 1;
+
+        processFail()
       } else if (state.cartItems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartItems.filter(
           (item) => item.id !== action.payload.id
         );
         state.cartItems = nextCartItems;
         state.cartTotalQuantity = state.cartTotalQuantity - 1;
+        processFail()
       }
       // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       localStorage.setItem("cart", JSON.stringify(state));
@@ -56,6 +88,7 @@ const cartSlice = createSlice({
           state.cartTotalQuantity =
             state.cartTotalQuantity - cartItem.cartQuantity;
           state.cartItems = nextCartItems;
+          processFail();
         }
         // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         localStorage.setItem("cart", JSON.stringify(state));

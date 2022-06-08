@@ -8,6 +8,7 @@ a {
   all: unset;
   width: max-content;
   cursor: pointer;
+  /* color: #1976D2"; */
 }
 * {
   margin: 0;

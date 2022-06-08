@@ -72,7 +72,7 @@ export default function CostumerNav(props) {
     <Box sx={{ flexGrow: 1 }} dir="rtl">
       <AppBar position="static" >
         <Toolbar>
-          {(props.slider) ? <Box width={"5%"}></Box>:<></>}
+          {/* {(props.slider) ? <Box width={"5%"}></Box>:<></>} */}
           <Tooltip title="رفتن به صفحه اصلی" >
             <Link to="/" style={{ width: "5%" }}>
               <img

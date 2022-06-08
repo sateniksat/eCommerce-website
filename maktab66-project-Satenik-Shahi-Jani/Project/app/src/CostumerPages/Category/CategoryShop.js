@@ -6,6 +6,11 @@ import Cards from "../shared/Cards";
 import { Container, CircularProgress, Box, CardMedia,Pagination } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 
 function CategoryShop() {
   const params = useParams();
@@ -104,6 +109,17 @@ function CategoryShop() {
           onChange={(_, page) => setActivePage(page)}
         />
       </Box>
+      <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={true}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
     </Container>
   );
 }

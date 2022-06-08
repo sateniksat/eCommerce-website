@@ -123,14 +123,18 @@ export function ProductAdd(props) {
         setProduct({ ...product, createdAt: Date.now() });
         const response = await api
           .post("/products", product)
-          .then((res) => res);
+          .then((res) => {console.log(res)
+           return res});
+          // console.log(response?.data)
         if (response?.status === 200 || response?.status === 201) {
-          props.addingProduct("OK");
+          console.log("hi")
+          // console.log(response?.data.data)
+          props.addingProduct(product);
         } else {
           props.addingProduct();
         }
 
-        props.addingProduct();
+        // props.addingProduct();
         console.log(product);
         props.handleClose();
       }

@@ -2,16 +2,16 @@ import React from "react";
 // import CostumerPageLayout from "../../layouts/CostumerPageLayout";
 import { useFetch } from "../../hooks/useFetch";
 import { Container, CircularProgress, Box } from "@mui/material";
-import ListAll from "./ListAll"
-
+import ListAll from "./ListAll";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// , toast
 
 function AllCategories() {
   const { data, loading } = useFetch("/category");
 
-
   return (
-    <Container sx={{ mt: "5%",minHeight: '95vh' }}>
-
+    <Container sx={{ mt: "5%", minHeight: "95vh" }}>
       {loading ? (
         <Box
           sx={{
@@ -27,9 +27,22 @@ function AllCategories() {
         </Box>
       ) : (
         <Box>
-          {data?.data.map(category=><ListAll key={category.id} category={category}/>)}
+          {data?.data.map((category) => (
+            <ListAll key={category.id} category={category} />
+          ))}
         </Box>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 }

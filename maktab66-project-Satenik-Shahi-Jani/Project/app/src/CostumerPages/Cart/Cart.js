@@ -27,6 +27,13 @@ import {
 import InputCart from "./InputCart";
 import { Link } from "react-router-dom";
 // import { useFetch } from "../../hooks/useFetch";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
+
+
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
@@ -198,6 +205,17 @@ function Cart() {
           </Link>
         </Box>
       )}
+              <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={true}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
     </Box>
   );
 }

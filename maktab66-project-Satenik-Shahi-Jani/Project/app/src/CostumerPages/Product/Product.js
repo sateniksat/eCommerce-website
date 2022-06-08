@@ -25,7 +25,9 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleOutline from "@mui/icons-material/Remove";
 import { Link } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// , toast
 
 function Product() {
   const [input, setInput] = useState(0);
@@ -212,7 +214,17 @@ const errorText={
           ))}
         </>
       )}
-
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 }

@@ -110,12 +110,17 @@ function ProductManegment() {
   };
 
   function addingProduct(input) {
-    if (input === "OK") {
+    // console.log(input)
+    if (input) {
       processDone();
+      if(activePage===Math.ceil(+data?.headers["x-total-count"] / limit)){
+        setGetData([...getData , input]);
+      }
     } else {
       processFail();
     }
   }
+  
   return (
     <Container sx={{ mt: "5%", minHeight: "100vh" }}>
       <Box dir="rtl" sx={{ display: "flex", justifyContent: "space-between" }}>
