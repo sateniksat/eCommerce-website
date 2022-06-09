@@ -79,14 +79,14 @@ export function Login() {
       sx={{
         width: "100%",
         background: " linear-gradient(to right, #007991, #78ffd6)",
-        p: 7,
+        p: {xs:2,sm:4,md:5},
         height: "100vh",
       }}
     >
       <Container
         dir="rtl"
         component="main"
-        sx={{ width: "50%", background: "white", borderRadius: "20px", p: 3 }}
+        sx={{ width: {xs:"95%",sm:"60%",md:"50%"}, background: "white", borderRadius: "20px", p: 3 }}
       >
         <CssBaseline />
         <Box

@@ -18,6 +18,7 @@
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "jss-rtl": "^0.3.0",
+    "lodash.debounce": "^4.0.8",
     "moment-jalaali": "^0.9.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
@@ -28,6 +29,7 @@
     "react-toastify": "^9.0.4",
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "^2.1.1",
+    "swiper": "^8.2.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -10,6 +10,7 @@ import AllCategories from "../costumerPages/Home/AllCategories";
 import Product from "../costumerPages/Product/Product";
 import ShopForm from "../costumerPages/ShopForm/ShopForm";
 // import Shaparak from "../costumerPages/Shaparak/Shaparak";
+// import Solid from "../costumerPages/shared/Solid";
 import SuccessOperation from "../costumerPages/SuccessOperation/SuccessOperation";
 import NotFound from "../notFound/NotFound";
 import CategoryShop from "../costumerPages/Category/CategoryShop";
@@ -33,15 +34,26 @@ export default function AppRoute() {
             </CostumerPageLayout>
           }
         />
-        {/* <Route
-          path="category/"
-          element={
-            <CostumerPageLayout slider={true}>
-              <CategoryShop />
-            </CostumerPageLayout>
-          }
-        >
-          <Route path="/*" element={<NotFound />} />
+        {/* <Route path="category" element={<Solid />}>
+          <Route
+            path=":categoryId"
+            element={
+              <CostumerPageLayout slider={true}>
+                <CategoryShop />
+              </CostumerPageLayout>
+            }
+          >
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          <Route
+            path="*"
+            element={
+              <CostumerPageLayout>
+                <NotFound />
+              </CostumerPageLayout>
+            }
+          />
         </Route> */}
         <Route
           path="category/:categoryId"
@@ -121,7 +133,14 @@ export default function AppRoute() {
             </ProtectedRout>
           }
         />
-        <Route path="/*" element={<NotFound />} />
+        <Route
+          path="/*"
+          element={
+            <CostumerPageLayout>
+              <NotFound />
+            </CostumerPageLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

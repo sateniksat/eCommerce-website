@@ -8,6 +8,7 @@ import {
   Input,
   FormControl,
   Button,
+  CardMedia,
 } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ModalPage from "../../components/ModalPage";
@@ -40,7 +41,7 @@ export function ProductAdd(props) {
   });
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
-    console.log(product);
+    // console.log(product);
   };
 
   function handleChangeSelect(e) {
@@ -121,21 +122,23 @@ export function ProductAdd(props) {
         alert("لطفا تمام فیلد ها را پر کنید.");
       } else {
         setProduct({ ...product, createdAt: Date.now() });
-        const response = await api
-          .post("/products", product)
-          .then((res) => {console.log(res)
-           return res});
-          // console.log(response?.data)
+        const response = await api.post("/products", product).then((res) => {
+          console.log(res.data);
+          setProduct(res.data);
+          return res;
+        });
+        // console.log(response?.data)
         if (response?.status === 200 || response?.status === 201) {
-          console.log("hi")
+          console.log("hi");
           // console.log(response?.data.data)
-          props.addingProduct(product);
+          // props.addingProduct(product);
+          props.addingProduct(response?.data);
         } else {
           props.addingProduct();
         }
 
         // props.addingProduct();
-        console.log(product);
+        // console.log(product);
         props.handleClose();
       }
     })();
@@ -165,13 +168,28 @@ export function ProductAdd(props) {
     props.setActivePage(props.activePage);
   };
 
+  // const handleDeletIMG = async (item) => {
+  //   const response = await api
+  //     .delete(`/upload?_name=${item}`,{
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         token: localStorage.getItem("token"),
+  //       },
+  //     })
+  //     .then((res) => res)
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   console.log(response);
+  // };
+
   return (
     <form>
-      <Box dir="rtl" sx={{ mt: "2%" }}>
+      <Box dir="rtl" sx={{ my: "4%" }}>
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
+            flexDirection:{ xs:"column",md:"row"},
             justifyContent: "space-between",
             alignContent: "center",
             width: "100%",
@@ -181,7 +199,7 @@ export function ProductAdd(props) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "48%",
+              width:{ xs:"100%",md:"48%"},
               alignContent: "center",
             }}
           >
@@ -238,7 +256,7 @@ export function ProductAdd(props) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "48%",
+              width:{ xs:"100%",md:"48%"},
               alignContent: "center",
             }}
           >
@@ -253,6 +271,44 @@ export function ProductAdd(props) {
             />
           </Box>
         </Box>
+        <Box width="100%">
+          {props.product && (
+            <Box>
+              <CardMedia
+                component="img"
+                alt="img"
+                sx={{ width: { xs:"20%",md:"10%"}, mx: 1 }}
+                image={`http://localhost:3002/files/${props.product.thumbnail}`}
+              />
+              {/* <Button
+                variant="outlined"
+                color="error"
+                sx={{ mx: 1 }}
+                onClick={() => handleDeletIMG(props.product.thumbnail)}
+              >
+                حذف
+              </Button> */}
+            </Box>
+          )}
+                    {product.thumbnail && (
+            <Box>
+              <CardMedia
+                component="img"
+                alt="img"
+                sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }}
+                image={`http://localhost:3002/files/${product.thumbnail}`}
+              />
+              {/* <Button
+                variant="outlined"
+                color="error"
+                sx={{ mx: 1 }}
+                onClick={() => handleDeletIMG(product.thumbnail)}
+              >
+                حذف
+              </Button> */}
+            </Box>
+          )}
+        </Box>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <label>Thumbnail</label>
           <Input
@@ -262,6 +318,46 @@ export function ProductAdd(props) {
             type="file"
             onChange={changeHanlerThumbnail}
           />
+        </Box>
+        <Box width="100%" sx={{display:"flex",flexWrap:"wrap"}}>
+          {props.product &&
+            props.product.images.map((item) => (
+              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+                <CardMedia
+                  component="img"
+                  alt="img"
+                  sx={{ width:"100%"}}
+                  image={`http://localhost:3002/files/${item}`}
+                />
+                {/* <Button
+                  variant="outlined"
+                  color="error"
+                  sx={{width:"100%" }}
+                  onClick={() => handleDeletIMG(item)}
+                >
+                  حذف
+                </Button> */}
+              </Box>
+            ))}
+          {product.images &&
+            product.images.map((item) => (
+              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+                <CardMedia
+                  component="img"
+                  alt="img"
+                  sx={{ width:"100%"}}
+                  image={`http://localhost:3002/files/${item}`}
+                />
+                {/* <Button
+                  variant="outlined"
+                  color="error"
+                  sx={{width:"100%" }}
+                  onClick={() => handleDeletIMG(item)}
+                >
+                  حذف
+                </Button> */}
+              </Box>
+            ))}
         </Box>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <label htmlFor="contained-button-file">
@@ -303,7 +399,7 @@ export function ProductAdd(props) {
               variant="contained"
               color="success"
               onClick={(e) => handleEditData(e)}
-              sx={{ width: "50%" }}
+              sx={{ width: "50%" ,mb:3}}
             >
               ویرایش
             </Button>
@@ -312,7 +408,7 @@ export function ProductAdd(props) {
               variant="contained"
               type="submit"
               color="success"
-              sx={{ width: "50%" }}
+              sx={{ width: "50%",mb:3 }}
               onClick={(e) => handleSendNewData(e)}
             >
               افزودن

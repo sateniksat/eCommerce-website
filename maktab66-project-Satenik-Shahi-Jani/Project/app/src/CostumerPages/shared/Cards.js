@@ -55,16 +55,16 @@ function Cards(props) {
   }
 
   return (
-    <Card sx={{ minWidth: "20%", mx: "2%", mb: "2%" }}>
+    <Card sx={{ minHieght: "20%" }}>
         <CardMedia
           component="img"
           alt="img"
-          height="200"
+          width="100%"
           image={`http://localhost:3002/files/${props.product.thumbnail}`}
         />
         <CardContent>
       <Link to={`/products/${props.product.id}`}>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{width:"100%",fontSize:{xs:"14px",md:"25px"}}}>
             {props.product.name}
           </Typography>
       </Link>

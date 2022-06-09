@@ -21,11 +21,41 @@ a {
 }
 .ck-editor__editable {
   min-height: 200px !important;
+  /* min-width: 300px; */
 }
-/* .ck-editor__top {
-  min-width: 1000px;
-} */
+.ck-editor__top {
+  min-width: 100px !important;
+}
 input:read-only{
   all:unset;
   width: 100%;
 }
+/* @media only screen and (max-width: 600px) {
+  .ck-editor__top {
+  min-width: 300px;
+}
+}
+
+@media only screen and (min-width: 600px) {
+  .ck-editor__top {
+  min-width: 500px;
+}
+}
+
+@media only screen and (min-width: 768px) {
+  .ck-editor__top {
+  min-width: 600px;
+}
+}
+
+@media only screen and (min-width: 992px) {
+  .ck-editor__top {
+  min-width: 800px;
+}
+}
+
+@media only screen and (min-width: 1200px) {
+  .ck-editor__top {
+  min-width: 1000px;
+}
+} */

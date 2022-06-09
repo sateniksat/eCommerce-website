@@ -21,8 +21,22 @@ import { useFetch } from "../../hooks/useFetch";
 import Order from "./DeliverdOrder";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+const ITEM_HEIGHT = 48;
 
 function OrderManegment() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const [selectedValue, setSelectedValue] = useState("6");
 
   const limit = useMemo(() => 5, []);
@@ -30,23 +44,41 @@ function OrderManegment() {
   const [changes, setchanges] = useState([]);
   const [openModal, setOpenModal] = useState("CLOSE");
   const [dataModal, setDataModal] = useState({});
+  const [urlString, setUrlString] = useState("");
+
 
   const { data } = useFetch(
-    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}`
-  );
+    `orderlist?_limit=${limit}&_page=${activePage}&orderStatus=${selectedValue}${urlString}`
+  ,{
+    headers: {
+      "Content-Type": "application/json",
+      token: localStorage.getItem("token"),
+    },
+  });
   const fillterData = (id) => {
-    if(id){
-     const filltered = changes.filter((item) => item.id !== id);
+    if (id) {
+      const filltered = changes.filter((item) => item.id !== id);
       setchanges(filltered);
       // console.log("hiiii")
       processDone();
-    }else{
+    } else {
       processFail();
     }
   };
+
   useEffect(() => {
     setchanges(data?.data);
   }, [data]);
+
+  function handleSort(input) {
+    if (input === "old") {
+      setUrlString("&_sort=orderDate&_order=desc");
+      setActivePage(1);
+    } else {
+      setUrlString("");
+      setActivePage(1);
+    }
+  }
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -118,7 +150,45 @@ function OrderManegment() {
             <TableRow>
               <TableCell align="left">نام کاربر</TableCell>
               <TableCell align="left"> مجموع مبلغ</TableCell>
-              <TableCell align="left">زمان ثبت سفارش</TableCell>
+              <TableCell align="left">
+                زمان ثبت سفارش{" "}
+                <IconButton
+                  aria-label="more"
+                  id="long-button"
+                  aria-controls={open ? "long-menu" : undefined}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>{" "}
+                <Menu
+                  id="long-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "long-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      maxHeight: ITEM_HEIGHT * 4.5,
+                      width: "20ch",
+                    },
+                  }}
+                >
+                  <MenuItem onClick={() => handleSort("new")} dir={"rtl"}>
+                    {/* <ListItemIcon>
+              </ListItemIcon> */}
+                    جدید
+                  </MenuItem>
+                  <MenuItem onClick={() => handleSort("old")} dir={"rtl"}>
+                    {/* <ListItemIcon>
+              </ListItemIcon> */}
+                    قدیمی
+                  </MenuItem>
+                </Menu>
+              </TableCell>
               <TableCell align="center">بررسی</TableCell>
             </TableRow>
           </TableHead>
@@ -159,7 +229,7 @@ function OrderManegment() {
         }}
       >
         <Pagination
-        dir="ltr"
+          dir="ltr"
           sx={{ mx: "auto", alignItems: "center", width: "content" }}
           variant="outlined"
           color="secondary"

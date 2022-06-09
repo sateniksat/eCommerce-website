@@ -97,11 +97,11 @@ function SuccessOperation() {
                 alignItems: "center",
                 minHeight: "90vh",
                 color: "red",
-                fontSize: "80px",
+                fontSize:{xs:"20px",sm:"30px",md:"60px"}
               }}
             >
               <Box>
-                <DisabledByDefaultIcon sx={{ fontSize: "300px" }} />
+                <DisabledByDefaultIcon sx={{ fontSize: {xs:"30px",sm:"80px",md:"200px"} }} />
               </Box>
               <h1>ناموفق</h1>
             </Box>
@@ -118,12 +118,12 @@ function SuccessOperation() {
               alignItems: "center",
               minHeight: "95vh",
               color: "green",
-              fontSize: "80px",
+              fontSize:{xs:"20px",sm:"30px",md:"60px"}
             }}
           >
             <Box>
               <CheckCircleOutlineIcon
-                sx={{ fontSize: "300px", color: "success" }}
+                sx={{ fontSize:{xs:"40px",sm:"80px",md:"200px"}, color: "success" }}
               />
             </Box>
             <h1>موفق</h1>

@@ -88,6 +88,16 @@ function ProductManegment() {
         console.log(error);
         processFail();
       });
+      // await api
+      // .delete(`/upload/${item.thumbnail}`)      .then((res) => {
+      //   if (res.status === 200) {
+      //   console.log(200);
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+        
+      // });
   }
 
   const handleProductEdit = (responseData) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useFetch } from "../../hooks/useFetch";
 import Cards from "../shared/Cards";
-import { Container, CircularProgress, Box, CardMedia } from "@mui/material";
+import { Container, CircularProgress, Box, CardMedia ,Grid} from "@mui/material";
 import { Link } from "react-router-dom";
 
 function ListAll(props) {
@@ -49,11 +49,13 @@ function ListAll(props) {
             <CircularProgress sx={{ my: "auto" }} />
           </Box>
         ) : (
-          <>
+          <Grid container spacing={2}>
             {data?.data.map((product) => (
+              <Grid item xs={6} sm={4} md={3}>
               <Cards key={product.id} product={product} />
+              </Grid>
             ))}
-          </>
+          </Grid>
         )}
       </Container>
     </Container>

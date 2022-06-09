@@ -60,7 +60,7 @@ export default function ModalPage(Component) {
           // sx={{overflow:"scroll",}}
         >
           <Fade in={open}>
-            <Box sx={{ ...style, width: props.ModalWidth }}>
+            <Box sx={{ ...style, width:{xs:"95%",md: props.ModalWidth} }}>
               <Box
                 dir="rtl"
                 sx={{

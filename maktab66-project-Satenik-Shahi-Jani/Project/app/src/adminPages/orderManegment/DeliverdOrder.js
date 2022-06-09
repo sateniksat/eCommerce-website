@@ -45,14 +45,14 @@ function DeliverdOrder(props) {
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", p: 4, my: 3 }}
+      sx={{ display: "flex", flexDirection: "column", p: 4, my: 3,fontSize:{xs:"14px",md:"25px"} }}
       dir="rtl"
     >
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -67,7 +67,7 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -81,7 +81,7 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -96,7 +96,7 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -110,7 +110,7 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -124,7 +124,7 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width:{ xs:"100%",md:"50%"},
           alignItems: "center",
           my: 3,
         }}
@@ -173,7 +173,7 @@ function DeliverdOrder(props) {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: { xs:"100%",md:"50%"},
             alignItems: "center",
             my: 3,
           }}
@@ -187,7 +187,7 @@ function DeliverdOrder(props) {
         <Button
           variant="contained"
           onClick={() => handleOreder(props.order)}
-          sx={{ width: "40%", mx: "auto", mt: 2 }}
+          sx={{ width: { xs:"100%",md:"50%"}, mx: "auto", mt: 2 }}
           color="success"
         >
           تحویل سفارش
@@ -196,7 +196,7 @@ function DeliverdOrder(props) {
       <Button
         variant="contained"
         onClick={props.handleClose}
-        sx={{ width: "40%", mx: "auto", my: 2 }}
+        sx={{ width: { xs:"100%",md:"50%"}, mx: "auto", my: 2 }}
         color="secondary"
       >
         بستن

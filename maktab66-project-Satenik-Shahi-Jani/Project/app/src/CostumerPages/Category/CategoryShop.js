@@ -1,13 +1,14 @@
 import React from "react";
-import { useMemo,useState } from "react";
+import { useMemo,useState ,useEffect} from "react";
 // import CostumerPageDrower from "../../layouts/CostumerPageDrower";
 import { useFetch } from "../../hooks/useFetch";
 import Cards from "../shared/Cards";
-import { Container, CircularProgress, Box, CardMedia,Pagination } from "@mui/material";
+import { Container, CircularProgress, Box, CardMedia,Pagination,Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {Outlet} from "react-router-dom";
 
 
 
@@ -20,10 +21,12 @@ function CategoryShop() {
   const [activePage, setActivePage] = useState(1);
 
   const { data, loading } = useFetch(`products?_page=${activePage}&_limit=${limit}}&category=${categoryNumber}`);
-
+useEffect(()=>{
+  setActivePage(1)
+},[categoryNumber])
   return (
     <Container sx={{ mt: "5%",minHeight: '95vh' }} >
-      {categoryData.loading ? (
+      {categoryData.loading && (
         <Box
           sx={{
             width: 1,
@@ -35,7 +38,7 @@ function CategoryShop() {
         >
           <CircularProgress sx={{ my: "auto" }} />
         </Box>
-      ) : (
+      ) } {categoryData.data &&(
         <Link to={`/category/${categoryData?.data.data[0].icon}`}>
           <Box dir="rtl" sx={{ display: "flex", alignItems: "center" }}>
             <CardMedia
@@ -84,9 +87,13 @@ function CategoryShop() {
             alignItems: "center",
             flexWrap:"wrap"
           }}>
+            <Grid container spacing={2}>
             {data?.data.map((product) => (
+              <Grid item xs={6} sm={4} md={3}>
               <Cards key={product.id} product={product} />
+              </Grid>
             ))}
+          </Grid>
           </Box>
         )}
       </Container>
@@ -120,6 +127,7 @@ function CategoryShop() {
           draggable
           pauseOnHover
         />
+        <Outlet/>
     </Container>
   );
 }

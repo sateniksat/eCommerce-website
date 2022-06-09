@@ -26,9 +26,8 @@ export function ShopForm() {
 
   function totalCount() {
     let total = 0;
-    cart.cartItems?.forEech((item) => {
+    cart.cartItems?.forEach((item) => {
       total = item.price * item.cartQuantity + total;
-
     });
     dispatch(setcartTotalAmount(total));
   }
@@ -116,7 +115,6 @@ export function ShopForm() {
     <Box
       sx={{
         width: "100%",
-        p: 7,
         minHeight: "100vh",
       }}
     >
@@ -181,7 +179,7 @@ export function ShopForm() {
                       sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}
                       width="100%"
                     >
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -194,11 +192,13 @@ export function ShopForm() {
                           autoFocus
                           onChange={handleChange}
                         />
-                        {errors.firstName && (
+                        { 
+                        // touched.firstName && 
+                        errors.firstName && (
                           <Alert severity="error">{errors.firstName}</Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -210,11 +210,13 @@ export function ShopForm() {
                           autoComplete="current-lastName"
                           onChange={handleChange}
                         />
-                        {errors.lastName && (
+                        { 
+                        // touched.lastName && 
+                        errors.lastName && (
                           <Alert severity="error">{errors.lastName}</Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -226,13 +228,15 @@ export function ShopForm() {
                           autoComplete="current-shippingAddress"
                           onChange={handleChange}
                         />
-                        {errors.shippingAddress && (
+                        { 
+                        // touched.shippingAddress && 
+                        errors.shippingAddress && (
                           <Alert severity="error">
                             {errors.shippingAddress}
                           </Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -244,11 +248,13 @@ export function ShopForm() {
                           autoComplete="current-phone"
                           onChange={handleChange}
                         />
-                        {errors.phone && (
+                        { 
+                        // touched.phone && 
+                        errors.phone && (
                           <Alert severity="error">{errors.phone}</Alert>
                         )}
                       </Box>
-                      <Box dir="rtl">
+                      <Box dir="rtl" sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <DatePicker
                           calendar={persian}
                           locale={persian_fa}
@@ -258,12 +264,14 @@ export function ShopForm() {
                           name="delivery"
                           id="delivery"
                         />
-                        {errors.delivery && (
+                        { 
+                        // touched.delivery && 
+                        errors.delivery && (
                           <Alert severity="error">{errors.delivery}</Alert>
                         )}
                       </Box>
 
-                      <Box sx={{ width: "60%" }}>
+                      <Box sx={{ width: { xs:"97%",md:"90%"} }}>
                         <Link to="/">
                           <Alert severity="info">بازگشت به سایت</Alert>
                         </Link>
