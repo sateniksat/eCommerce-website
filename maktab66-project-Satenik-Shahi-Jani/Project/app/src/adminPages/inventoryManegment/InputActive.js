@@ -54,6 +54,7 @@ const value=e.target.value
   // console.log(newArray)
   setReadInput(newArray)
 }
+setReadInput(true)
 }
   return (
     <>

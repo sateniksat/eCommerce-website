@@ -1,5 +1,5 @@
 import React from "react";
-import ModalPage from "../../components/ModalPage";
+import ModalPage from "../../Components/ModalPage";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {
@@ -10,9 +10,11 @@ import {
   Table,
   Paper,
   TableBody,
+  CardMedia,
 } from "@mui/material";
 import { api } from "../../api/api";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 
 function DeliverdOrder(props) {
   const handleOreder = (item) => {
@@ -24,7 +26,7 @@ function DeliverdOrder(props) {
       orderStatus: 6,
     };
     // console.log(newObj);
-    let status;
+    // let status;
     (async () => {
       const response = await api
         .patch(`/orderlist/${item.id}`, newObj, {
@@ -33,46 +35,56 @@ function DeliverdOrder(props) {
             token: localStorage.getItem("token"),
           },
         })
-        .then((res) => {
-          // console.log(res);
-          status = res.status;
-          // console.log(status);
-        });
-        if (status === 200) {
-          props.fillterData(item.id);
-        }
+        .then((res) => res);
+      if (response?.status === 200 || response?.status === 201) {
+        props.fillterData(item.id);
+      } else {
+        props.fillterData();
+      }
     })();
     props.handleClose();
   };
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", p: 4, my: 3 }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        p: 4,
+        my: 3,
+        fontSize: { xs: "14px", md: "25px" },
+      }}
       dir="rtl"
     >
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label>نام و نام خانوادگی مشتری :</label>
+        <Typography variant="subtitle1" component="div">
+          نام و نام خانوادگی مشتری :
+        </Typography>
         <Typography id="transition-modal-title" variant="h6" component="h2">
-          {props.order.customerDetail.firstName}-
-          {props.order.customerDetail.lastName}
+          {props.order.customerDetail?.firstName}{" "}
+          {props.order.customerDetail?.lastName}
         </Typography>
       </Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label>آدرس :</label>
+        <Typography variant="subtitle1" component="div">
+          آدرس :
+        </Typography>
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           {props.order.customerDetail.shippingAddress}
         </Typography>
@@ -81,11 +93,14 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label>تلفن :</label>
+        <Typography variant="subtitle1" component="div">
+          تلفن :
+        </Typography>
 
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           {props.order.customerDetail.phone}
@@ -95,11 +110,14 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label>زمان سفارش :</label>
+        <Typography variant="subtitle1" component="div">
+          زمان سفارش :
+        </Typography>
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           {new Date(props.order.orderDate).toLocaleDateString("fa-IR")}
         </Typography>
@@ -108,11 +126,14 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label>زمان تحویل :</label>
+        <Typography variant="subtitle1" component="div">
+          زمان تحویل :
+        </Typography>
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           {new Date(props.order.delivery).toLocaleDateString("fa-IR")}
         </Typography>
@@ -121,11 +142,16 @@ function DeliverdOrder(props) {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          width: "50%",
+          width: { xs: "100%", md: "50%" },
+          alignItems: "center",
           my: 3,
         }}
       >
-        <label> مجموع قیمت ها :</label>
+         {/* color="text.secondary" */}
+        <Typography variant="subtitle1" component="div">
+          {" "}
+          مجموع قیمت ها :
+        </Typography>
 
         <Typography id="transition-modal-description" sx={{ mt: 2 }}>
           {props.order.purchaseTotal}
@@ -133,32 +159,37 @@ function DeliverdOrder(props) {
       </Box>
       <TableContainer component={Paper} dir="rtl" sx={{ my: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" dir="rtl">
-          <TableHead>
+          <TableHead key={"head"}>
             <TableRow>
-              <TableCell align="left">تصویر</TableCell>
-              <TableCell align="left">نام کالا</TableCell>
-              <TableCell align="left">مجموع مبلغ</TableCell>
-              <TableCell align="left">تعداد</TableCell>
+              <TableCell align="center">تصویر</TableCell>
+              <TableCell align="center">نام کالا</TableCell>
+              <TableCell align="center">مجموع مبلغ</TableCell>
+              <TableCell align="center">تعداد</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.order.orderItems.map((row) => (
               <TableRow
-                key={row.id}
+                key={row.id ? row.id : row.name}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}
               >
-                <TableCell sx={{ width: "20%" }} align="left">
-                  <img
-                    alt="img"
-                    width={"50%"}
-                    src={`http://localhost:3002/files/${row.thumbnail}`}
-                  />
+                <TableCell sx={{ width: "10%" }} align="center">
+                  <Link to={`/products/${row.id}`}>
+                    <CardMedia
+                      sx={{ width: "100%" }}
+                      component="img"
+                      alt="img"
+                      image={`http://localhost:3002/files/${row.thumbnail}`}
+                    />
+                  </Link>
                 </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.price} تومان</TableCell>
-                <TableCell align="left">{row.quantity}</TableCell>
+                <TableCell align="center">
+                  <Link to={`/products/${row.id}`}>{row.name} </Link>
+                </TableCell>
+                <TableCell align="center">{row.price} تومان</TableCell>
+                <TableCell align="center">{row.quantity}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -169,11 +200,18 @@ function DeliverdOrder(props) {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            width: "50%",
+            width: { xs: "100%", md: "50%" },
+            alignItems: "center",
             my: 3,
           }}
         >
-          <label>زمان تحویل داده شده :</label>
+          <Typography
+            variant="subtitle1"
+           
+            component="div"
+          >
+            زمان تحویل داده شده :
+          </Typography>
           <Typography id="transition-modal-description" sx={{ mt: 2 }}>
             {new Date(props.order.deliveredAt).toLocaleDateString("fa-IR")}
           </Typography>
@@ -182,7 +220,7 @@ function DeliverdOrder(props) {
         <Button
           variant="contained"
           onClick={() => handleOreder(props.order)}
-          sx={{ width: "40%", mx: "auto", mt: 2 }}
+          sx={{ width: { xs: "100%", md: "50%" }, mx: "auto", mt: 2 }}
           color="success"
         >
           تحویل سفارش
@@ -191,7 +229,7 @@ function DeliverdOrder(props) {
       <Button
         variant="contained"
         onClick={props.handleClose}
-        sx={{ width: "40%", mx: "auto", my: 2 }}
+        sx={{ width: { xs: "100%", md: "50%" }, mx: "auto", my: 2 }}
         color="secondary"
       >
         بستن

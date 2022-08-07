@@ -2,23 +2,24 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import InventoryManegment from "../adminPages/inventoryManegment/InventoryManegment";
 import ProtectedRout from "../adminPages/ProtectedRoute/ProtectedRoute";
-import Cart from "../costumerPages/Cart/Cart";
+import Cart from "../CostumerPages/Cart/Cart";
 // import CategoryShop from "../CostumerPages/Category/CategoryShop";
-// import FailedOperation from "../costumerPages/FailedOperation/FailedOperation";
-import AllCategories from "../costumerPages/Home/AllCategories";
+// import FailedOperation from "../CostumerPages/FailedOperation/FailedOperation";
+import AllCategories from "../CostumerPages/Home/AllCategories";
 // import Welcome from "../CostumerPages/Home/Welcome";
-import Product from "../costumerPages/Product/Product";
-import ShopForm from "../costumerPages/ShopForm/ShopForm";
-// import Shaparak from "../costumerPages/Shaparak/Shaparak";
-import SuccessOperation from "../costumerPages/SuccessOperation/SuccessOperation";
-import NotFound from "../notFound/NotFound";
-import CategoryShop from "../costumerPages/Category/CategoryShop";
+import Product from "../CostumerPages/Product/Product";
+import ShopForm from "../CostumerPages/ShopForm/ShopForm";
+// import Shaparak from "../CostumerPages/Shaparak/Shaparak";
+// import Solid from "../CostumerPages/shared/Solid";
+import SuccessOperation from "../CostumerPages/SuccessOperation/SuccessOperation";
+import NotFound from "../NotFound/NotFound";
+import CategoryShop from "../CostumerPages/Category/CategoryShop";
 import { Login } from "../adminPages/Login/Login";
 import OrderManegment from "../adminPages/orderManegment/OrderManegment";
 import ProductManegment from "../adminPages/productManegment/ProductManegment";
-import CostumerPageLayout from "../layouts/CostumerPageLayout";
-import AdminPageLayout from "../layouts/AdminPageLayout";
-import SimpleLayout from "../layouts/SimpleLayout";
+import CostumerPageLayout from "../Layouts/CostumerPageLayout";
+import AdminPageLayout from "../Layouts/AdminPageLayout";
+import SimpleLayout from "../Layouts/SimpleLayout";
 
 export default function AppRoute() {
   return (
@@ -33,15 +34,26 @@ export default function AppRoute() {
             </CostumerPageLayout>
           }
         />
-        {/* <Route
-          path="category/"
-          element={
-            <CostumerPageLayout slider={true}>
-              <CategoryShop />
-            </CostumerPageLayout>
-          }
-        >
-          <Route path="/*" element={<NotFound />} />
+        {/* <Route path="category" element={<Solid />}>
+          <Route
+            path=":categoryId"
+            element={
+              <CostumerPageLayout slider={true}>
+                <CategoryShop />
+              </CostumerPageLayout>
+            }
+          >
+            <Route path="*" element={<NotFound />} />
+          </Route>
+
+          <Route
+            path="*"
+            element={
+              <CostumerPageLayout>
+                <NotFound />
+              </CostumerPageLayout>
+            }
+          />
         </Route> */}
         <Route
           path="category/:categoryId"
@@ -121,7 +133,14 @@ export default function AppRoute() {
             </ProtectedRout>
           }
         />
-        <Route path="/*" element={<NotFound />} />
+        <Route
+          path="/*"
+          element={
+            <CostumerPageLayout>
+              <NotFound />
+            </CostumerPageLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

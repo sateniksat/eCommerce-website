@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { serAuthorizationToken } from "../../api/api";
+
 
 export default function ProtectedRout({ children }) {
   const tokenRedux = useSelector((state) => state?.token); 

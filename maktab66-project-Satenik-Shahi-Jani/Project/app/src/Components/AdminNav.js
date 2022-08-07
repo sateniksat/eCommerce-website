@@ -6,6 +6,7 @@ import Toolbar from "@mui/material/Toolbar";
 // import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
 import Tooltip from "@mui/material/Tooltip";
 import Logo from "../assets/images/shop.png";
 import { Link } from "react-router-dom";
@@ -18,6 +19,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Logout from "@mui/icons-material/Logout";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import HomeIcon from "@mui/icons-material/Home";
 import { useDispatch } from "react-redux";
 import { addtoken } from "../redux/tokenslice";
 import { api } from "../api/api";
@@ -42,6 +44,7 @@ export function AdminNav() {
   useEffect(() => {
     setAlignment(endPoint);
   }, [endPoint]);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -66,18 +69,25 @@ export function AdminNav() {
 
   return (
     <Box sx={{ flexGrow: 1 }} dir="rtl">
-      <AppBar position="static" sx={{ bgcolor: "secondary.main" }}>
-        <Toolbar>
-          <Tooltip title="رفتن به صفحه اصلی">
-            <Link to="/" style={{ width: "5%" }}>
-              <img
+      <AppBar
+        position="static"
+        sx={{ bgcolor: "#fff", display: "flex", flexDirection: "column" }}
+      >
+        <Toolbar sx={{ bgcolor: "secondary.main" }}>
+          <Link to="/">
+            <Tooltip title="رفتن به صفحه اصلی">
+              <CardMedia
+                sx={{
+                  width: { xs: "12%", sm: "8%", md: "5%" },
+                  backgroundColor: "#ffffff9f",
+                  borderRadius: "10px",
+                }}
+                component="img"
                 alt="logo"
-                src={Logo}
-                width="100%"
-                style={{ backgroundColor: "#ffffff9f", borderRadius: "10px" }}
+                image={Logo}
               />
-            </Link>
-          </Tooltip>
+            </Tooltip>
+          </Link>
           <Typography
             dir="rtl"
             variant="h6"
@@ -87,27 +97,12 @@ export function AdminNav() {
           >
             پنل مدیریت فروشگاه
           </Typography>
-          {/* <Box sx={{ bgcolor: "#ffff", borderRadius: "10px" }}> */}
-          <ToggleButtonGroup
-            color="primary"
-            sx={{ bgcolor: "#ffff", borderRadius: "10px" }}
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-          >
-            <ToggleButton value="productmanagement">
-              <Link to="/admin-productmanagement">کالا ها</Link>
-            </ToggleButton>
-            <ToggleButton value="inventory">
-              <Link to="/admin-inventory">موجودی و قیمت ها </Link>
-            </ToggleButton>
-            <ToggleButton value="orders">
-              <Link to="/admin-orders">سفارس ها </Link>
-            </ToggleButton>
-          </ToggleButtonGroup>
-          {/* </Box> */}
+
           <Link to="/">
-            <Button color="inherit"> بازگشت به سایت</Button>
+            <Button color="inherit">
+              {/* بازگشت به سایت */}
+              <HomeIcon />
+            </Button>
           </Link>
 
           <IconButton
@@ -143,6 +138,60 @@ export function AdminNav() {
             </MenuItem>
           </Menu>
         </Toolbar>
+
+          <ToggleButtonGroup
+            color="primary"
+            sx={{
+              bgcolor: "#ffff",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              alignItems: "center",
+            }}
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+          >
+            <Link to="/admin-productmanagement">
+              <ToggleButton
+                value="productmanagement"
+                sx={{
+                  ml:1,
+                  bgcolor:
+                    alignment === "productmanagement" ? "#1976d21b" : null,
+                  color:
+                    alignment === "productmanagement" ? "primary.main" : null,
+                }}
+              >
+                کالا ها
+              </ToggleButton>
+            </Link>
+            <Link to="/admin-inventory">
+              <ToggleButton
+                value="inventory"
+                sx={{
+                  ml:1,
+                  bgcolor: alignment === "inventory" ? "#1976d21b" : null,
+                  color: alignment === "inventory" ? "primary.main" : null,
+                }}
+              >
+                موجودی و قیمت ها
+              </ToggleButton>
+            </Link>
+            <Link to="/admin-orders">
+              <ToggleButton
+                value="orders"
+                sx={{
+                  ml:1,
+                  bgcolor: alignment === "orders" ? "#1976d21b" : null,
+                  color: alignment === "orders" ? "primary.main" : null,
+                }}
+              >
+                سفارس ها
+              </ToggleButton>
+            </Link>
+          </ToggleButtonGroup>
+
       </AppBar>
     </Box>
   );

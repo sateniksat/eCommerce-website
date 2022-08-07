@@ -1,12 +1,11 @@
 import React from 'react'
 // import SimpleLayout from '../../layouts/SimpleLayout';
+import{Outlet} from "react-router-dom";
 
-export function Shaparak() {
+export function Solid() {
   return (
-    <div>Shaparak</div>
+    <Outlet/>
   )
 }
 
-export default Shaparak
-
-
+export default Solid

@@ -1,4 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// ToastContainer,
+
+function processDone() {
+  toast.success("تغییرات انجام شد.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
+
+function processFail() {
+  toast.error("تغییرات حذف انجام شد.", {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+}
 
 const initialState = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
@@ -9,23 +36,25 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      if (existingIndex >= 0) {
-        state.cartItems[existingIndex] = {
+      if (foundIndex >= 0) {
+        state.cartItems[foundIndex] = {
           ...action.payload,
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+          cartQuantity: state.cartItems[foundIndex].cartQuantity + 1,
         };
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
+        processDone()
       } else {
         // let tempProductItem = { id: action.payload.id, cartQuantity: 1 };
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
         state.cartTotalQuantity = state.cartTotalQuantity + 1;
+        processDone()
       }
-      console.log(state.cartItems);
+      // console.log(state.cartItems);
       // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       localStorage.setItem("cart", JSON.stringify(state));
     },
@@ -37,12 +66,15 @@ const cartSlice = createSlice({
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
         state.cartTotalQuantity = state.cartTotalQuantity - 1;
+
+        processFail()
       } else if (state.cartItems[itemIndex].cartQuantity === 1) {
         const nextCartItems = state.cartItems.filter(
           (item) => item.id !== action.payload.id
         );
         state.cartItems = nextCartItems;
         state.cartTotalQuantity = state.cartTotalQuantity - 1;
+        processFail()
       }
       // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       localStorage.setItem("cart", JSON.stringify(state));
@@ -56,6 +88,7 @@ const cartSlice = createSlice({
           state.cartTotalQuantity =
             state.cartTotalQuantity - cartItem.cartQuantity;
           state.cartItems = nextCartItems;
+          processFail();
         }
         // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
         localStorage.setItem("cart", JSON.stringify(state));
@@ -63,42 +96,42 @@ const cartSlice = createSlice({
       });
     },
     updateData(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
 
-      // console.log(existingIndex);
+      // console.log(foundIndex);
       // console.log(action.payload)
-      if (existingIndex >= 0) {
+      if (foundIndex >= 0) {
         state.cartTotalAmount =
           +state.cartTotalAmount -
-          +state.cartItems[existingIndex].cartQuantity *
-            +state.cartItems[existingIndex].price +
-          +state.cartItems[existingIndex].cartQuantity * +action.payload.price;
-        state.cartItems[existingIndex] = {
-          cartQuantity: state.cartItems[existingIndex].cartQuantity,
+          +state.cartItems[foundIndex].cartQuantity *
+            +state.cartItems[foundIndex].price +
+          +state.cartItems[foundIndex].cartQuantity * +action.payload.price;
+        state.cartItems[foundIndex] = {
+          cartQuantity: state.cartItems[foundIndex].cartQuantity,
           ...action.payload,
         };
       }
-      // console.log(state.cartItems[existingIndex])
+      // console.log(state.cartItems[foundIndex])
       localStorage.setItem("cart", JSON.stringify(state));
     },
     updateQuantity(state, action) {
-      const existingIndex = state.cartItems.findIndex(
+      const foundIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (existingIndex >= 0) {
+      if (foundIndex >= 0) {
         state.cartTotalAmount =
           +state.cartTotalAmount -
-          +state.cartItems[existingIndex].cartQuantity *
-            +state.cartItems[existingIndex].price +
-          +action.payload.count * +state.cartItems[existingIndex].price;
+          +state.cartItems[foundIndex].cartQuantity *
+            +state.cartItems[foundIndex].price +
+          +action.payload.count * +state.cartItems[foundIndex].price;
         state.cartTotalQuantity =
           +state.cartTotalQuantity -
-          +state.cartItems[existingIndex].cartQuantity +
+          +state.cartItems[foundIndex].cartQuantity +
           +action.payload.count;
-        state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
+        state.cartItems[foundIndex] = {
+          ...state.cartItems[foundIndex],
           cartQuantity: action.payload.count,
         };
       }

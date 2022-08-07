@@ -20,6 +20,7 @@ function SuccessOperation() {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
 
+  
   async function sendCustomerDetails() {
     // dispatch(addToUser({ ...user, orderDate: Date.now() }));
     const responseServer = await api
@@ -40,7 +41,7 @@ function SuccessOperation() {
     } else {
       let temp = [];
       // console.log("hi");
-      cart.cartItems.map((item) => {
+      cart.cartItems.forEach((item) => {
         let leftCount = item.count - item.cartQuantity;
         const sendCount = api.patch(
           `/products/${item.id}`,
@@ -53,7 +54,6 @@ function SuccessOperation() {
           }
         );
         temp.push(sendCount);
-        return true;
       });
       const arrayResponse = await Promise.all(temp);
       console.log(arrayResponse);
@@ -61,12 +61,13 @@ function SuccessOperation() {
       dispatch(clearCart());
     }
   }
-
   useEffect(() => {
+    
     if (params.operationID === "success") {
       sendCustomerDetails();
+      // eslint-disable-next-line
     }
-  }, [params]);
+  }, [params]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -96,11 +97,11 @@ function SuccessOperation() {
                 alignItems: "center",
                 minHeight: "90vh",
                 color: "red",
-                fontSize: "80px",
+                fontSize:{xs:"20px",sm:"30px",md:"60px"}
               }}
             >
               <Box>
-                <DisabledByDefaultIcon sx={{ fontSize: "300px" }} />
+                <DisabledByDefaultIcon sx={{ fontSize: {xs:"30px",sm:"80px",md:"200px"} }} />
               </Box>
               <h1>ناموفق</h1>
             </Box>
@@ -117,12 +118,12 @@ function SuccessOperation() {
               alignItems: "center",
               minHeight: "95vh",
               color: "green",
-              fontSize: "80px",
+              fontSize:{xs:"20px",sm:"30px",md:"60px"}
             }}
           >
             <Box>
               <CheckCircleOutlineIcon
-                sx={{ fontSize: "300px", color: "success" }}
+                sx={{ fontSize:{xs:"40px",sm:"80px",md:"200px"}, color: "success" }}
               />
             </Box>
             <h1>موفق</h1>
@@ -134,3 +135,53 @@ function SuccessOperation() {
 }
 
 export default SuccessOperation;
+
+
+// const sendCustomerDetails=useCallback(async()=> {
+//   // dispatch(addToUser({ ...user, orderDate: Date.now() }));
+//   const responseServer = await api
+//     .patch(
+//       `/orderlist/${user.id}`,
+//       { orderDate: Date.now(), orderStatus: 3 },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           token: localStorage.getItem("token"),
+//         },
+//       }
+//     )
+//     .then((res) => res)
+//     .catch((error) => console.log(error));
+//   if (responseServer?.status >= 400) {
+//     dispatch(addToUser({ ...user, orderDate: null }));
+//   } else {
+//     let temp = [];
+//     // console.log("hi");
+//     cart.cartItems.map((item) => {
+//       let leftCount = item.count - item.cartQuantity;
+//       const sendCount = api.patch(
+//         `/products/${item.id}`,
+//         { count: leftCount },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//             token: localStorage.getItem("token"),
+//           },
+//         }
+//       );
+//       temp.push(sendCount);
+//       return true;
+//     });
+//     const arrayResponse = await Promise.all(temp);
+//     console.log(arrayResponse);
+//     dispatch(removeUser());
+//     dispatch(clearCart());
+//   }
+// },[cart,dispatch,user])
+
+// useEffect(() => {
+  
+//   if (params.operationID === "success") {
+//     sendCustomerDetails();
+//   }
+// }, [params,sendCustomerDetails]);

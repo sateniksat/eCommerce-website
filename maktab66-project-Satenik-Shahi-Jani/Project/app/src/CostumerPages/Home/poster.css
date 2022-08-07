@@ -1,0 +1,268 @@
+.poster-gradient {
+    width: 100%;
+    min-height: 32vw;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .poster-gradient.class-0 {
+    background: rgb(121, 9, 111);
+    background: linear-gradient(
+      315deg,
+      rgba(121, 9, 111, 1) 0%,
+      rgba(66, 101, 177, 0.9416141456582633) 52%,
+      rgba(17, 183, 235, 0.896796218487395) 100%
+    );
+  }
+  .poster-gradient.class-1 {
+    background: rgb(183, 222, 20);
+    background: linear-gradient(
+      71deg,
+      rgba(183, 222, 20, 1) 0%,
+      rgba(177, 66, 169, 0.9416141456582633) 52%,
+      rgba(81, 9, 144, 0.896796218487395) 100%
+    );
+  }
+  .poster-gradient.class-2 {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(66, 101, 177, 0.9416141456582633) 52%,
+      rgba(92, 235, 136, 0.896796218487395) 100%
+    );
+  }
+  .poster-gradient.class-3 {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(66, 177, 130, 0.9416141456582633) 52%,
+      rgba(221, 235, 92, 0.896796218487395) 100%
+    );
+  }
+  .poster-gradient.class-4 {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(177, 66, 169, 0.9416141456582633) 52%,
+      rgba(126, 9, 144, 0.896796218487395) 100%
+    );
+  }
+  
+  /* .poster-gradient:nth-of-type(5n + 1){
+    background: rgb(121, 9, 111);
+    background: linear-gradient(
+      315deg,
+      rgba(121, 9, 111, 1) 0%,
+      rgba(66, 101, 177, 0.9416141456582633) 52%,
+      rgba(17, 183, 235, 0.896796218487395) 100%
+    );
+  } */
+  /* .poster-gradient:nth-of-type(5n + 2) {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(66, 101, 177, 0.9416141456582633) 52%,
+      rgba(92, 235, 136, 0.896796218487395) 100%
+    );
+  } */
+  /* .poster-gradient:nth-of-type(5n + 3) {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(66, 177, 130, 0.9416141456582633) 52%,
+      rgba(221, 235, 92, 0.896796218487395) 100%
+    );
+  } */
+  /* .poster-gradient:nth-of-type(5n + 4) {
+    background: rgb(20, 215, 222);
+    background: linear-gradient(
+      315deg,
+      rgba(20, 215, 222, 1) 0%,
+      rgba(177, 66, 169, 0.9416141456582633) 52%,
+      rgba(126, 9, 144, 0.896796218487395) 100%
+    );
+  } */
+  
+  .poster-container {
+    display: flex;
+    padding: 2%;
+    position: relative;
+    width: 100%;
+  }
+  
+  .poster.part-one {
+    flex-basis: 40%;
+    position: relative;
+    min-height: 32vw;
+  }
+  
+  .poster.part-two {
+    flex-basis: 46%;
+    margin: 0 2% 0 2%;
+    width: 100%;
+  }
+  .poster .part-two-absolute {
+    position: absolute;
+    width: 45vw;
+    top: 100%;
+  }
+  .poster-image {
+    width: 48%;
+    position: absolute;
+  }
+  .poster-image img {
+    transition: transform 0.5s;
+  }
+  .poster-image img:hover {
+    transform: scale(1.2);
+    z-index: 1;
+  }
+  .poster-image:nth-child(1) {
+    transform: rotate(-10deg);
+    top: 5%;
+    left: 8%;
+    transition: transform 0.5s;
+  }
+  
+  .poster.part-one:hover .poster-image:nth-child(1) {
+    transform: rotate(0deg) translate(-20%, 0);
+  }
+  
+  .poster-image:nth-child(2) {
+    top: 35%;
+    left: 40%;
+    transform: rotate(15deg);
+    transition: transform 0.5s;
+  }
+  .poster.part-one:hover .poster-image:nth-child(2) {
+    transform: rotate(0deg) translate(24%, 0);
+  }
+  .poster-image img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .poster-description {
+    /* min-height: 30vh; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+  }
+  
+  .poster-title {
+    color: white;
+    font-size: 2rem;
+    margin: 25% 5% 2% 5%;
+    border-right: solid 5px white;
+    padding: 1% 2% 1% 0;
+    text-align: start;
+    cursor: pointer;
+  }
+  
+  .poster-title:hover {
+    /* text-shadow: 6px 6px 0px rgba(0,0,0,0.2); */
+    text-shadow: 0px 14px 10px rgba(0, 0, 0, 0.15);
+  }
+  .poster-text {
+    color: white;
+    margin: 0 5% 5% 5%;
+    border-right: solid 5px white;
+    padding: 1% 2% 1% 0;
+    text-align: start;
+    cursor: pointer;
+  }
+  
+  .poster-text:hover {
+    text-decoration: underline;
+  }
+  .poster-button {
+    all: unset;
+    text-align: center;
+    cursor:pointer;
+    width: 85%;
+    padding: 3%;
+    color: white;
+    margin: 0 5% 5% 5%;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    transition: transform 0.5s;
+  }
+  
+  .poster-button:hover {
+    background: rgba(255, 255, 255, 0.31);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.4px);
+    -webkit-backdrop-filter: blur(5.4px);
+    transform: scale(1.09);
+  }
+  .slider {
+    animation: slide 2s forwards ease-in-out;
+  }
+  
+  @keyframes slide {
+    from {
+      top: 100%;
+    }
+    to {
+      top: 0%;
+    }
+  }
+  
+  @media (max-width:991.98px){
+    .poster-title {
+      /* font-size: 1rem; */
+      margin-top: 22%;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .poster-text {
+      font-size: 10px;
+      margin-bottom: 1%;
+    }
+    .poster-title {
+      font-size: 1rem;
+      margin-top: 20%;
+    }
+     /* .poster-button {
+      font-size: 8px;
+    } */
+    /* .poster-container {
+      padding: 5%;
+    } */ 
+  }
+  @media (max-width: 575.98px) {
+    .poster-text {
+      font-size: 8px;
+      margin-bottom: 1%;
+    }
+    .poster-title {
+      font-size: 1rem;
+      margin-top: 20%;
+    }
+    .poster-button {
+      font-size: 8px;
+    }
+    .poster-container {
+      padding: 5%;
+    }
+  }
+  
+  @media (max-width: 319.98px) {
+    .poster-text {
+      margin-bottom: 3px;
+      font-size: 5px;
+    }
+    .poster-title {
+      font-size: 0.8rem;
+      margin-top: 5%;
+    }
+  }
+  

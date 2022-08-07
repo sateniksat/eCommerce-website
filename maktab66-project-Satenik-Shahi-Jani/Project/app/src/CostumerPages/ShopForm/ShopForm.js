@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import CostumerPageLayout from '../../layouts/CostumerPageLayout'
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -26,12 +25,10 @@ export function ShopForm() {
 
   function totalCount() {
     let total = 0;
-     cart.cartItems?.map((item) => {
+    cart.cartItems?.forEach((item) => {
       total = item.price * item.cartQuantity + total;
-      return total;
     });
     dispatch(setcartTotalAmount(total));
-    return total;
   }
   function totalItemNecessary() {
     const totalMap = cart.cartItems?.map((item) => {
@@ -51,7 +48,7 @@ export function ShopForm() {
     shippingAddress: "",
     phone: "",
   };
-
+  // pattern = '/(\+?98|098|0|0098)?(9\d{9})/'
   const validate = (values) => {
     let errors = {};
     if (!values.firstName) {
@@ -68,6 +65,8 @@ export function ShopForm() {
     }
     if (!values.phone) {
       errors.phone = "لطفا فیلد را پر کنید.";
+    } else if (!/(\+?98|098|0|0098)?(9\d{9})/.test(values.phone)) {
+      errors.phone = "اعداد شماره تلفن خود را اضافه کنید.";
     } else if (values.phone.length < 11) {
       errors.phone = " کوتاه است -باید حداقل 11 کاراکتر داشته باشد.";
     }
@@ -75,8 +74,6 @@ export function ShopForm() {
   };
 
   const submitForm = (values) => {
-
-
     const details = {
       customerDetail: {
         username: values.firstName,
@@ -90,7 +87,7 @@ export function ShopForm() {
       orderNumber: "",
       orderDate: null,
       purchaseTotal: totalCount(),
-      orderStatus: 5,
+      orderStatus: "pending",
       delivery: Date.parse(date.toDate()),
       deliveredAt: null,
       orderItems: totalItemNecessary(),
@@ -108,10 +105,7 @@ export function ShopForm() {
         dispatch(addToUser(responseServer.data));
 
         // console.log(responseServer.data)
-        window.open(
-          "http://127.0.0.1:5501/index.html",
-          "_self"
-        );
+        window.open("http://127.0.0.1:5501/index.html", "_self");
       }
     })();
   };
@@ -120,7 +114,6 @@ export function ShopForm() {
     <Box
       sx={{
         width: "100%",
-        p: 7,
         minHeight: "100vh",
       }}
     >
@@ -185,7 +178,7 @@ export function ShopForm() {
                       sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}
                       width="100%"
                     >
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -198,11 +191,13 @@ export function ShopForm() {
                           autoFocus
                           onChange={handleChange}
                         />
-                        {errors.firstName && (
+                        { 
+                        // touched.firstName && 
+                        errors.firstName && (
                           <Alert severity="error">{errors.firstName}</Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -214,11 +209,13 @@ export function ShopForm() {
                           autoComplete="current-lastName"
                           onChange={handleChange}
                         />
-                        {errors.lastName && (
+                        { 
+                        // touched.lastName && 
+                        errors.lastName && (
                           <Alert severity="error">{errors.lastName}</Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -230,13 +227,15 @@ export function ShopForm() {
                           autoComplete="current-shippingAddress"
                           onChange={handleChange}
                         />
-                        {errors.shippingAddress && (
+                        { 
+                        // touched.shippingAddress && 
+                        errors.shippingAddress && (
                           <Alert severity="error">
                             {errors.shippingAddress}
                           </Alert>
                         )}
                       </Box>
-                      <Box sx={{ width: "48%", mx: 1 }}>
+                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <TextField
                           dir="rtl"
                           margin="normal"
@@ -248,11 +247,13 @@ export function ShopForm() {
                           autoComplete="current-phone"
                           onChange={handleChange}
                         />
-                        {errors.phone && (
+                        { 
+                        // touched.phone && 
+                        errors.phone && (
                           <Alert severity="error">{errors.phone}</Alert>
                         )}
                       </Box>
-                      <Box dir="rtl">
+                      <Box dir="rtl" sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
                         <DatePicker
                           calendar={persian}
                           locale={persian_fa}
@@ -262,12 +263,14 @@ export function ShopForm() {
                           name="delivery"
                           id="delivery"
                         />
-                        {errors.delivery && (
+                        { 
+                        // touched.delivery && 
+                        errors.delivery && (
                           <Alert severity="error">{errors.delivery}</Alert>
                         )}
                       </Box>
 
-                      <Box sx={{ width: "60%" }}>
+                      <Box sx={{ width: { xs:"97%",md:"90%"} }}>
                         <Link to="/">
                           <Alert severity="info">بازگشت به سایت</Alert>
                         </Link>

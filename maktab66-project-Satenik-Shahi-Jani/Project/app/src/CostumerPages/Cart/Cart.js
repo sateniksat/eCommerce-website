@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+// import { useEffect } from "react";
 // import CostumerPageLayout from '../../layouts/CostumerPageLayout';
 import {
   TableCell,
@@ -13,6 +14,7 @@ import {
   Fab,
   Button,
   Alert,
+  CardMedia,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreditScore from "@mui/icons-material/CreditScore";
@@ -20,17 +22,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   removeFromCart,
   setcartTotalAmount,
-  updateData,
-  updateQuantity,
+  // updateData,
+  // updateQuantity,
 } from "../../redux/cartSlice";
 import InputCart from "./InputCart";
 import { Link } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
+// import { useFetch } from "../../hooks/useFetch";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-
-
-function Cart() {
+export default function Cart() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ function Cart() {
   function totalCount() {
     let total = 0;
     if (cart.cartItems !== []) {
-cart.cartItems?.map((item) => {
+      cart.cartItems?.map((item) => {
         total = item?.price * item?.cartQuantity + total;
         return total;
       });
@@ -49,47 +50,48 @@ cart.cartItems?.map((item) => {
     return total;
   }
 
-  function genrateUrl() {
-    let urlString = "";
-    if (cart.cartTotalQuantity !== 0) {
- cart.cartItems?.map((item, index) => {
-        if (index === cart.cartItems.length - 1) {
-          urlString = urlString + `id=${item.id}`;
-        } else {
-          urlString = urlString + `id=${item.id}&`;
-        }
-      });
-      return urlString;
-    }
-  }
-  const { data } = useFetch(`/products?${genrateUrl()}`);
+  // function genrateUrl() {
+  //   let urlString = "";
+  //   if (cart.cartTotalQuantity !== 0) {
+  //     cart.cartItems?.forEach((item, index) => {
+  //       if (index === cart.cartItems.length - 1) {
+  //         urlString = urlString + `id=${item.id}`;
+  //       } else {
+  //         urlString = urlString + `id=${item.id}&`;
+  //       }
+  //     });
+  //     return urlString;
+  //   }
+  // }
+  // const { data } = useFetch(`/products?${genrateUrl()}`);
 
-  function getDataCartUpdate() {
-    if (cart.cartTotalQuantity !== 0) {
- data?.data.map((item) => {
-        const productcheck = cart?.cartItems.find(
-          (newItem) => newItem.id === item.id
-        );
+  //   function getDataCartUpdate() {
+  //     if (cart.cartTotalQuantity !== 0) {
+  //  data?.data.forEach((item) => {
+  //         const productcheck = cart?.cartItems.find(
+  //           (newItem) => newItem.id === item.id
+  //         );
 
-        if (
-          productcheck?.price !== item?.price &&
-          productcheck?.count !== item?.count
-        ) {
-          dispatch(updateData(item));
-          dispatch(updateQuantity({ id: item.id, count: item.count }));
-          console.log(item.id);
-        } else if (productcheck?.price !== item?.price) {
-          dispatch(updateData(item));
-          console.log(item.id);
-        } else if (productcheck?.count !== item?.count) {
-          dispatch(updateData({ id: item.id, count: item.count }));
-        }
-      });
-    }
-  }
-  useEffect(() => {
-    getDataCartUpdate();
-  }, [data]);
+  //         if (
+  //           productcheck?.price !== item?.price &&
+  //           productcheck?.count !== item?.count
+  //         ) {
+  //           dispatch(updateData(item));
+  //           dispatch(updateQuantity({ id: item.id, count: item.count }));
+  //           console.log(item.id);
+  //         } else if (productcheck?.price !== item?.price) {
+  //           dispatch(updateData(item));
+  //           console.log(item.id);
+  //         } else if (productcheck?.count !== item?.count) {
+  //           dispatch(updateData({ id: item.id, count: item.count }));
+  //         }
+  //       });
+  //     }
+  //   }
+  // useEffect(() => {
+  //   getDataCartUpdate();
+
+  // }, [data]);
 
   return (
     <Box dir="rtl" sx={{ my: "5%", minHeight: "95vh" }}>
@@ -118,14 +120,21 @@ cart.cartItems?.map((item) => {
                     key={item.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell sx={{ width: "20%" }} align="left">
-                      <img
-                        alt="img"
-                        width={"30%"}
-                        src={`http://localhost:3002/files/${item.thumbnail}`}
-                      />
+                    <TableCell sx={{ width: "10%" }} align="left">
+                      <Link to={`/products/${item.id}`}>
+                        <CardMedia
+                          // sx={{ width: { xs: "40%", sm: "40%", md: "40%" }, }}
+                          sx={{ width: "100%" }}
+                          component="img"
+                          alt="img"
+                          // width="100%"
+                          image={`http://localhost:3002/files/${item.thumbnail}`}
+                        />
+                      </Link>
                     </TableCell>
-                    <TableCell align="left">{item.name}</TableCell>
+                    <TableCell align="left">
+                      <Link to={`/products/${item.id}`}>{item.name}</Link>
+                    </TableCell>
                     <TableCell align="center">{item.price}</TableCell>
                     <TableCell align="center">
                       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -165,7 +174,7 @@ cart.cartItems?.map((item) => {
       </Container>
       <Container>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <h2> جمع کل :</h2>
+          <h2> جمع کل مبلغ:</h2>
           <Box sx={{ mx: 2 }} component="h2">
             {totalCount()}
           </Box>
@@ -174,22 +183,28 @@ cart.cartItems?.map((item) => {
       {cart.cartTotalQuantity !== 0 ? (
         <Box
           sx={{
+            display: "flex",
             width: "100%",
             alignItems: "center",
-            display: "flex",
             p: 2,
             justifyContent: "space-around",
           }}
         >
           <Button
             variant="contained"
-            sx={{ width: "40%", fontSize: "large" }}
+            color="success"
+            sx={{ width: { xs: "100%", md: "60%" }, fontSize: "large" }}
           >
             <Link to="/purchaseform">
               <Box
-                sx={{ width: "100%", alignItems: "center", display: "flex" }}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <Box>پرداخت</Box>
+                <Box sx={{ mx: 1 }}>پرداخت مبلغ</Box>
                 <CreditScore />
               </Box>
             </Link>
@@ -198,12 +213,21 @@ cart.cartItems?.map((item) => {
       ) : (
         <Box sx={{ width: "60%", mx: "auto", my: 4 }}>
           <Link to="/">
-            <Alert severity="info">بازگشت به سایت</Alert>
+            <Alert severity="info">بازگشت به صفحه اصلی</Alert>
           </Link>
         </Box>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Box>
   );
 }
-
-export default Cart;

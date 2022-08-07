@@ -1,31 +1,28 @@
-// import CostumerPageLayout from "../../layouts/CostumerPageLayout";
-import * as React from "react";
-import { useState ,useEffect} from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import {
   Container,
+  Typography,
   CircularProgress,
   Button,
-  TextField,
+  InputBase,
+  Grid,
+  Box,
+  Alert,
+  Zoom,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  addToCart,
-  decreaseCart,
-  removeFromCart,
-} from "../../redux/cartSlice";
+import { addToCart, decreaseCart, removeFromCart } from "../../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveCircleOutline from "@mui/icons-material/Remove";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ImageGallery from "./ImageGallery";
 
-function Product() {
+export default function Product() {
   const [input, setInput] = useState(0);
   const [error, setError] = useState("");
   const params = useParams();
@@ -34,28 +31,27 @@ function Product() {
   const { data, loading } = useFetch(`products?id=${productNumber}`);
 
   const cart = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    cart?.cartItems.map(item=>{
-      console.log(item.id)
-      console.log(productNumber)
-      if(item.id=== +(productNumber)){
-        setInput(item.cartQuantity)
-      }
-    })
-  }, []);
+    if (cart) {
+      cart.cartItems.forEach((item) => {
+        // console.log(item.id);
+        // console.log(productNumber);
+        if (item.id === +productNumber) {
+          setInput(item.cartQuantity);
+        }
+      });
+    }
+  }, [cart, productNumber]);
 
-  // useEffect(() => {
-    
-  // }, [cart, dispatch]);
-const errorText={
-  min:"بزرگ تر از صفر وارد کنید.",
-  max:"موجودی کالا کافی نیست."
-}
+  const errorText = {
+    min: "بزرگ تر از صفر وارد کنید.",
+    max: "موجودی کالا کافی نیست.",
+  };
+
   const handleAddToCart = (product) => {
-    let add=input+1;
+    let add = input + 1;
     if (add > +data.data[0].count) {
       setError(errorText.max);
       setInput(data?.data[0].count);
@@ -65,9 +61,10 @@ const errorText={
       dispatch(addToCart(product));
     }
   };
+
   const handleDecreaseCart = (product) => {
-    let minus=input-1;
-    if (minus <0) {
+    let minus = input - 1;
+    if (minus < 0) {
       setError(errorText.min);
       setInput(0);
     } else {
@@ -118,93 +115,143 @@ const errorText={
         </Box>
       ) : (
         <>
-          {data.data.map((item) => (
-            <Card key={item.id} sx={{ width: "100%", display: "flex" }}>
-              <Box dir="rtl" sx={{ display: "flex", flexDirection: "column" }}>
-                <CardContent sx={{ flex: "1 0 auto" }}>
-                  <Typography component="div" variant="h5">
-                    {item.name}
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <ImageGallery
+                thumbnail={data.data[0].thumbnail}
+                images={data.data[0].images}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box
+                dir="rtl"
+                sx={{ display: "flex", flexDirection: "column", p: 2 }}
+              >
+                <Typography component="div" variant="h4">
+                  {data.data[0].name}
+                </Typography>
+                <Link to={`/category/${data.data[0].category}`}>
+                  <Typography component="div" variant="h6">
+                    {data.data[0].categoryName}
                   </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    component="div"
-                  >
-                    {/* {stringToHTML(item.description)} */}
-                    <div
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
-                  </Typography>
-                </CardContent>
-                <Box sx={{color:"red"}}>{error}</Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    pr: 1,
-                    pb: 1,
-                    mr: "5%",
-                  }}
+                </Link>
+                <Typography
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
                 >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: data.data[0].description,
+                    }}
+                  />
+                </Typography>
+                <Typography
+                  component="div"
+                  variant="h6"
+                  sx={{ p: 2, color: "primary.main" }}
+                >
+                  قیمت : {data.data[0].price} تومان
+                </Typography>
+                <Box sx={{ height: "35px", my: 2 }}>
+                  {error && (
+                    <Zoom in={error !== ""}>
+                      <Alert severity="error">{error}</Alert>
+                    </Zoom>
+                  )}
+                </Box>
+                <Box sx={{ my: 2 }}>
                   <Box
                     sx={{
-                      width: "10%",
-                      mx: 5,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      width: { xs: "100%",sm:"50%", md: "50%" },
                     }}
                   >
-                    {item.price}
-                  </Box>
-                  <Button
-                    onClick={() => handleRemoveFromCart(item)}
-                    dir="ltr"
-                    variant="contained"
-                    endIcon={<DeleteIcon />}
-                  >
-                    حذف
-                  </Button>
-                  <Fab color="secondary" size="small" aria-label="add" onClick={()=>handleAddToCart(item)}>
-                    <AddIcon />
-                  </Fab>
-                  <Box
-                    sx={{
-                      width: "10%",
-                      mx: 2,
-                      display:"flex",
-                      flexDirection:"column"
-                    }}
-                  >
-                    
-                    <TextField
-                      id="filled-number"
-                      onChange={(e) => handlechange(e)}
-                      type="number"
-                      value={input}
-                      defaultValue={input}
-                      InputProps={{
+                    <Button
+                      variant="contained"
+                      size="small"
+                      aria-label="increase"
+                      onClick={() => handleAddToCart(data.data[0])}
+                      sx={{ p: 1, width: "30%" }}
+                    >
+                      <AddIcon />
+                    </Button>
+                    <InputBase
+                      sx={{
+                        mx: "2px",
+                        width: "30%",
+                        textAlign: "center",
+                        fontSize: "inherit",
+                        border: "solid 1px",
+                        borderColor: "primary.main",
+                        borderRadius: "3px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        p: 1,
+                      }}
+                      // InputProps={{
+                      //   readOnly: true,
+                      // }}
+                      inputProps={{
+                        style: {
+                          textAlign: "center",
+                        },
                         readOnly: true,
                       }}
+                      variant="outlined"
+                      id="filled-number"
+                      onChange={(e) => handlechange(e)}
+                      // type="number"
+                      value={input}
                       color="primary"
-                      variant="filled"
                     />
-                    
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      aria-label="decrease"
+                      onClick={() => handleDecreaseCart(data.data[0])}
+                      sx={{ p: 1, width: "30%" }}
+                    >
+                      <RemoveCircleOutline />
+                    </Button>
                   </Box>
-                  <Fab color="primary" size="small" aria-label="add" onClick={()=>handleDecreaseCart(item)}>
-                    <RemoveCircleOutline />
-                  </Fab>
+                  <Button
+                    onClick={() => handleRemoveFromCart(data.data[0])}
+                    dir="ltr"
+                    variant="contained"
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      p: 1,
+                      width: { xs: "100%",sm:"50%", md: "50%" },
+                      my: 2,
+                    }}
+                  >
+                    <DeleteIcon />
+                    <Box sx={{ mx: 1 }}>حذف</Box>
+                  </Button>
                 </Box>
               </Box>
-              <CardMedia
-                component="img"
-                sx={{ width: "40%" }}
-                image={`http://localhost:3002/files/${item.images[0]}`}
-                alt={`${item.name}`}
-              />
-            </Card>
-          ))}
+            </Grid>
+          </Grid>
         </>
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 }
-
-export default Product;

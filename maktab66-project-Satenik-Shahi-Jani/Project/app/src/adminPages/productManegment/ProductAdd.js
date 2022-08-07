@@ -8,9 +8,10 @@ import {
   Input,
   FormControl,
   Button,
+  CardMedia,
 } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ModalPage from "../../components/ModalPage";
+import ModalPage from "../../Components/ModalPage";
 import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 
@@ -27,19 +28,42 @@ export function ProductAdd(props) {
 
   const { data } = useFetch("/category");
 
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    // description: "",
+    // name: "",
+    // price: "",
+    // count: "",
+    // brand: "",
+    // category: "",
+    // images: [],
+    // thumbnail: "",
+    // categoryName: "",
+  });
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     // console.log(product);
   };
+
+  function handleChangeSelect(e) {
+    handleChangeInput(e);
+    let test = "";
+    data?.data.forEach((item) => {
+      if (item.id === Number(e.target.value)) {
+        test = item.name;
+        console.log(item.name);
+        setProduct((prevState) => ({ ...prevState, categoryName: test }));
+        console.log(product);
+      }
+    });
+  }
 
   const changeHanler = async (e) => {
     const files = Array.from(e.target.files);
     // preview(files[0]);
     // console.log(files);
     let temp = [];
-    files.map((item) => {
-      const formData = new FormData();
+    const formData = new FormData();
+    files.forEach((item) => {
       formData.append("image", item);
       const tempRequest = api.post("/upload", formData, {
         headers: { token: localStorage.getItem("token") },
@@ -59,7 +83,7 @@ export function ProductAdd(props) {
     // preview(files[0]);
     // console.log(files);
     let tempThum = [];
-    files.map((item) => {
+    files.forEach((item) => {
       const formData = new FormData();
       formData.append("image", item);
       const tempRequest = api.post("/upload", formData);
@@ -77,77 +101,105 @@ export function ProductAdd(props) {
 
   const handleEditor = (event, editor) => {
     const data = editor.getData();
-    setProduct({ ...product, ["description"]: data });
+    setProduct({ ...product, description: data });
     // console.log(product);
   };
   const handleSendNewData = (e) => {
     e.preventDefault();
-    if(
-      product.description === "" ||
-      product.name === "" ||
-      product.price === "" ||
-      product.count === "" ||
-      product.brand === "" ||
-      product.category === "" ||
-      product.images === "" ||
-      product.thymbnail === ""
-    ){
-      alert("fill all feilds");
-    }else{
-      setProduct({ ...product, ["createdAt"]: Date.now() });
-      data.data.map((item) => {
-        // console.log(item.id);
-        // console.log(Number(product.category));
-        if (item.id === Number(product.category)) {
-          setProduct({ ...product, ["categoryName"]: item.name });
+
+    (async () => {
+      if (
+        product.description === "" ||
+        product.name === "" ||
+        product.price === "" ||
+        product.count === "" ||
+        product.brand === "" ||
+        product.categoryName === "" ||
+        product.category === "" ||
+        product.images === [] ||
+        product.thumbnail === ""
+      ) {
+        alert("لطفا تمام فیلد ها را پر کنید.");
+      } else {
+        setProduct({ ...product, createdAt: Date.now() });
+        const response = await api.post("/products", product).then((res) => {
+          console.log(res.data);
+          setProduct(res.data);
+          return res;
+        });
+        // console.log(response?.data)
+        if (response?.status === 200 || response?.status === 201) {
+          console.log("hi");
+          // console.log(response?.data.data)
+          // props.addingProduct(product);
+          props.addingProduct(response?.data);
+        } else {
+          props.addingProduct();
         }
-      });
-      const tempRequest = api.post("/products", product);
-      // console.log(product);
-      props.handleClose();
-      // props. refreshTry();
-    }
+
+        // props.addingProduct();
+        // console.log(product);
+        props.handleClose();
+      }
+    })();
   };
 
   const handleEditData = (e) => {
     e.preventDefault();
     (async () => {
       const response = await api
-      .patch(`/products/${props.product?.id}`, product, {
-        headers: {
-          "Content-Type": "application/json",
-          token: localStorage.getItem("token"),
-        },
-      })
-      .then((res) => res);
+        .patch(`/products/${props.product?.id}`, product, {
+          headers: {
+            "Content-Type": "application/json",
+            token: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => res);
       // console.log(response)
-      if(response.status===200){
-        props.handleProductEdit(response.data)
+      if (response?.status === 200 || response?.status === 201) {
+        props.handleProductEdit(response.data);
         // console.log("hellooo")
+      } else {
+        props.handleProductEdit();
       }
-    })()
+    })();
+    // props.handleProductEdit()
     props.handleClose();
     props.setActivePage(props.activePage);
-    // props.refreshing();
   };
+
+  // const handleDeletIMG = async (item) => {
+  //   const response = await api
+  //     .delete(`/upload?_name=${item}`,{
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         token: localStorage.getItem("token"),
+  //       },
+  //     })
+  //     .then((res) => res)
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   console.log(response);
+  // };
+
   return (
     <form>
-      <Box dir="rtl" sx={{ mt: "2%" }}>
+      <Box dir="rtl" sx={{ my: "4%" }}>
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
+            flexDirection:{ xs:"column",md:"row"},
             justifyContent: "space-between",
             alignContent: "center",
             width: "100%",
-            // overflow: "auto",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "48%",
+              width:{ xs:"100%",md:"48%"},
               alignContent: "center",
             }}
           >
@@ -164,6 +216,7 @@ export function ProductAdd(props) {
               required
               id="outlined-required"
               label="قیمت"
+              InputProps={{ inputProps: { min: 0 } }}
               type="number"
               name="price"
               sx={{ my: 2 }}
@@ -174,6 +227,7 @@ export function ProductAdd(props) {
               required
               id="outlined-required"
               label="موجودی"
+              InputProps={{ inputProps: { min: 0 } }}
               name="count"
               type="number"
               onChange={(e) => handleChangeInput(e)}
@@ -189,7 +243,7 @@ export function ProductAdd(props) {
                   label="دسته بندی"
                   name="category"
                   required
-                  onChange={(e) => handleChangeInput(e)}
+                  onChange={(e) => handleChangeSelect(e)}
                 >
                   {data?.data.map((item) => {
                     return <option value={item.id}>{item.name}</option>;
@@ -202,7 +256,7 @@ export function ProductAdd(props) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "48%",
+              width:{ xs:"100%",md:"48%"},
               alignContent: "center",
             }}
           >
@@ -217,6 +271,44 @@ export function ProductAdd(props) {
             />
           </Box>
         </Box>
+        <Box width="100%">
+          {props.product && (
+            <Box>
+              <CardMedia
+                component="img"
+                alt="img"
+                sx={{ width: { xs:"20%",md:"10%"}, mx: 1 }}
+                image={`http://localhost:3002/files/${props.product.thumbnail}`}
+              />
+              {/* <Button
+                variant="outlined"
+                color="error"
+                sx={{ mx: 1 }}
+                onClick={() => handleDeletIMG(props.product.thumbnail)}
+              >
+                حذف
+              </Button> */}
+            </Box>
+          )}
+                    {product.thumbnail && (
+            <Box>
+              <CardMedia
+                component="img"
+                alt="img"
+                sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }}
+                image={`http://localhost:3002/files/${product.thumbnail}`}
+              />
+              {/* <Button
+                variant="outlined"
+                color="error"
+                sx={{ mx: 1 }}
+                onClick={() => handleDeletIMG(product.thumbnail)}
+              >
+                حذف
+              </Button> */}
+            </Box>
+          )}
+        </Box>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <label>Thumbnail</label>
           <Input
@@ -226,6 +318,46 @@ export function ProductAdd(props) {
             type="file"
             onChange={changeHanlerThumbnail}
           />
+        </Box>
+        <Box width="100%" sx={{display:"flex",flexWrap:"wrap"}}>
+          {props.product &&
+            props.product.images.map((item) => (
+              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+                <CardMedia
+                  component="img"
+                  alt="img"
+                  sx={{ width:"100%"}}
+                  image={`http://localhost:3002/files/${item}`}
+                />
+                {/* <Button
+                  variant="outlined"
+                  color="error"
+                  sx={{width:"100%" }}
+                  onClick={() => handleDeletIMG(item)}
+                >
+                  حذف
+                </Button> */}
+              </Box>
+            ))}
+          {product.images &&
+            product.images.map((item) => (
+              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+                <CardMedia
+                  component="img"
+                  alt="img"
+                  sx={{ width:"100%"}}
+                  image={`http://localhost:3002/files/${item}`}
+                />
+                {/* <Button
+                  variant="outlined"
+                  color="error"
+                  sx={{width:"100%" }}
+                  onClick={() => handleDeletIMG(item)}
+                >
+                  حذف
+                </Button> */}
+              </Box>
+            ))}
         </Box>
         <Box sx={{ p: 2, display: "flex", flexDirection: "column" }}>
           <label htmlFor="contained-button-file">
@@ -267,7 +399,7 @@ export function ProductAdd(props) {
               variant="contained"
               color="success"
               onClick={(e) => handleEditData(e)}
-              sx={{ width: "50%" }}
+              sx={{ width: "50%" ,mb:3}}
             >
               ویرایش
             </Button>
@@ -276,7 +408,7 @@ export function ProductAdd(props) {
               variant="contained"
               type="submit"
               color="success"
-              sx={{ width: "50%" }}
+              sx={{ width: "50%",mb:3 }}
               onClick={(e) => handleSendNewData(e)}
             >
               افزودن

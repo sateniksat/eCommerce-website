@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { TextField, Fab, Box } from "@mui/material";
+import { Button, Box, InputBase } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addToCart, decreaseCart, removeFromCart } from "../../redux/cartSlice";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,6 +16,7 @@ export default function InputCart(props) {
   const [input, setInput] = useState(props.item.cartQuantity);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+
   //   const handleChangeInput = (e) => {
   //     props.handleChange({
   //       id: e.target.id,
@@ -24,6 +25,7 @@ export default function InputCart(props) {
   //     });
   //     setvalue(e.target.value);
   //   };
+
   const errorText = {
     min: "بزرگ تر از صفر وارد کنید.",
     max: "موجودی کالا کافی نیست.",
@@ -59,37 +61,71 @@ export default function InputCart(props) {
 
   return (
     <>
-      <Box >
-        <Box sx={{ color: "red" }}>{error}</Box>
-        <Fab
-          color="secondary"
-          size="small"
-          aria-label="add"
-          onClick={() => handleAddToCart(props.item)}
-        >
-          <AddIcon />
-        </Fab>
-        <TextField
-          id={props.item.id.toString()}
-          name={props.item.id.toString()}
-          type="number"
-          value={input}
-          sx={{width:"30%"}}
-          // onChange={(e) => handleChangeInput(e)}
-          InputProps={{
-            readOnly: true,
+      <Box sx={{ height: "100%" }}>
+      <Box sx={{ color: "red", height: "10px", fontSize: "small" }}></Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-          variant="standard"
-        />
-        <Fab
-          color="primary"
-          size="small"
-          aria-label="add"
-          onClick={() => handleDecreaseCart(props.item)}
-          onDoubleClick={() => handleRemoveFromCart(props.item)}
         >
-          <RemoveCircleOutline />
-        </Fab>
+          <Button
+            variant="contained"
+            size="small"
+            aria-label="increase"
+            sx={{p:1}}
+            onClick={() => handleAddToCart(props.item)}
+          >
+            <AddIcon />
+          </Button>
+          <InputBase
+            id={props.item.id.toString()}
+            name={props.item.id.toString()}
+            // type="number"
+            value={input}
+            sx={{
+              mx:"2px",
+              p:1,
+              width: "25%",
+              textAlign: "center",
+              fontSize: "inherit",
+              border: "solid 1px",
+              borderColor: "primary.main",
+              borderRadius: "3px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            // onChange={(e) => handleChangeInput(e)}
+            // InputProps={{
+            //   readOnly: true,
+            // }}
+            inputProps={{
+              style: {
+                textAlign: "center",
+              },
+              readOnly: true,
+
+            }}
+            variant="outlined"
+          />
+          {/* <Box sx={{width:"30%",p:2}}>{input}</Box> */}
+          <Button
+            variant="contained"
+            size="small"
+            color="secondary"
+            aria-label="decrease"
+            sx={{p:1}}
+            onClick={() => handleDecreaseCart(props.item)}
+            onDoubleClick={() => handleRemoveFromCart(props.item)}
+          >
+            <RemoveCircleOutline />
+          </Button>
+        </Box>
+        <Box sx={{ color: "red", height: "10px", fontSize: "small" }}>
+          {error}
+        </Box>
       </Box>
     </>
   );

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
-import AdminNav from "../components/AdminNav";
-import Footer from "../components/Footer";
+import AdminNav from "../Components/AdminNav";
+import Footer from "../Components/Footer";
 
 // const AdminPageLayout = (Component) => {
 //   return function WithAdminPage(props) {

@@ -14,21 +14,19 @@ import { Button, Pagination } from "@mui/material";
 import { useFetch } from "../../hooks/useFetch";
 import InputActive from "./InputActive";
 // import axios from "axios";
+// import { Axios } from "../../api/api";
 import { api } from "../../api/api";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function InventoryManegment() {
   const limit = useMemo(() => 9, []);
   const [activePage, setActivePage] = useState(1);
   const [changes, setchanges] = useState([]);
   const [changedID, setChangeID] = useState([]);
-  // const [refresh, setrefresh] = useState(true);
-  // const refreshing = () => {
-  //   setrefresh(!refresh);
-  // };
 
-  const { data } = useFetch(
-    `/products?_page=${activePage}&_limit=${limit}}`
-  );
+  const { data } = useFetch(`/products?_page=${activePage}&_limit=${limit}}`);
   useEffect(() => {
     setchanges(data?.data);
   }, [data]);
@@ -36,7 +34,11 @@ function InventoryManegment() {
     // console.log(data)
     // console.log(newchangeInput.id);
     const newchanges = changes?.map((row) => {
-      if (row.id === +newchangeInput.id) {
+      if (
+        row.id === +newchangeInput.id &&
+        (row.count !== newchangeInput.value ||
+          row.price !== newchangeInput.value)
+      ) {
         if (!changedID.includes(row.id)) {
           setChangeID((prevState) => [...prevState, row.id]);
         }
@@ -51,7 +53,7 @@ function InventoryManegment() {
 
   const handleSave = async () => {
     let temp = [];
-    changedID.map((item) => {
+    changedID.forEach((item) => {
       const found = changes.find((product) => product.id === item);
       // console.log(found)
       const tempRequest = api.patch(`/products/${item}`, found, {
@@ -62,7 +64,42 @@ function InventoryManegment() {
       });
       temp.push(tempRequest);
     });
-    const arrayResponse = await Promise.all(temp);
+    // const arrayResponse = await Promise.all(temp);
+    // console.log(arrayResponse);
+    Promise.all(temp)
+      .then((data) => {
+        let sum = 0;
+        data.forEach((entry) => {
+          if (entry.status === 200) {
+            console.log("hiiii");
+            sum++;
+          }
+        });
+        if (sum === data.length) {
+          toast.success("تغییرات انجام شد.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            // theme:"colored",
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error("تغییرات انجام نشد.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        console.log(error);
+      });
   };
   return (
     <>
@@ -136,6 +173,17 @@ function InventoryManegment() {
             onChange={(_, page) => setActivePage(page)}
           />
         </Box>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick
+          rtl={true}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Container>
     </>
   );

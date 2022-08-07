@@ -9,6 +9,7 @@ export default function Footer(props) {
       sx={{
         background: props.backgroundColor,
         p:6,
+        mt:3,
         color:"whitesmoke",
         display:"flex",
         justifyContent:"space-around"

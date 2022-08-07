@@ -15,9 +15,9 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <CacheProvider value={cacheRtl}>
-          <AppRoute  dir="rtl" />
-        </CacheProvider>
+          <CacheProvider value={cacheRtl}>
+            <AppRoute dir="rtl" />
+          </CacheProvider>
       </Provider>
     </>
   );
