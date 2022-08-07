@@ -1,8 +1,8 @@
 // import React from "react";
-// import CostumerNav from "../components/CostumerNav";
-// import DrawerComponent from "../components/DrawerComponent";
+// import CostumerNav from "../Components/CostumerNav";
+// import DrawerComponent from "../Components/DrawerComponent";
 
-// const CostumerPageDrower = (Component) => {
+// const CostumerPageDrawer = (Component) => {
 //   return function CostumerPage(props) {
 //     return (
 //       <>
@@ -13,7 +13,7 @@
 //     );
 //   };
 // };
-// const CostumerPageDrower = (props) => {
+// const CostumerPageDrawer = (props) => {
 //   return (
 //     <>
 //       <CostumerNav />
@@ -23,4 +23,4 @@
 //   );
 // };
 
-// export default CostumerPageDrower;
+// export default CostumerPageDrawer;

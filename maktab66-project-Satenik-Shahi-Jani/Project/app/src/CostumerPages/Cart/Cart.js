@@ -14,6 +14,7 @@ import {
   Fab,
   Button,
   Alert,
+  CardMedia,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreditScore from "@mui/icons-material/CreditScore";
@@ -30,12 +31,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
-
-
-
-function Cart() {
+export default function Cart() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -124,14 +120,21 @@ function Cart() {
                     key={item.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell sx={{ width: "20%" }} align="left">
-                      <img
-                        alt="img"
-                        width={"30%"}
-                        src={`http://localhost:3002/files/${item.thumbnail}`}
-                      />
+                    <TableCell sx={{ width: "10%" }} align="left">
+                      <Link to={`/products/${item.id}`}>
+                        <CardMedia
+                          // sx={{ width: { xs: "40%", sm: "40%", md: "40%" }, }}
+                          sx={{ width: "100%" }}
+                          component="img"
+                          alt="img"
+                          // width="100%"
+                          image={`http://localhost:3002/files/${item.thumbnail}`}
+                        />
+                      </Link>
                     </TableCell>
-                    <TableCell align="left">{item.name}</TableCell>
+                    <TableCell align="left">
+                      <Link to={`/products/${item.id}`}>{item.name}</Link>
+                    </TableCell>
                     <TableCell align="center">{item.price}</TableCell>
                     <TableCell align="center">
                       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -171,7 +174,7 @@ function Cart() {
       </Container>
       <Container>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <h2> جمع کل :</h2>
+          <h2> جمع کل مبلغ:</h2>
           <Box sx={{ mx: 2 }} component="h2">
             {totalCount()}
           </Box>
@@ -180,19 +183,28 @@ function Cart() {
       {cart.cartTotalQuantity !== 0 ? (
         <Box
           sx={{
+            display: "flex",
             width: "100%",
             alignItems: "center",
-            display: "flex",
             p: 2,
             justifyContent: "space-around",
           }}
         >
-          <Button variant="contained" sx={{ width: "40%", fontSize: "large" }}>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ width: { xs: "100%", md: "60%" }, fontSize: "large" }}
+          >
             <Link to="/purchaseform">
               <Box
-                sx={{ width: "100%", alignItems: "center", display: "flex" }}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                <Box>پرداخت</Box>
+                <Box sx={{ mx: 1 }}>پرداخت مبلغ</Box>
                 <CreditScore />
               </Box>
             </Link>
@@ -201,23 +213,21 @@ function Cart() {
       ) : (
         <Box sx={{ width: "60%", mx: "auto", my: 4 }}>
           <Link to="/">
-            <Alert severity="info">بازگشت به سایت</Alert>
+            <Alert severity="info">بازگشت به صفحه اصلی</Alert>
           </Link>
         </Box>
       )}
-              <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={true}
-          closeOnClick
-          rtl={true}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={true}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Box>
   );
 }
-
-export default Cart;

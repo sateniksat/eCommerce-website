@@ -6,9 +6,11 @@ body {
 }
 a {
   all: unset;
-  width: max-content;
+  width: fit-content;
   cursor: pointer;
-  /* color: #1976D2"; */
+  display: contents;
+  /* color: #1976D2; */
+  /* color: #1976d21b; */
 }
 * {
   margin: 0;
@@ -16,9 +18,16 @@ a {
   box-sizing: border-box;
 }
 
+img {
+  width: 100%;
+}
+
 #root {
   width: 100%;
 }
+/* input::placeholder{
+  color:white;
+} */
 .ck-editor__editable {
   min-height: 200px !important;
   /* min-width: 300px; */
@@ -26,8 +35,8 @@ a {
 .ck-editor__top {
   min-width: 100px !important;
 }
-input:read-only{
-  all:unset;
+input:read-only {
+  all: unset;
   width: 100%;
 }
 /* @media only screen and (max-width: 600px) {

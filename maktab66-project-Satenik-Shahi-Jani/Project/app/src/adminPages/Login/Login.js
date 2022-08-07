@@ -1,4 +1,4 @@
-import SimpleLayout from "../../layouts/SimpleLayout";
+import SimpleLayout from "../../Layouts/SimpleLayout";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Box, Button } from "@mui/material";
-import ModalPage from "../../components/ModalPage";
+import ModalPage from "../../Components/ModalPage";
 
 export function ProductDelete(props) {
   const handledelete = () => {

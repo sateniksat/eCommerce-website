@@ -11,7 +11,7 @@ import {
   CardMedia,
 } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import ModalPage from "../../components/ModalPage";
+import ModalPage from "../../Components/ModalPage";
 import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 
@@ -29,15 +29,15 @@ export function ProductAdd(props) {
   const { data } = useFetch("/category");
 
   const [product, setProduct] = useState({
-    description: "",
-    name: "",
-    price: "",
-    count: "",
-    brand: "",
-    category: "",
-    images: [],
-    thumbnail: "",
-    categoryName: "",
+    // description: "",
+    // name: "",
+    // price: "",
+    // count: "",
+    // brand: "",
+    // category: "",
+    // images: [],
+    // thumbnail: "",
+    // categoryName: "",
   });
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
@@ -62,8 +62,8 @@ export function ProductAdd(props) {
     // preview(files[0]);
     // console.log(files);
     let temp = [];
+    const formData = new FormData();
     files.forEach((item) => {
-      const formData = new FormData();
       formData.append("image", item);
       const tempRequest = api.post("/upload", formData, {
         headers: { token: localStorage.getItem("token") },

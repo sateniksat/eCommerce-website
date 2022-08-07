@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-// import AdminPageLayout from "../../layouts/AdminPageLayout";
 import { Table } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,13 +8,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { Pagination, Button } from "@mui/material";
+import { Pagination, Button, CardMedia } from "@mui/material";
 import { api } from "../../api/api";
 import { useFetch } from "../../hooks/useFetch";
 import ProductAdd from "./ProductAdd";
 import ProductDelete from "./ProductDelete";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 function ProductManegment() {
   const limit = useMemo(() => 9, []);
@@ -88,16 +88,16 @@ function ProductManegment() {
         console.log(error);
         processFail();
       });
-      // await api
-      // .delete(`/upload/${item.thumbnail}`)      .then((res) => {
-      //   if (res.status === 200) {
-      //   console.log(200);
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-        
-      // });
+    // await api
+    // .delete(`/upload/${item.thumbnail}`)      .then((res) => {
+    //   if (res.status === 200) {
+    //   console.log(200);
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.log(error);
+
+    // });
   }
 
   const handleProductEdit = (responseData) => {
@@ -123,14 +123,14 @@ function ProductManegment() {
     // console.log(input)
     if (input) {
       processDone();
-      if(activePage===Math.ceil(+data?.headers["x-total-count"] / limit)){
-        setGetData([...getData , input]);
+      if (activePage === Math.ceil(+data?.headers["x-total-count"] / limit)) {
+        setGetData([...getData, input]);
       }
     } else {
       processFail();
     }
   }
-  
+
   return (
     <Container sx={{ mt: "5%", minHeight: "100vh" }}>
       <Box dir="rtl" sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -149,9 +149,9 @@ function ProductManegment() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">تصویر</TableCell>
-              <TableCell align="left">نام کالا</TableCell>
-              <TableCell align="left">دسته بندی</TableCell>
+              <TableCell align="center">تصویر</TableCell>
+              <TableCell align="center">نام کالا</TableCell>
+              <TableCell align="center">دسته بندی</TableCell>
               <TableCell align="center">تغییرات</TableCell>
             </TableRow>
           </TableHead>
@@ -161,15 +161,29 @@ function ProductManegment() {
                 key={item.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell sx={{ width: "20%" }} align="left">
-                  <img
+                <TableCell sx={{ width: "10%" }} align="center">
+                  <Link to={`/products/${item.id}`}>
+                    {/* <img
                     alt="img"
                     width={"50%"}
                     src={`http://localhost:3002/files/${item.thumbnail}`}
-                  />
+                  /> */}
+                    <CardMedia
+                      sx={{ width: "100%" }}
+                      component="img"
+                      alt="img"
+                      image={`http://localhost:3002/files/${item.thumbnail}`}
+                    />
+                  </Link>
                 </TableCell>
-                <TableCell align="left">{item.name}</TableCell>
-                <TableCell align="left">{item.categoryName}</TableCell>
+                <TableCell align="center">
+                  <Link to={`/products/${item.id}`}>{item.name}</Link>
+                </TableCell>
+                <TableCell align="center">
+                  <Link to={`/category/${item.category}`}>
+                    {item.categoryName}
+                  </Link>
+                </TableCell>
                 <TableCell align="center">
                   <Box sx={{ display: "flex", justifyContent: "center" }}>
                     <Button

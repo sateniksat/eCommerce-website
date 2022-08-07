@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 // import { useEffect } from "react";
-// import AdminPageLayout from "../../layouts/AdminPageLayout";
+// import AdminPageLayout from "../../Layouts/AdminPageLayout";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -71,12 +71,14 @@ function OrderManegment() {
   }, [data]);
 
   function handleSort(input) {
-    if (input === "old") {
+    if (input === "new") {
       setUrlString("&_sort=orderDate&_order=desc");
       setActivePage(1);
+      handleClose();
     } else {
       setUrlString("");
       setActivePage(1);
+      handleClose();
     }
   }
 
@@ -178,13 +180,9 @@ function OrderManegment() {
                   }}
                 >
                   <MenuItem onClick={() => handleSort("new")} dir={"rtl"}>
-                    {/* <ListItemIcon>
-              </ListItemIcon> */}
                     جدید
                   </MenuItem>
                   <MenuItem onClick={() => handleSort("old")} dir={"rtl"}>
-                    {/* <ListItemIcon>
-              </ListItemIcon> */}
                     قدیمی
                   </MenuItem>
                 </Menu>
