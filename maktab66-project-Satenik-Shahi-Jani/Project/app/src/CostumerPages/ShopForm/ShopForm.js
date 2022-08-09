@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -21,7 +21,7 @@ export function ShopForm() {
 
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  const [date, setdate] = useState(null);
+  const [date, setOrderDate] = useState(null);
 
   function totalCount() {
     let total = 0;
@@ -48,7 +48,6 @@ export function ShopForm() {
     shippingAddress: "",
     phone: "",
   };
-  // pattern = '/(\+?98|098|0|0098)?(9\d{9})/'
   const validate = (values) => {
     let errors = {};
     if (!values.firstName) {
@@ -175,115 +174,195 @@ export function ShopForm() {
                     <Box
                       component="form"
                       onSubmit={handleSubmit}
-                      sx={{ mt: 4, display: "flex", flexWrap: "wrap" }}
-                      width="100%"
+                      sx={{
+                        mt: 4,
+                        display: "flex",
+                        flexDirection: "column",
+                        width: { xs: "95%", md: "60%" },
+                      }}
                     >
-                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
-                        <TextField
-                          dir="rtl"
-                          margin="normal"
-                          label="نام"
-                          required
-                          fullWidth
-                          id="firstName"
-                          name="firstName"
-                          autoComplete="firstName"
-                          autoFocus
-                          onChange={handleChange}
-                        />
-                        { 
-                        // touched.firstName && 
-                        errors.firstName && (
-                          <Alert severity="error">{errors.firstName}</Alert>
-                        )}
-                      </Box>
-                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
-                        <TextField
-                          dir="rtl"
-                          margin="normal"
-                          label=" نام خانوادگی"
-                          required
-                          fullWidth
-                          name="lastName"
-                          id="lastName"
-                          autoComplete="current-lastName"
-                          onChange={handleChange}
-                        />
-                        { 
-                        // touched.lastName && 
-                        errors.lastName && (
-                          <Alert severity="error">{errors.lastName}</Alert>
-                        )}
-                      </Box>
-                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
-                        <TextField
-                          dir="rtl"
-                          margin="normal"
-                          label="آدرس"
-                          required
-                          fullWidth
-                          name="shippingAddress"
-                          id="shippingAddress"
-                          autoComplete="current-shippingAddress"
-                          onChange={handleChange}
-                        />
-                        { 
-                        // touched.shippingAddress && 
-                        errors.shippingAddress && (
-                          <Alert severity="error">
-                            {errors.shippingAddress}
-                          </Alert>
-                        )}
-                      </Box>
-                      <Box sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
-                        <TextField
-                          dir="rtl"
-                          margin="normal"
-                          label="تلفن همراه"
-                          required
-                          fullWidth
-                          name="phone"
-                          id="phone"
-                          autoComplete="current-phone"
-                          onChange={handleChange}
-                        />
-                        { 
-                        // touched.phone && 
-                        errors.phone && (
-                          <Alert severity="error">{errors.phone}</Alert>
-                        )}
-                      </Box>
-                      <Box dir="rtl" sx={{ width: { xs:"97%",md:"48%"}, mx: 1 }}>
-                        <DatePicker
-                          calendar={persian}
-                          locale={persian_fa}
-                          calendarPosition="bottom-left"
-                          onChange={setdate}
-                          value={date}
-                          name="delivery"
-                          id="delivery"
-                        />
-                        { 
-                        // touched.delivery && 
-                        errors.delivery && (
-                          <Alert severity="error">{errors.delivery}</Alert>
-                        )}
+                      <TextField
+                        dir="rtl"
+                        margin="normal"
+                        label="نام"
+                        required
+                        fullWidth
+                        id="firstName"
+                        name="firstName"
+                        autoComplete="firstName"
+                        autoFocus
+                        onChange={handleChange}
+                      />
+                      <Box
+                        sx={{
+                          height: "15px",
+                          mb: 1,
+                          // p:1,
+                          fontSize: "small",
+                          color: "red",
+                          // bgcolor: errors.firstName ? "#FDEDED" : null,
+                        }}
+                      >
+                        {
+                          // touched.firstName &&
+                          errors.firstName && <>{errors.firstName}</>
+                        }
                       </Box>
 
-                      <Box sx={{ width: { xs:"97%",md:"90%"} }}>
-                        <Link to="/">
-                          <Alert severity="info">بازگشت به سایت</Alert>
-                        </Link>
-                        <Button
-                          type="submit"
-                          fullWidth
-                          variant="contained"
-                          sx={{ mt: 3, mb: 2, width: "100%" }}
-                          endIcon={<CreditScore />}
-                        >
-                          <Box>پرداخت</Box>
-                        </Button>
+                      <TextField
+                        dir="rtl"
+                        margin="normal"
+                        label=" نام خانوادگی"
+                        required
+                        fullWidth
+                        name="lastName"
+                        id="lastName"
+                        autoComplete="current-lastName"
+                        onChange={handleChange}
+                      />
+                      <Box
+                        sx={{
+                          height: "15px",
+                          mb: 1,
+                          // p:1,
+                          fontSize: "small",
+                          color: "red",
+                          // bgcolor: errors.lastName ? "#FDEDED" : null,
+                        }}
+                      >
+                        {
+                          // touched.lastName &&
+                          errors.lastName && <>{errors.lastName}</>
+                        }
                       </Box>
+
+                      <TextField
+                        dir="rtl"
+                        margin="normal"
+                        label="آدرس"
+                        required
+                        fullWidth
+                        name="shippingAddress"
+                        id="shippingAddress"
+                        autoComplete="current-shippingAddress"
+                        onChange={handleChange}
+                      />
+                      <Box
+                        sx={{
+                          height: "15px",
+                          mb: 1,
+                          // p:1,
+                          fontSize: "small",
+                          color: "red",
+                          // bgcolor: errors.shippingAddress ? "#FDEDED" : null,
+                        }}
+                      >
+                        {errors.shippingAddress && (
+                          <>{errors.shippingAddress}</>
+                        )}
+                      </Box>
+                      <TextField
+                        dir="rtl"
+                        margin="normal"
+                        label="تلفن همراه"
+                        required
+                        fullWidth
+                        name="phone"
+                        id="phone"
+                        autoComplete="current-phone"
+                        onChange={handleChange}
+                      />
+                      {/* {
+                        // touched.phone &&
+                        errors.phone && (
+                          <Alert severity="error" size="small">
+                            {errors.phone}
+                          </Alert>
+                        )
+                      } */}
+                      <Box
+                        sx={{
+                          height: "15px",
+                          mb: 1,
+                          // p:1,
+                          fontSize: "small",
+                          color: "red",
+                          // bgcolor: errors.phone ? "#FDEDED" : null,
+                        }}
+                      >
+                        {errors.phone && <>{errors.phone}</>}
+                      </Box>
+                      <Typography variant="subtitle1" component="label" sx={{mt:1}} color="primary.main">
+                        زمان تحویل سفارش :
+                      </Typography>
+                      <DatePicker
+                        calendar={persian}
+                        locale={persian_fa}
+                        // calendarPosition="top-center"
+                        // onChange={(val) => {
+                        //   setOrderDate(val.unix * 1000);
+                        // }}
+                        minDate={new Date()}
+                        // maxDate={new Date().setDate(new Date().getDate() + 21)}
+                        onChange={setOrderDate}
+                        value={date}
+                        name="delivery"
+                        id="delivery"
+                        style={{
+                          width: "100%",
+                          boxSizing: "border-box",
+                          padding: "16px 8px",
+                          height: "40px",
+                          "&:focus": {
+                            border: "1px solid #1976D2",
+                          },
+                        }}
+                        containerStyle={{
+                          width: "100%",
+                          margin: "4px 0px",
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          height: "15px",
+                          mb: 1,
+                          // p:1,
+                          fontSize: "small",
+                          color: "red",
+                          // bgcolor: errors.delivery ? "#FDEDED" : null,
+                        }}
+                      >
+                        {
+                          // touched.delivery &&
+                          errors.delivery && <>{errors.delivery}</>
+                        }
+                      </Box>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{
+                          mt: 3,
+                          mb: 2,
+                          width: "100%",
+                          fontSize: { xs: "small", md: "medium" },
+                        }}
+                        // endIcon={<CreditScore />}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Box sx={{ fontSize: "inherit" }}>پرداخت</Box>
+                          <CreditScore sx={{ fontSize: "inherit", mx: 1 }} />
+                        </Box>
+                      </Button>
+                      <Link to="/">
+                        <Alert severity="info">بازگشت به سایت</Alert>
+                      </Link>
                     </Box>
                   )}
                 </>

@@ -69,6 +69,7 @@ export default function Cards(props) {
   return (
     
     // <Card sx={{ height: { xs: "180px", sm: "250px", md: "380px" } }}>
+    // height: { xs: "40vh", sm: "40vh", md: "55vh", lg: "55vh" }
     <Card sx={{ position: "relative" }}>
         <Link to={`/products/${props.product.id}`}>
       
@@ -81,7 +82,7 @@ export default function Cards(props) {
         image={`http://localhost:3002/files/${props.product.thumbnail}`}
       />
       </Link>
-      <Box sx={{ p: { xs: 1, sm: 1 } }}>
+      <Box sx={{ p: { xs: 1, sm: 1 },height:"45%"}}>
         {/* <CardContent> */}
 
         <Link to={`/products/${props.product.id}`}>
@@ -143,6 +144,7 @@ export default function Cards(props) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            mt:"auto"
           }}
         >
           <Button
@@ -152,7 +154,7 @@ export default function Cards(props) {
               ml: "auto",
               mr: "auto",
               width: { xs: "80%", sm: "100%" },
-              mt: 1,
+              my:1,
               fontSize: { xs: "8px", md: "15px" },
             }}
             // endIcon={

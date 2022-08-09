@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import { useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
@@ -9,6 +9,8 @@ import {
   FormControl,
   Button,
   CardMedia,
+  MenuItem,
+  Select,
 } from "@mui/material";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import ModalPage from "../../Components/ModalPage";
@@ -38,21 +40,34 @@ export function ProductAdd(props) {
     // images: [],
     // thumbnail: "",
     // categoryName: "",
+    //poster:""
   });
+  const [selectCategory, setSelectCategory] = useState("");
+
+
+useEffect(()=>{
+  if(props.product.category){
+    setSelectCategory(props.product.category)
+  }
+},[props])
+
+
   const handleChangeInput = (e) => {
     setProduct({ ...product, [e.target.name]: e.target.value });
     // console.log(product);
   };
 
   function handleChangeSelect(e) {
+    setSelectCategory(e.target.value);
+    // console.log(e.target)
     handleChangeInput(e);
     let test = "";
     data?.data.forEach((item) => {
       if (item.id === Number(e.target.value)) {
         test = item.name;
-        console.log(item.name);
+        // console.log(item.name);
         setProduct((prevState) => ({ ...prevState, categoryName: test }));
-        console.log(product);
+        // console.log(product);
       }
     });
   }
@@ -117,19 +132,20 @@ export function ProductAdd(props) {
         product.categoryName === "" ||
         product.category === "" ||
         product.images === [] ||
-        product.thumbnail === ""
+        product.thumbnail === "" ||
+        product.poster === ""
       ) {
         alert("لطفا تمام فیلد ها را پر کنید.");
       } else {
         setProduct({ ...product, createdAt: Date.now() });
         const response = await api.post("/products", product).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setProduct(res.data);
           return res;
         });
         // console.log(response?.data)
         if (response?.status === 200 || response?.status === 201) {
-          console.log("hi");
+          // console.log("hi");
           // console.log(response?.data.data)
           // props.addingProduct(product);
           props.addingProduct(response?.data);
@@ -168,28 +184,13 @@ export function ProductAdd(props) {
     props.setActivePage(props.activePage);
   };
 
-  // const handleDeletIMG = async (item) => {
-  //   const response = await api
-  //     .delete(`/upload?_name=${item}`,{
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         token: localStorage.getItem("token"),
-  //       },
-  //     })
-  //     .then((res) => res)
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   console.log(response);
-  // };
-
   return (
     <form>
       <Box dir="rtl" sx={{ my: "4%" }}>
         <Box
           sx={{
             display: "flex",
-            flexDirection:{ xs:"column",md:"row"},
+            flexDirection: { xs: "column", md: "row" },
             justifyContent: "space-between",
             alignContent: "center",
             width: "100%",
@@ -199,7 +200,7 @@ export function ProductAdd(props) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width:{ xs:"100%",md:"48%"},
+              width: { xs: "100%", md: "48%" },
               alignContent: "center",
             }}
           >
@@ -234,29 +235,12 @@ export function ProductAdd(props) {
               sx={{ my: 2 }}
               defaultValue={props.product?.count}
             />
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">دسته بندی</InputLabel>
-                <select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  label="دسته بندی"
-                  name="category"
-                  required
-                  onChange={(e) => handleChangeSelect(e)}
-                >
-                  {data?.data.map((item) => {
-                    return <option value={item.id}>{item.name}</option>;
-                  })}
-                </select>
-              </FormControl>
-            </Box>
           </Box>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              width:{ xs:"100%",md:"48%"},
+              width: { xs: "100%", md: "48%" },
               alignContent: "center",
             }}
           >
@@ -269,6 +253,37 @@ export function ProductAdd(props) {
               onChange={(e) => handleChangeInput(e)}
               defaultValue={props.product?.brand}
             />
+            <TextField
+              required
+              sx={{ my: 2 }}
+              id="outlined-required"
+              label="پستر"
+              name="poster"
+              onChange={(e) => handleChangeInput(e)}
+              defaultValue={props.product?.poster}
+            />
+             <Box sx={{ my: 2 }}> 
+              <FormControl fullWidth >
+                <InputLabel id="demo-simple-select-label">دسته بندی</InputLabel>
+                <Select
+                  id="demo-simple-select"
+                  label="دسته بندی"
+                  name="category"
+                  value={selectCategory}
+                  required
+                  defaultValue={props.product?.category}
+                  onChange={(e) => handleChangeSelect(e)}
+                >
+                  {data?.data.map((item) => {
+                    return (
+                      <MenuItem dir="rtl" key={item.name} value={item.id}>
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Box>
           </Box>
         </Box>
         <Box width="100%">
@@ -277,7 +292,7 @@ export function ProductAdd(props) {
               <CardMedia
                 component="img"
                 alt="img"
-                sx={{ width: { xs:"20%",md:"10%"}, mx: 1 }}
+                sx={{ width: { xs: "20%", md: "10%" }, mx: 1 }}
                 image={`http://localhost:3002/files/${props.product.thumbnail}`}
               />
               {/* <Button
@@ -290,12 +305,12 @@ export function ProductAdd(props) {
               </Button> */}
             </Box>
           )}
-                    {product.thumbnail && (
+          {product.thumbnail && (
             <Box>
               <CardMedia
                 component="img"
                 alt="img"
-                sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }}
+                sx={{ width: { xs: "20%", md: "10%" }, mx: 1 }}
                 image={`http://localhost:3002/files/${product.thumbnail}`}
               />
               {/* <Button
@@ -309,7 +324,7 @@ export function ProductAdd(props) {
             </Box>
           )}
         </Box>
-        <Box sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+        <Box sx={{ p: 2, display: "flex" }}>
           <label>Thumbnail</label>
           <Input
             accept="image/*"
@@ -319,14 +334,14 @@ export function ProductAdd(props) {
             onChange={changeHanlerThumbnail}
           />
         </Box>
-        <Box width="100%" sx={{display:"flex",flexWrap:"wrap"}}>
+        <Box width="100%" sx={{ display: "flex", flexWrap: "wrap" }}>
           {props.product &&
             props.product.images.map((item) => (
-              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+              <Box key={item} sx={{ width: { xs: "20%", md: "10%" }, mx: 1 }}>
                 <CardMedia
                   component="img"
                   alt="img"
-                  sx={{ width:"100%"}}
+                  sx={{ width: "100%" }}
                   image={`http://localhost:3002/files/${item}`}
                 />
                 {/* <Button
@@ -341,11 +356,11 @@ export function ProductAdd(props) {
             ))}
           {product.images &&
             product.images.map((item) => (
-              <Box sx={{ width:{ xs:"20%",md:"10%"}, mx: 1 }} >
+              <Box key={item} sx={{ width: { xs: "20%", md: "10%" }, mx: 1 }}>
                 <CardMedia
                   component="img"
                   alt="img"
-                  sx={{ width:"100%"}}
+                  sx={{ width: "100%" }}
                   image={`http://localhost:3002/files/${item}`}
                 />
                 {/* <Button
@@ -370,9 +385,6 @@ export function ProductAdd(props) {
               name="images"
               onChange={changeHanler}
             />
-            <Button variant="contained" component="span">
-              Upload
-            </Button>
           </label>
         </Box>
         <Box sx={{ width: "%100", display: "flex", justifyContent: "center" }}>
@@ -399,7 +411,7 @@ export function ProductAdd(props) {
               variant="contained"
               color="success"
               onClick={(e) => handleEditData(e)}
-              sx={{ width: "50%" ,mb:3}}
+              sx={{ width: "50%", mb: 3 }}
             >
               ویرایش
             </Button>
@@ -408,7 +420,7 @@ export function ProductAdd(props) {
               variant="contained"
               type="submit"
               color="success"
-              sx={{ width: "50%",mb:3 }}
+              sx={{ width: "50%", mb: 3 }}
               onClick={(e) => handleSendNewData(e)}
             >
               افزودن

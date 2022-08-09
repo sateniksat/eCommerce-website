@@ -3,7 +3,7 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 // import { InputLabel } from "@mui/material";
@@ -79,14 +79,19 @@ export function Login() {
       sx={{
         width: "100%",
         background: " linear-gradient(to right, #007991, #78ffd6)",
-        p: {xs:2,sm:4,md:5},
+        p: { xs: 2, sm: 4, md: 5 },
         height: "100vh",
       }}
     >
       <Container
         dir="rtl"
         component="main"
-        sx={{ width: {xs:"95%",sm:"60%",md:"50%"}, background: "white", borderRadius: "20px", p: 3 }}
+        sx={{
+          width: { xs: "95%", sm: "60%", md: "50%" },
+          background: "white",
+          borderRadius: "20px",
+          p: 3,
+        }}
       >
         <CssBaseline />
         <Box
@@ -141,12 +146,15 @@ export function Login() {
                     autoFocus
                     onChange={handleChange}
                   />
-                  {errors.username && (
-                    <Alert severity="error">{errors.username}</Alert>
-                  )}
 
+                  <Box sx={{ height: "10px",mb:1}}>
+                    {errors.username && (
+                      <Box sx={{ fontSize: "small", color: "red" }}>
+                        {errors.username}
+                      </Box>
+                    )}
+                  </Box>
                   <label>رمز عبور</label>
-
                   <TextField
                     dir="ltr"
                     margin="normal"
@@ -158,9 +166,13 @@ export function Login() {
                     autoComplete="current-password"
                     onChange={handleChange}
                   />
-                  {errors.password && (
-                    <Alert severity="error">{errors.password}</Alert>
-                  )}
+                  <Box sx={{ height: "10px"}}>
+                    {errors.password && (
+                      <Box sx={{ fontSize: "small", color: "red" }}>
+                        {errors.password}
+                      </Box>
+                    )}
+                  </Box>
                   <Button
                     type="submit"
                     fullWidth
